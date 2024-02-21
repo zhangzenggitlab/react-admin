@@ -1,0 +1,20 @@
+.baseSetting {
+    padding: 8px 40px;
+
+    .title {
+        margin-bottom: 12px;
+        color: rgba($blackTextColor, 0.88);
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .avatar {
+        padding: 0px 160px;
+
+        .label {
+            padding: 20px 0;
+        }
+    }
+
+}
