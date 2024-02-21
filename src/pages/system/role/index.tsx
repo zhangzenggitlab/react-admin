@@ -1,15 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Tooltip, Flex, Space, Button, Popconfirm, Tree, message } from "antd";
+import { Tooltip, Flex, Space, Tag, Button, Popconfirm, Tree } from "antd";
 import { useImmer } from "use-immer";
-import {
-  getRole,
-  editRole,
-  addRole,
-  delRoleById,
-  menuRoleByRoleId,
-  addMenuRole,
-} from "./api";
-import { getMenuTree } from "@/api/menu";
+import { getRole, editRole } from "./api";
 import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import AtTable from "@/components/at-table";
 import IRole from "./interface";
@@ -18,7 +10,6 @@ import EditRole from "./editRole";
 import AtModel from "@/components/at-model/AtModel";
 
 function Role() {
-  const [editRoleId, setEditRoleId] = useImmer<number>(0);
   const [columns] = useImmer<Array<any>>([
     {
       title: "角色名称",
@@ -36,34 +27,33 @@ function Role() {
       dataIndex: "description",
       align: "description",
     },
-    // {
-    //   title: "是否默认",
-    //   dataIndex: "status",
-    //   align: "center",
-    //   render: (text: number) =>
-    //     text == 1 ? <Tag color="cyan">是 </Tag> : <Tag color="red">否</Tag>,
-    // },
+    {
+      title: "是否默认",
+      dataIndex: "status",
+      align: "center",
+      render: (text: number) =>
+        text == 1 ? <Tag color="cyan">是 </Tag> : <Tag color="red">否</Tag>,
+    },
     {
       title: "操作",
       dataIndex: "control",
       align: "center",
-      render: (text: any, record: any) => (
+      render: (text: any, record: any, index: number) => (
         <Space>
           <Button
             type="link"
             onClick={() => {
+              setSelectedKey(record.menu);
               console.log(text);
-              setEditRoleId(record.id);
-              menuRoleByRoleId({ roleId: record.id }).then((res: any) => {
-                console.log(res.data);
-                setSelectedKey(res.data);
-                setOpenModel(true);
-              });
+              setOpenModel(true);
             }}
           >
-            权限
+           权限
           </Button>
 
+<<<<<<< HEAD
+       
+=======
           <Button
             type="link"
             onClick={() => {
@@ -79,6 +69,7 @@ function Role() {
             添加子角色
           </Button>
 
+>>>>>>> 771c49629394f6ff0e74c9597324313bc76335e7
           <Button
             type="link"
             onClick={() => {
@@ -92,9 +83,8 @@ function Role() {
             title="提示"
             description="确认删除?"
             onConfirm={() => {
-              delRoleById({ id: record.id }).then(() => {
-                message.success("删除成功");
-                getRolefn();
+              setDataSoruce((draf) => {
+                draf.splice(index, 1);
               });
             }}
             onCancel={() => {}}
@@ -111,7 +101,10 @@ function Role() {
   const [loading, setLoading] = useImmer<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPagesize] = useState<number>(10);
-
+  const [search, setSearch] = useState({
+    page,
+    pageSize,
+  });
   const [justify] = useState<string>("space-between");
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -122,40 +115,54 @@ function Role() {
     status: 1,
     parentId: 0,
   });
-  const [treeData, setTreeData] = useImmer<Array<any>>([]);
+  const [treeData] = useImmer<Array<any>>([
+    {
+      id: 1,
+      label: "系统管理",
+      children: [
+        {
+          id: 2,
+          label: "用户列表",
+          children: [
+            {
+              id: 5,
+              label: "查询接口",
+            },
+            {
+              id: 6,
+              label: "删除接口",
+            },
+          ],
+        },
+        {
+          id: 3,
+          label: "菜单列表",
+        },
+        {
+          id: 4,
+          label: "角色列表",
+        },
+      ],
+    },
+  ]);
   const [total, setTotal] = useState<number>(0);
   const [selectedKey, setSelectedKey] = useImmer<Array<number>>([2]);
   const editFormRef = useRef<any>(null);
-  const [menuIds, setMenuIds] = useImmer<Array<number>>([]);
 
-  const getRolefn = async () => {
+  useEffect(() => {
     setLoading(true);
-    getRole({
-      page,
-      pageSize,
-    })
-      .then((res: any) => {
-        setDataSoruce(res.data.data);
+    getRole(search).then((res: any) => {
+      setTimeout(() => {
+        setDataSoruce(res.data.list);
         setTotal(res.data.total);
-      })
-      .finally(() => {
         setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    getMenuTree().then((res) => {
-      setTreeData(res.data);
+      }, 200);
     });
-  }, []);
-
-  useEffect(() => {
-    getRolefn();
 
     return () => {
       setDataSoruce([]);
     };
-  }, [page, pageSize]);
+  }, [search]);
 
   return (
     <div className="default-contant">
@@ -181,7 +188,10 @@ function Role() {
             <Tooltip title="刷新">
               <ReloadOutlined
                 onClick={() => {
-                  getRolefn();
+                  setSearch({
+                    page,
+                    pageSize,
+                  });
                 }}
               />
             </Tooltip>
@@ -199,6 +209,10 @@ function Role() {
         onChange={(page: number, pageSize: number) => {
           setPage(page);
           setPagesize(pageSize);
+          setSearch({
+            page,
+            pageSize,
+          });
         }}
       />
 
@@ -216,21 +230,21 @@ function Role() {
                 editFormRef.current
                   .validateFields()
                   .then((val: IRole) => {
-                    if (editForm.id) {
-                      editRole(
-                        Object.assign(editFormRef.current.getFormValue(), {
-                          id: editForm.id,
-                        })
-                      ).then(() => {
-                        getRolefn();
-                        setOpenDrawer(false);
-                      });
+                    if (val.id) {
+                      editRole(editFormRef.current.getFormValue()).then(
+                        (res: any) => {
+                          console.log(res);
+                        }
+                      );
                       return;
                     }
 
-                    addRole(val).then(() => {
+                    editRole(val).then((res: any) => {
+                      setDataSoruce((draf) => {
+                        res.id = draf.length + 1;
+                        draf.push(res);
+                      });
                       setOpenDrawer(false);
-                      getRolefn();
                     });
                   })
                   .catch((err: any) => {
@@ -254,10 +268,6 @@ function Role() {
         open={openModel}
         title="菜单权限"
         onOk={() => {
-          addMenuRole({
-            roleId: editRoleId,
-            menuIds: menuIds,
-          });
           setOpenModel(false);
         }}
         onCancel={() => {
@@ -267,19 +277,14 @@ function Role() {
         <Tree
           checkable
           checkedKeys={selectedKey}
-          onCheck={(checkedKeys: any, info: any) => {
+          onCheck={(checkedKeys: any) => {
             setSelectedKey(checkedKeys);
-            const idx = info.checkedNodes.map((item: any) => {
-              return item.id;
-            });
-            idx.push(...info.halfCheckedKeys);
-            setMenuIds(idx);
           }}
           treeData={treeData}
           multiple={true}
           fieldNames={{
             key: "id",
-            title: "name",
+            title: "label",
           }}
         />
       </AtModel>

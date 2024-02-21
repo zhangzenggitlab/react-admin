@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Input, Tree } from "antd";
+import { allDepartment } from "../department/api";
 import { useImmer } from "use-immer";
-import DepartmentStore from "@/mobx/system/department";
 import IDepartment from "@/interfaces/IDepartment";
 
-function TreeDepartment(props: any) {
+function TreeDepartment(props:any) {
   const [treeData, setTreeData] = useState<any>([]);
   const [expandedKeys, setExpandedKeys] = useImmer<any>([]);
   const [timerVariable, setTimerVariable] = useState<any>(null);
@@ -38,8 +38,11 @@ function TreeDepartment(props: any) {
   };
 
   useEffect(() => {
-    setTreeData(DepartmentStore.listDepartment);
-
+    allDepartment().then((res: any) => {
+      setTimeout(() => {
+        setTreeData(res.data.list);
+      }, 500);
+    });
     return () => {
       setTreeData([]);
       [];

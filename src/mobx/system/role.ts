@@ -5,16 +5,17 @@ import { allRole } from "@/pages/system/role/api";
 class RoleStore {
     @observable allTree: Array<IRole> = [];
 
+
     @action async getAllTree() {
         runInAction(() => {
             allRole().then((res: any) => {
                 if (res.code === 200) {
-                    // res.data.unshift({
-                    //     id: 0,
-                    //     name: "一级角色",
-                    // });
-                    this.allTree = res.data;
-                    console.log(res.data);
+                    res.data.list.unshift({
+                        id: 0,
+                        name: "一级角色",
+                    });
+
+                    this.allTree = res.data.list;
                     localStorage.setItem("roleTree", JSON.stringify(this.allTree));
                 }
             })

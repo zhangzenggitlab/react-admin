@@ -9,7 +9,6 @@ import {
   TreeSelect,
   Col,
   Row,
-  InputNumber,
 } from "antd";
 import { IAtForm, IAtFormItem } from "@/interfaces/IAtForm";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
@@ -126,27 +125,6 @@ const AtForm = forwardRef((props: IAtForm, ref: any) => {
                     fieldNames={item.fieldNames}
                     disabled={item.disabled}
                   ></TreeSelect>
-                </Form.Item>
-              </Col>
-            );
-
-          case "inputNumber":
-            return (
-              <Col key={item.name} span={item.colSpan ? item.colSpan : 6}>
-                <Form.Item
-                  name={item.name}
-                  label={item.label}
-                  rules={item.rules}
-                  key={item.name}
-                  style={props.style ? props.style : item.style}
-                  wrapperCol={item.wrapperCol}
-                >
-             
-                  <InputNumber
-                    onChange={item.onChange}
-                    min={item.min}
-                    max={item.max}
-                  />
                 </Form.Item>
               </Col>
             );

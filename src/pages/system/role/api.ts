@@ -1,30 +1,85 @@
 import IRole from "./interface";
-import request from "@/utils/request";
 
 export const getRole = async (params: any) => {
-    return request.get("/api/role/list", params);
+    console.log(params);
+    return {
+        code: 200,
+        data: {
+            list: [
+                {
+                    id: 1,
+                    name: "超级管理员",
+                    permission: "superAdmin",
+                    status: 2,
+                    description: "管理所有权限",
+                    menu: [2, 3, 4],
+                    parentId:0,
+                    children: [{
+                        id: 3,
+                        name: "普通用户",
+                        permission: "general",
+                        status: 1,
+                        description: "普通权限",
+                        menu: [3],  parentId:1,
+                    }]
+                },
+                {
+                    id: 2,
+                    name: "普通用户",
+                    permission: "general",
+                    status: 1,
+                    description: "普通权限",
+                    menu: [3],  parentId:0,
+                    children: [{
+                        id: 4,
+                        name: "普通用户",
+                        permission: "general",
+                        status: 1,
+                        description: "普通权限",
+                        menu: [3],  parentId:2,
+                    }]
+                },
+            ],
+            total: 10
+        },
+    };
 }
 
-export const editRole = async (data: IRole) => {
-    return request.put("/api/role/updateRoleById", data);
+export const editRole = async (role: IRole) => {
+
+    return role;
 }
 
 export const allRole = async () => {
-    return request.get("/api/role/allTree", null);
-}
-
-export const addRole = async (data: IRole) => {
-    return request.post("/api/role/add", data);
-}
-
-export const delRoleById = async (data: Pick<IRole, "id">) => {
-    return request.delete("/api/role/delRoleById", data);
-}
-
-export const menuRoleByRoleId = async (params: any) => {
-    return request.get("/api/menuRole/menuRoleByRoleId", params);
-}
-
-export const addMenuRole = async (data: any) => {
-    return request.post("/api/menuRole/add", data);
-}
+    return {
+        code: 200,
+        data: {
+            list: [
+                {
+                    id: 1,
+                    name: "超级管理员",
+                    permission: "superAdmin",
+                    status: 2,
+                    description: "管理所有权限",
+                    menu: [2, 3, 4], children: [{
+                        id: 3,
+                        name: "普通用户",
+                        permission: "general",
+                        status: 1,
+                        description: "普通权限",
+                        menu: [3]
+                    }]
+                },
+                {
+                    id: 2,
+                    name: "普通用户",
+                    permission: "general",
+                    status: 1,
+                    description: "普通权限",
+                    menu: [3]
+                },
+            ],
+            total: 10
+        },
+    };
+} 

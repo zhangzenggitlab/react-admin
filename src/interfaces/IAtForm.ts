@@ -26,8 +26,6 @@ export interface IAtFormItem {
     treeValue?: Array<any>                                                   // 树结构默认值
     multiple?: boolean;                                                      // 多选
     fieldNames?: any;                                                        // treeSelect
-    min?: number;
-    max?: number;
 }
 
 export interface IAtForm {
@@ -52,7 +50,5 @@ export interface IAtForm {
     treeData?: Array<any>                                                    // 树结构数据
     treeValue?: Array<any>                                                   // 树结构默认值
     footer?: any;                                                             // 默认false，或传递react组件
-    min?: number;
-    max?: number;
 }
 

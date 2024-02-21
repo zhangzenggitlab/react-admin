@@ -9,7 +9,6 @@ import AtForm from "@/components/at-form";
 import { useImmer } from "use-immer";
 import { Form } from "antd";
 import DepartmentStore from "@/mobx/system/department";
-import RoleStore from "@/mobx/system/role";
 
 const EditUser = forwardRef((props: any, ref: any) => {
   const [userForm2] = Form.useForm<any>();
@@ -48,7 +47,7 @@ const EditUser = forwardRef((props: any, ref: any) => {
     {
       type: "text",
       label: "账号",
-      name: "username",
+      name: "account",
       placeholder: "账号",
       colSpan: 24,
       rules: [
@@ -74,15 +73,10 @@ const EditUser = forwardRef((props: any, ref: any) => {
     {
       type: "treeSelect",
       label: "角色",
-      name: "roles",
+      name: "role",
       placeholder: "角色",
       multiple: true,
       colSpan: 24,
-      treeData: RoleStore.allTree,
-      fieldNames: {
-        label: "name",
-        value: "id",
-      },
       rules: [
         {
           required: true,
@@ -107,13 +101,23 @@ const EditUser = forwardRef((props: any, ref: any) => {
       ],
     },
   ]);
+  const [roleTree] = Array<any>([
+    {
+      value: 1,
+      title: "管理员",
+    },
+    {
+      value: 2,
+      title: "预览人员",
+    },
+  ]);
 
   const [treeValue, setTreeValue] = useState<Array<string>>([]);
 
   useEffect(() => {
     const formRef: any = editUserFormRef.current;
+
     formRef.setFieldsValue(props.formData);
-    
     return () => {
       if (formRef) {
         formRef.resetFields();
@@ -136,6 +140,7 @@ const EditUser = forwardRef((props: any, ref: any) => {
       form={userForm2}
       formItems={formItems2}
       layout={layout}
+      treeData={roleTree}
       treeValue={treeValue}
       footer={false}
     ></AtForm>

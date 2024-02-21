@@ -27,6 +27,7 @@ import AtDrawer from "@/components/at-drawer";
 import IUser from "./interface";
 import TreeDepartment from "./treeDepartment";
 import "./index.scss";
+import { ISearch } from "./interface";
 
 function User() {
   const [form] = Form.useForm<any>();
@@ -41,7 +42,7 @@ function User() {
     {
       type: "text",
       label: "账号",
-      name: "username",
+      name: "account",
       placeholder: "账号",
     },
     {
@@ -76,19 +77,19 @@ function User() {
         },
       ],
     },
-    // {
-    //   type: "datePicker",
-    //   label: "创建时间",
-    //   name: "createTime",
-    //   placeholder: "创建时间",
-    //   format: "YYYY-MM-DD",
-    //   showTime: { format: "HH:mm" },
-    //   style: { width: "100%" },
-    //   colSpan: 6,
-    //   onChange: (date: any, dateString: string): void => {
-    //     console.log(date, dateString);
-    //   },
-    // },
+    {
+      type: "datePicker",
+      label: "创建时间",
+      name: "createTime",
+      placeholder: "创建时间",
+      // format: "YYYY-MM-DD",
+      showTime: { format: "HH:mm" },
+      style: { width: "100%" },
+      colSpan: 6,
+      onChange: (date: any, dateString: string): void => {
+        console.log(date, dateString);
+      },
+    },
   ]);
   const [layout] = useImmer<string>("inline");
   const [userForm, setUserForm] = useImmer<any>({
@@ -108,7 +109,7 @@ function User() {
     },
     {
       title: "账号",
-      dataIndex: "username",
+      dataIndex: "account",
       align: "center",
     },
     {
@@ -137,7 +138,7 @@ function User() {
       title: "操作",
       dataIndex: "control",
       align: "center",
-      render: (text: any, record: any) => (
+      render: (text, record, index) => (
         <Space>
           <Button
             type="link"
@@ -153,9 +154,12 @@ function User() {
           <Popconfirm
             title="提示"
             description="确认删除?"
-            onConfirm={async () => {
-              await delUser({ id: record.id });
-              getUserList();
+            onConfirm={() => {
+              delUser(record);
+              setDataSoruce((draf) => {
+                console.log(record, index);
+                draf.splice(index, 1);
+              });
             }}
             onCancel={() => {}}
             okText="是"
@@ -173,7 +177,6 @@ function User() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPagesize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
-  const [departmentId, setDepartmentId] = useState<number>(0);
   const formRef = useRef<any>(null);
   const editUserFormRef = useRef<any>(null);
   const formBtnNode = (
@@ -182,7 +185,9 @@ function User() {
         type="primary"
         icon={<SearchOutlined />}
         onClick={() => {
-          getUserList();
+          const val = formRef.current.getFormValue();
+          console.log(val);
+          setSearch(val);
         }}
       >
         搜索
@@ -196,44 +201,47 @@ function User() {
       </Button>
     </Space>
   );
-
+  const [search, setSearch] = useState<ISearch>({
+    page,
+    pageSize,
+    status: 0,
+  });
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
 
   // 查询用户列表
-  const getUserList = () => {
-    setLoading(true);
-    const val = formRef.current.getFormValue();
-    getUser(Object.assign({ page, pageSize, departmentId }, val)).then(
-      (res: any) => {
-        setDataSoruce(res.data.data);
+  const getUserList = (params: ISearch) => {
+    getUser(params).then((res: any) => {
+      setLoading(true);
+      setTimeout(() => {
+        setDataSoruce(res.data.list);
         setTotal(res.data.total);
-        setLoading(false);
-      }
-    ).finally(()=>{
+      }, 200);
       setLoading(false);
     });
   };
 
   useEffect(() => {
-    getUserList();
+    getUserList(search);
 
     return () => {
       setDataSoruce([]);
     };
-  }, [pageSize, page, departmentId]);
+  }, [search]);
 
   const editUserfn = async (user: IUser) => {
     editUser(user).then(() => {
       setOpenDrawer(false);
-      getUserList();
     });
   };
 
   const addUserfn = async (user: IUser) => {
-    addUser(user).then(() => {
-      getUserList();
+    addUser(user).then((res: any) => {
+      setDataSoruce((draf) => {
+        res.id = draf.length + 1;
+        draf.push(res);
+      });
       setOpenDrawer(false);
     });
   };
@@ -268,7 +276,7 @@ function User() {
                   account: "",
                   mail: "",
                   phone: "",
-                  status: 1,
+                  status: "1",
                   roles: [],
                 });
               }}
@@ -278,7 +286,9 @@ function User() {
             <Tooltip title="刷新">
               <ReloadOutlined
                 onClick={() => {
-                  getUserList();
+                  const val = formRef.current.getFormValue();
+
+                  setSearch(val);
                 }}
               />
             </Tooltip>
@@ -290,7 +300,7 @@ function User() {
         <Col span={4}>
           <TreeDepartment
             onSelect={(selectedKeys: Array<number>) => {
-              setDepartmentId(selectedKeys[0]);
+              console.log(selectedKeys);
             }}
           ></TreeDepartment>
         </Col>
@@ -302,9 +312,11 @@ function User() {
             pageSize={pageSize}
             rowKey="id"
             loading={loading}
-            onChange={(current: number, size: number) => {
-              setPage(current);
-              setPagesize(size);
+            onChange={(page: number, pageSize: number) => {
+              const val = formRef.current.getFormValue();
+              setPage(page);
+              setPagesize(pageSize);
+              setSearch(val);
             }}
           />
         </Col>

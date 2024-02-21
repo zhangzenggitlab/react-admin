@@ -14,8 +14,8 @@ import {
 import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useImmer } from "use-immer";
 import { IAtFormItem } from "@/interfaces/IAtForm";
-import { getMenu, editMenu, addMenu, delMenu } from "./api";
-import MenuStore from "@/mobx/system/menu";
+import { getMenu, editMenu } from "./api";
+import ISearch from "./interface";
 import EditMenu from "./editMenu";
 import AtTable from "@/components/at-table";
 import IMenu from "@/interfaces/IMenu";
@@ -27,7 +27,7 @@ function Menu() {
     {
       type: "text",
       label: "菜单名称",
-      name: "name",
+      name: "label",
       placeholder: "菜单名称(模糊查询)",
     },
     {
@@ -55,7 +55,7 @@ function Menu() {
   const [columns] = useImmer<Array<any>>([
     {
       title: "菜单名称",
-      dataIndex: "name",
+      dataIndex: "label",
       align: "center",
     },
     {
@@ -75,7 +75,7 @@ function Menu() {
     },
     {
       title: "类型",
-      dataIndex: "type",
+      dataIndex: "status",
       align: "center",
       render: (text: any) => {
         if (text == 1) {
@@ -94,9 +94,12 @@ function Menu() {
       dataIndex: "status",
       align: "center",
       render: (text: any) =>
-        text == 1 ? <Tag color="cyan">启用</Tag> : <Tag color="red">禁用</Tag>,
+        text.status == 1 ? (
+          <Tag color="cyan">启用</Tag>
+        ) : (
+          <Tag color="red">禁用</Tag>
+        ),
     },
-
     {
       title: "创建时间",
       dataIndex: "createTime",
@@ -113,29 +116,6 @@ function Menu() {
             onClick={() => {
               console.log(text);
               setOpenDrawer(true);
-              setMenuForm({
-                parentId: record.id,
-                key: "",
-                icon: "",
-                path: "",
-                menu: "",
-                name: "",
-                hideMenu: 1,
-                type: 1,
-                permission: "",
-                status: 1,
-                sort: 1,
-              });
-            }}
-          >
-            新增子菜单
-          </Button>
-
-          <Button
-            type="link"
-            onClick={() => {
-              console.log(text);
-              setOpenDrawer(true);
               setMenuForm(record);
             }}
           >
@@ -144,12 +124,8 @@ function Menu() {
           <Popconfirm
             title="提示"
             description="确认删除?"
-            onConfirm={() => {
-              console.log(record);
-              delMenu({ id: record.id }).then(() => {
-                getMenufn();
-              });
-            }}
+            onConfirm={() => {}}
+            onCancel={() => {}}
             okText="是"
             cancelText="否"
           >
@@ -166,64 +142,52 @@ function Menu() {
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPagesize] = useState<number>(10);
+  const [search, setSearch] = useState<ISearch>({
+    page,
+    pageSize,
+  });
   const [menuForm, setMenuForm] = useImmer<IMenu>({
+    key: "",
     icon: "",
-    key:"",
     path: "",
-    name: "",
-    hideMenu: 1,
+    menu: "",
+    label: "",
+    hideMenu: false,
     type: 1, // 1:目录 2:菜单 3:按钮
     permission: "",
   });
 
   const editMenuFormRef = useRef<any>(null);
   const formRef = useRef<any>(null);
-
-  const getMenufn = async () => {
-    setLoading(true);
-    const val = formRef.current.getFormValue();
-    getMenu(Object.assign(val, { page, pageSize }))
-      .then((res) => {
-        setDataSoruce(res.data.data);
-        setTotal(res.data.total);
-      })
-      .finally(() => {
-        setLoading(false);
-        setOpenDrawer(false);
-      });
-  };
-
-  const onFinish = () => {
-    setPage(1);
-    getMenufn();
-  };
-
-  const addMenufn = async (menu: IMenu) => {
-    await addMenu(menu);
-    MenuStore.getAllMenuTree();
-    getMenufn();
-  };
-
   const edtMenufn = async (menu: IMenu) => {
     await editMenu(menu);
-
-    MenuStore.getAllMenuTree();
-    getMenufn();
+    setOpenDrawer(false);
   };
 
   useEffect(() => {
-    getMenufn();
-  }, [page, pageSize]);
-
-  useEffect(() => {
-    MenuStore.getAllMenuTree();
-
+    const getDatafn = async () => {
+      setLoading(true);
+      const res: any = getMenu();
+      setTimeout(() => {
+        setDataSoruce(res.data.list);
+        setTotal(res.data.total);
+        setLoading(false);
+      }, 200);
+    };
+    getDatafn();
     return () => {
       setDataSoruce([]);
-      MenuStore.menuTree = [];
     };
-  }, []);
+  }, [search]);
 
+  const onFinish = (values: any) => {
+    setSearch({
+      page,
+      pageSize,
+      name: values.name,
+      status: values.status,
+    });
+  };
   return (
     <div className="default-contant">
       <AtForm
@@ -249,12 +213,10 @@ function Menu() {
                   icon: "",
                   path: "",
                   menu: "",
-                  name: "",
-                  hideMenu: 1,
+                  label: "",
+                  hideMenu: false,
                   type: 1,
                   permission: "",
-                  status: 1,
-                  sort: 1,
                 });
               }}
             >
@@ -263,7 +225,8 @@ function Menu() {
             <Tooltip title="刷新">
               <ReloadOutlined
                 onClick={() => {
-                  getMenufn();
+                  const val = formRef.current.getFormValue();
+                  setSearch(val);
                 }}
               />
             </Tooltip>
@@ -277,9 +240,11 @@ function Menu() {
         loading={loading}
         total={total}
         pageSize={pageSize}
-        onChange={(curre1: number, size: number) => {
-          setPage(curre1);
-          setPagesize(size);
+        onChange={(page: number, pageSize: number) => {
+          const val = formRef.current.getFormValue();
+          setPage(page);
+          setPagesize(pageSize);
+          setSearch({ page, pageSize, name: val.name, status: val.status });
         }}
       />
 
@@ -299,13 +264,7 @@ function Menu() {
                 editMenuFormRef.current
                   .validateFields()
                   .then((result: IMenu) => {
-                    if (menuForm.id) {
-                      result.id = menuForm.id;
-                      edtMenufn(result);
-                      return;
-                    }
-                    addMenufn(result);
-                    //
+                    edtMenufn(result);
                   })
                   .catch((err: any) => {
                     console.log(err);

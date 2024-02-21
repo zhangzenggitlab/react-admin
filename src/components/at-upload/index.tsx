@@ -1,29 +1,32 @@
 import React from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import {Upload, Button } from "antd";
+import { message, Upload, Button } from "antd";
 
 function AtUpload(props: IUpload) {
-  const action = "/api/txCos/upload";
-  const headers: any = {
-    token: localStorage.getItem("token"),
-  };
+  const action = "/upload";
   const beforeUpload = (file: any) => {
-    console.log(file);
-    return true;
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
   };
-
   return (
     <>
       <Upload
-        name="file"
+        name="avatar"
         className="avatar-uploader"
         showUploadList={false}
         action={action}
-        headers={headers}
         beforeUpload={beforeUpload}
         onChange={(info: any) => {
           if ("done" === info.file.status) {
-            props.onChange(info.file.response);
+            console.log(info.file);
+            props.onChange(info.file.response.data);
           }
         }}
       >

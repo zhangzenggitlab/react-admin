@@ -17,7 +17,7 @@ const loadStore = () => {
     // 用户信息
     if (userLocal) {
         const user = JSON.parse(userLocal);
-        userInfo.updateLocal(user);
+        userInfo.update(user);
     }
 
     // 全部角色
@@ -27,14 +27,12 @@ const loadStore = () => {
     } else {
         RoleStore.getAllTree();
     }
+
 }
 
 
 // (自定义初始化数据)
 const init = () => {
-    // if (localStorage.getItem("token")) {
-
-    // }
     loadStore();
 };
 
@@ -45,10 +43,9 @@ const destory = () => {
     localStorage.removeItem("roleTree");
 }
 
-
 const App = {
     init,
-    destory,
+    destory
 }
 
 export default App;

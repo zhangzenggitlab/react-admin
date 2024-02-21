@@ -4,7 +4,6 @@ import { loadAntIconByName } from '@/utils/antLoad';
 import { getRouter } from "@/api/index";
 import IMenu from '@/interfaces/IMenu';
 import { addRouter } from "@/router/router";
-import { getMenuTree } from "@/api/menu";
 
 // 菜单管理
 class MenuStore {
@@ -12,8 +11,7 @@ class MenuStore {
         configure({ enforceActions: "always" });
     }
 
-    @observable menu: Array<IMenu> = [];                // 左侧菜单
-    @observable menuTree: Array<IMenu> = [];            // 全部菜单tree
+    @observable menu: Array<IMenu> = [];
 
     /*
      * 初始化菜单
@@ -27,19 +25,8 @@ class MenuStore {
         })
     }
 
-    @action async getAllMenuTree(): Promise<any> {
-        runInAction(() => {
-            getMenuTree().then((res: any) => {
-                if (res.code == 200) {
-                    this.menuTree = res.data;
-                }
-            });
-        })
-    }
-
     @action clear() {
         this.menu = [];
-        this.menuTree = [];
     }
 
     @action async getRouters(): Promise<any> {
@@ -56,7 +43,7 @@ class MenuStore {
      * 递归把返回的菜单注册进路由
      * @param menu 
      */
-    recursionMenu(menus: Array<IMenu>, leftAsideMenu: Array<any>): Array<IMenu> {
+    recursionMenu(menus: Array<IMenu>, leftAsideMenu: Array<IMenu>): Array<IMenu> {
         if (!menus) {
             return []
         }
@@ -67,7 +54,7 @@ class MenuStore {
 
             // 菜单类型则导入组件
             if (iterator.type == 2) {
-                // iterator.path = iterator.key;
+                iterator.path = iterator.key;
                 const path = `pages${iterator.key}`;
                 iterator.Component = lazy(() => import(`/src/${path}`));
                 addRouter(iterator);

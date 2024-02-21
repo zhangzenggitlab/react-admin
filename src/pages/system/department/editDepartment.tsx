@@ -8,7 +8,7 @@ import React, {
 import AtForm from "@/components/at-form";
 import { useImmer } from "use-immer";
 import { Form } from "antd";
-import DepartmentStore from "@/mobx/system/department";
+import { allDepartment } from "./api";
 
 const EditDepartment = forwardRef((props: any, ref: any) => {
   const [userForm2] = Form.useForm<any>();
@@ -44,23 +44,7 @@ const EditDepartment = forwardRef((props: any, ref: any) => {
         },
       ],
     },
-    {
-      type: "select",
-      label: "状态",
-      name: "status",
-      style: { width: 200 },
-      placeholder: "状态",
-      options: [
-        {
-          label: "启用",
-          value: 1,
-        },
-        {
-          label: "禁用",
-          value: 2,
-        },
-      ],
-    },
+
     {
       type: "text",
       label: "负责人",
@@ -89,7 +73,6 @@ const EditDepartment = forwardRef((props: any, ref: any) => {
   useEffect(() => {
     const formRef: any = editUserFormRef.current;
     formRef.setFieldsValue(props.formData);
-
     return () => {
       if (formRef) {
         formRef.resetFields();
@@ -101,15 +84,15 @@ const EditDepartment = forwardRef((props: any, ref: any) => {
    * 获取tree
    */
   useEffect(() => {
-    const list: Array<any> = JSON.parse(
-      JSON.stringify(DepartmentStore.listDepartment)
-    );
-    list.unshift({
-      id: 0,
-      name: "一级菜单",
+    allDepartment().then((res: any) => {
+      res.data.list.unshift({
+        id: 0,
+        name: "一级菜单",
+      });
+
+      setMenuTree(res.data.list);
     });
 
-    setMenuTree(list);
     return () => {
       setMenuTree([]);
     };

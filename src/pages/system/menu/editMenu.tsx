@@ -8,7 +8,6 @@ import React, {
 import AtForm from "@/components/at-form";
 import { useImmer } from "use-immer";
 import { Form } from "antd";
-import MenuStore from "@/mobx/system/menu";
 
 const EditMenu = forwardRef((props: any, ref: any) => {
   const [userForm2] = Form.useForm<any>();
@@ -21,10 +20,6 @@ const EditMenu = forwardRef((props: any, ref: any) => {
       name: "parentId",
       placeholder: "父级菜单",
       multiple: false,
-      fieldNames: {
-        value: "id",
-        label: "name",
-      },
       colSpan: 24,
       rules: [
         {
@@ -35,7 +30,7 @@ const EditMenu = forwardRef((props: any, ref: any) => {
     {
       type: "text",
       label: "菜单名称",
-      name: "name",
+      name: "label",
       placeholder: "菜单名称",
       colSpan: 24,
       rules: [
@@ -75,52 +70,25 @@ const EditMenu = forwardRef((props: any, ref: any) => {
     },
     {
       type: "text",
+      label: "组件路径",
+      name: "key",
+      placeholder: "组件路径",
+      colSpan: 24,
+    },
+    {
+      type: "text",
       label: "权限标识",
       name: "permission",
-      align: "center",
       placeholder: "权限标识",
       colSpan: 24,
     },
     {
       type: "text",
-      label: "组件路径",
-      name: "path",
-      placeholder: "组件路径",
+      label: "菜单标识",
+      name: "menu",
+      placeholder: "菜单标识",
       colSpan: 24,
     },
-    {
-      type: "inputNumber",
-      label: "排序",
-      name: "sort",
-      placeholder: "排序",
-      colSpan: 24,
-      min: 1,
-    },
-
-    {
-      type: "select",
-      label: "显示在左侧",
-      name: "hideMenu",
-      style: { width: 200 },
-      placeholder: "是否显示在左侧",
-      options: [
-        {
-          label: "显示",
-          value: 1,
-        },
-        {
-          label: "隐藏",
-          value: 2,
-        },
-      ],
-      rules: [
-        {
-          required: true,
-          message: "不能为空",
-        },
-      ],
-    },
-
     {
       type: "select",
       label: "状态",
@@ -137,43 +105,38 @@ const EditMenu = forwardRef((props: any, ref: any) => {
           value: 2,
         },
       ],
-      rules: [
+    },
+  ]);
+  const [menuTree] = Array<any>([
+    {
+      value: "0",
+      label: "一级栏目",
+    },
+    {
+      value: "1",
+      label: "系统管理",
+      children: [
         {
-          required: true,
-          message: "不能为空",
+          value: "2",
+          label: "用户列表",
+        },
+        {
+          value: "3",
+          label: "菜单列表",
         },
       ],
     },
   ]);
-  const [menuTree, setMenuTree] = useImmer<Array<any>>([
-    {
-      id: 0,
-      name: "一级栏目",
-    },
-  ]);
-
   const [treeValue, setTreeValue] = useState<Array<string>>([]);
 
   useEffect(() => {
     const formRef: any = editUserFormRef.current;
     formRef.setFieldsValue(props.formData);
-    console.log(MenuStore.menuTree);
-
-    setMenuTree((drft) => {
-      drft.push(...MenuStore.menuTree);
-    });
-
+    
     return () => {
       if (formRef) {
         formRef.resetFields();
       }
-
-      setMenuTree([
-        {
-          id: 0,
-          name: "一级栏目",
-        },
-      ]);
     };
   }, [props.formData]);
 
