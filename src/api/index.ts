@@ -29,6 +29,12 @@ export const getRouter = async (): Promise<any> => {
                 label: '工作台',
                 menu: '/workplace',
                 type: 2,
+            }, {
+                key: '/community',
+                icon: "CommentOutlined",
+                label: '社区',
+                menu: "/community",
+                type: 2,
             },
             {
                 key: '/system',
