@@ -51,25 +51,7 @@ function Role() {
            权限
           </Button>
 
-<<<<<<< HEAD
        
-=======
-          <Button
-            type="link"
-            onClick={() => {
-              setOpenDrawer(true);
-              setEditForm({
-                name: "",
-                permission: "",
-                status: 2,
-                parentId: record.id,
-              });
-            }}
-          >
-            添加子角色
-          </Button>
-
->>>>>>> 771c49629394f6ff0e74c9597324313bc76335e7
           <Button
             type="link"
             onClick={() => {
