@@ -1,4 +1,5 @@
 export interface iProListItem {
+    id?: number
     title?: string
     tags: Array<string>
     createTime?: string

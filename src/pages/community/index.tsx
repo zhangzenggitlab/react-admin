@@ -1,6 +1,6 @@
 import "./index.scss";
 import React from "react";
-import { Col, Row, Space, Card, Tag, Flex } from "antd";
+import { Col, Row, Space, Card, Tag, Flex, Divider } from "antd";
 import AtProList from "./components/at-proList";
 import type { Dayjs } from "dayjs";
 import { Calendar, Input } from "antd";
@@ -8,7 +8,10 @@ import type { CalendarProps } from "antd";
 import { iProListItem } from "./components/at-proList/interface";
 import AtPagination from "@/components/at-pagination";
 import Comment from "./components/comment";
+import Article from "./components/article";
 import AtMask from "@/components/at-mask";
+import CommentItem from "./components/comment/item";
+
 function Community() {
   const { Search } = Input;
   const [showComment, setShowComment] = React.useState(false);
@@ -25,24 +28,37 @@ function Community() {
       like: 13,
       collect: 10,
     },
-    { id: 2, title: "Ant Design", tags: [] },
-    { id: 3, title: "蚂蚁金服体验科技", tags: [] },
-    { id: 4, title: "TechUI", tags: [] },
+    { id: 2, title: "Ant Design", tags: [], link: 12, like: 13, collect: 10 },
+    {
+      id: 3,
+      title: "蚂蚁金服体验科技",
+      tags: [],
+      link: 12,
+      like: 13,
+      collect: 10,
+    },
+    { id: 4, title: "TechUI", tags: [], link: 12, like: 13, collect: 10 },
   ];
 
   const onSearch = (text: string) => {
     console.log(text);
   };
+
   return (
     <div className="main-page">
       {showComment ? (
         <AtMask
-          className="at-comment"
           onClose={() => {
-          setShowComment(false)
+            setShowComment(false);
           }}
         >
-          <Comment></Comment>
+          <div className="mask-content">
+            <Article></Article>
+            <Divider />
+            <Comment></Comment>
+            <Divider />
+            <CommentItem></CommentItem>
+          </div>
         </AtMask>
       ) : null}
 

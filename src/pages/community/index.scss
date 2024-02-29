@@ -35,4 +35,34 @@
         z-index: 2;
 
     }
+
+}
+
+.mask-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: $defaultBackroundColor;
+    width: 40%;
+    padding: 20px;
+    max-height: 80%;
+    border-radius: 10px;
+    min-width: 400px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    animation: animate 0.15s;
+    overflow-y: auto;
+}
+
+@keyframes animate {
+    from {
+        opacity: 0;
+        top: 45%;
+    }
+
+    to {
+        opacity: 1;
+        top: 50%;
+
+    }
 }
