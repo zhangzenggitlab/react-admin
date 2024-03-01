@@ -1,13 +1,17 @@
-import React from "react";
 import "./index.scss";
-import { Flex, Input, Button } from "antd";
+import React from "react";
+import { Flex, Input, Button, message } from "antd";
 const { TextArea } = Input;
+interface IProps {
+  onSend: (value: string) => void; // 发送按钮回调
+}
 
-function Comment() {
+function Comment(props: IProps) {
+  const [value, setValue] = React.useState("");
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log("Change:", e.target.value);
+    setValue(e.target.value);
   };
 
   return (
@@ -20,9 +24,24 @@ function Comment() {
         style={{ height: 120, resize: "none" }}
       />
 
-      <Button type="primary" className="public-btn">
-        发布
-      </Button>
+      <Flex justify={"flex-end"}>
+        <Button
+          type="primary"
+          className="public-btn"
+          onClick={() => {
+            if (!value) {
+              message.error("请填写评论内容");
+              return;
+            }
+
+            if (props.onSend) {
+              props.onSend(value);
+            }
+          }}
+        >
+          发布
+        </Button>
+      </Flex>
     </Flex>
   );
 }

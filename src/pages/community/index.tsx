@@ -10,10 +10,11 @@ import AtPagination from "@/components/at-pagination";
 import Comment from "./components/comment";
 import Article from "./components/article";
 import AtMask from "@/components/at-mask";
-import CommentItem from "./components/comment/item";
-
+import CommentList from "./components/comment/list";
+import { treeType } from "./components/comment/list/interface";
 function Community() {
   const { Search } = Input;
+  const [showArticle, setShowArticle] = React.useState(false);
   const [showComment, setShowComment] = React.useState(false);
   const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
     console.log(value.format("YYYY-MM-DD"), mode);
@@ -46,6 +47,31 @@ function Community() {
 
   return (
     <div className="main-page">
+      {showArticle ? (
+        <AtMask
+          onClose={() => {
+            setShowArticle(false);
+          }}
+        >
+          <div className="mask-content">
+            <Article></Article>
+            <Divider />
+            <Comment
+              onSend={(text: string) => {
+                console.log(text);
+              }}
+            ></Comment>
+            <Divider />
+            <CommentList
+              onReply={(data: treeType) => {
+                console.log(data);
+                setShowComment(true);
+              }}
+            ></CommentList>
+          </div>
+        </AtMask>
+      ) : null}
+
       {showComment ? (
         <AtMask
           onClose={() => {
@@ -53,11 +79,7 @@ function Community() {
           }}
         >
           <div className="mask-content">
-            <Article></Article>
-            <Divider />
             <Comment></Comment>
-            <Divider />
-            <CommentItem></CommentItem>
           </div>
         </AtMask>
       ) : null}
@@ -72,7 +94,7 @@ function Community() {
             dataSource={dataSource}
             commentfn={(data: any) => {
               console.log(data);
-              setShowComment(true);
+              setShowArticle(true);
             }}
           ></AtProList>
 
