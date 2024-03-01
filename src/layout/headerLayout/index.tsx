@@ -3,7 +3,6 @@ import { Layout, Button, Badge, Dropdown, MenuProps, Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import {
-  UserOutlined,
   BellOutlined,
   SettingOutlined,
   LogoutOutlined,

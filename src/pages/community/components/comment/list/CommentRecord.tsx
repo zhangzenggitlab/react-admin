@@ -1,6 +1,6 @@
 import "./index.scss";
 import React from "react";
-import { Avatar, List } from "antd";
+import { Avatar, List, Popconfirm } from "antd";
 import { treeType } from "./interface";
 import { CaretRightOutlined } from "@ant-design/icons";
 interface IProps {
@@ -17,6 +17,7 @@ function CommentRecord(props: IProps) {
         </div>
       );
     }
+    
     return <div>{data.name}</div>;
   };
 
@@ -37,7 +38,20 @@ function CommentRecord(props: IProps) {
     }
 
     if (item.mySelf) {
-      actions.push(<a key="list-loadmore-edit">删除</a>);
+      actions.push(
+        <Popconfirm
+          title="删除"
+          description="确认删除?"
+          onConfirm={() => {
+            console.log(item);
+          }}
+          onCancel={() => {}}
+          okText="是"
+          cancelText="否"
+        >
+          <a key="list-loadmore-edit">删除</a>
+        </Popconfirm>
+      );
     }
 
     return actions;

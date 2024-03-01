@@ -1,5 +1,5 @@
 import React from "react";
-import {Typography } from "antd";
+import { Typography } from "antd";
 const { Title, Paragraph, Text, Link } = Typography;
 function Artlcle() {
   return (

@@ -1,5 +1,5 @@
 import "./index.scss";
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Row, Space, Card, Tag, Flex, Divider } from "antd";
 import AtProList from "./components/at-proList";
 import type { Dayjs } from "dayjs";
@@ -12,10 +12,14 @@ import Article from "./components/article";
 import AtMask from "@/components/at-mask";
 import CommentList from "./components/comment/list";
 import { treeType } from "./components/comment/list/interface";
+import { getCommentList } from "./api/api";
+import { useImmer } from "use-immer";
+
 function Community() {
   const { Search } = Input;
   const [showArticle, setShowArticle] = React.useState(false);
   const [showComment, setShowComment] = React.useState(false);
+
   const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
@@ -45,6 +49,24 @@ function Community() {
     console.log(text);
   };
 
+  const [treeData, setTreeData] = useImmer<treeType[]>([]);
+
+  const getCommentListfn = () => {
+    getCommentList({ page: 1, pageSize: 10, commentId: 1, articleId: 1 }).then(
+      (res) => {
+        setTreeData(res.data);
+      }
+    );
+  };
+
+  useEffect(() => {
+    getCommentListfn();
+
+    return () => {
+      setTreeData([]);
+    };
+  }, []);
+
   return (
     <div className="main-page">
       {showArticle ? (
@@ -54,20 +76,25 @@ function Community() {
           }}
         >
           <div className="mask-content">
-            <Article></Article>
+            <Article />
+
             <Divider />
+
             <Comment
               onSend={(text: string) => {
                 console.log(text);
               }}
-            ></Comment>
+            />
+
             <Divider />
+
             <CommentList
+              data={treeData}
               onReply={(data: treeType) => {
                 console.log(data);
                 setShowComment(true);
               }}
-            ></CommentList>
+            />
           </div>
         </AtMask>
       ) : null}

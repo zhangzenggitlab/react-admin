@@ -1,20 +1,20 @@
 .baseLayout {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
 
-    .at-layout {
-        overflow: auto;
-
+    .at-layout-main {
+        // margin-left: 230px;
+        // width: calc(100% - 230px);
+        // display: flex;
     }
 
     .side {
-        position: relative;
+        position: fixed;
         z-index: 2;
-        // width: 256px !important;
-        // min-width: auto !important;
-        // max-width: auto !important;
-        // flex: 0 0 256px !important;
+        left: 0;
+        bottom: 0;
+        top: 48px;
 
         .side-arrow {
             position: absolute;
@@ -101,7 +101,8 @@
             font-weight: 600;
             font-size: 18px;
             margin-left: 10px;
-            color: rgba($color: $blackTextColor, $alpha: 0.8);
+            color: rgba($color: $blackTextColor, $alpha: 0.7);
+            font-style: italic;
 
         }
 

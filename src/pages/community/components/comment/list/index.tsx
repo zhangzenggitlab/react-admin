@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Tree } from "antd";
 import CommentRecord from "./CommentRecord";
-import { getCommentList } from "../../../api/api";
 import { useImmer } from "use-immer";
 import { treeType } from "./interface";
 
-function CommentItem(props:any) {
+function CommentList(props: any) {
   const [treeData, setTreeData] = useImmer<treeType[]>([]);
 
   /**
@@ -18,6 +17,7 @@ function CommentItem(props:any) {
       if (data[i].children) {
         dataTitleToCommentListNode(data[i].children);
       }
+      data[i].index = i;
       data[i].title = (
         <CommentRecord
           data={[data[i]]}
@@ -31,22 +31,14 @@ function CommentItem(props:any) {
     return data;
   };
 
-  const getCommentListfn = () => {
-    getCommentList({ page: 1, pageSize: 10, commentId: 1, articleId: 1 }).then(
-      (res) => {
-        const data = dataTitleToCommentListNode(res.data);
-        setTreeData(data);
-      }
-    );
-  };
-
   useEffect(() => {
-    getCommentListfn();
+    if (Array.isArray(props.data))
+      setTreeData(dataTitleToCommentListNode(props.data));
 
     return () => {
       setTreeData([]);
     };
-  }, []);
+  }, [props.data]);
 
   const fieldNames = {
     key: "id",
@@ -54,10 +46,9 @@ function CommentItem(props:any) {
 
   return (
     <>
-     
       <Tree treeData={treeData} fieldNames={fieldNames} />
     </>
   );
 }
 
-export default CommentItem;
+export default CommentList;
