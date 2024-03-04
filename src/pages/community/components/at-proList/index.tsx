@@ -77,7 +77,7 @@ function AtProList(props: any) {
               icon={<MessageOutlined />}
               text={record.link}
               key="list-vertical-message"
-              fn={()=>{
+              fn={() => {
                 props.commentfn(record);
               }}
             />,
