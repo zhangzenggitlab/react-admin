@@ -87,21 +87,19 @@ function SafeSetting() {
                   }
 
                   setLoading(true);
-                  updatePassword(result.oldPassword, result.newPassword).then(
-                    (res: any) => {
-                      if (res.code == 200) {
-                        message.success("更新成功");
-                        return;
-                      }
+                  updatePassword(result.newPassword).then((res: any) => {
+                    if (res.code == 200) {
+                      message.success("更新成功");
+                    } else {
                       message.error("更新失败");
                     }
-                  );
+
+                    setLoading(false);
+                  });
+                  console.log("更新");
                 })
                 .catch((err: any) => {
                   console.log(err);
-                })
-                .finally(() => {
-                  setLoading(false);
                 });
             }}
           >

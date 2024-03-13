@@ -7,12 +7,21 @@ import React, { useEffect } from "react";
 import MenuLayout from "../menuLayout";
 import HeaderLayout from "../headerLayout";
 import DepartmentStore from "@/mobx/system/department";
-
+import { useImmer } from "use-immer";
+interface ILayoutStyle {
+  width: number;
+  marginLeft: number;
+}
 function BaseLayout(props: any) {
   const [collapsed, setCollapsed] = useState(false);
   const [collapsed2, setCollapsed2] = useState(false);
   const { Sider } = Layout;
   const navigate = useNavigate();
+
+  const [layoutStyle, setLayoutStyle] = useImmer<ILayoutStyle>({
+    width: 230,
+    marginLeft: 230,
+  });
 
   useEffect(() => {
     // 检查是否登录
@@ -33,6 +42,20 @@ function BaseLayout(props: any) {
     };
   }, []);
 
+  useEffect(() => {
+    if (collapsed) {
+      setLayoutStyle({
+        width: 80,
+        marginLeft: 80,
+      });
+    } else {
+      setLayoutStyle({
+        width: 230,
+        marginLeft: 230,
+      });
+    }
+  }, [collapsed,setLayoutStyle]);
+
   return (
     <Layout className="baseLayout">
       <HeaderLayout
@@ -42,7 +65,7 @@ function BaseLayout(props: any) {
         setCollapsed2={setCollapsed2}
       ></HeaderLayout>
 
-      <Layout className="">
+      <Layout className="at-layout-main">
         <Sider
           trigger={null}
           collapsible
@@ -65,7 +88,9 @@ function BaseLayout(props: any) {
           </div>
           <MenuLayout></MenuLayout>
         </Sider>
-        <Layout className="at-layout">{props.children}</Layout>
+        <Layout className="at-layout" style={layoutStyle}>
+          {props.children}
+        </Layout>
       </Layout>
     </Layout>
   );

@@ -1,5 +1,8 @@
-import request from "@/utils/request";
-
-export const updateUserInfo = async (data: any) => {
-    return request.post("/api/user/editUser", data);
+import IResponse from "@/interfaces/common";
+export const updateUserInfo = async (password: any): Promise<IResponse> => {
+    return {
+        code: 200,
+        data: password,
+        msg: ""
+    };
 }

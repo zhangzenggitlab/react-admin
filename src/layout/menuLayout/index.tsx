@@ -25,14 +25,10 @@ function MenuLayout() {
 
     if (!menuKey) {
       const token = localStorage.getItem("token");
-
-      if (token) {
-        navigate("/workplace")
-      }else{
-        navigate("/login");
-      }
-      //
-
+      
+      if(token) navigate("/workplace");
+      navigate("/login");
+    
     }
     if (menuKey) {
       setOpenKeys([menuKey.menu]);
@@ -40,12 +36,6 @@ function MenuLayout() {
   };
 
   useEffect(() => {
-    // 没有登录只能进入登录页面
-
-    if (!localStorage.getItem("token")) {
-      navigate("login");
-      return;
-    }
     if (location.pathname === "/") {
       navigate("workplace");
     }

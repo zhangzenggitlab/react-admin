@@ -10,7 +10,7 @@ import {
 import logo from "@/assets/images/logo.svg";
 import UserStore from "@/mobx/userInfo";
 import App from "@/initApp";
-import { cos } from "@/utils/global";
+
 function HeaderLayout(props: any) {
   const { Header } = Layout;
   const navigate = useNavigate();
@@ -78,18 +78,13 @@ function HeaderLayout(props: any) {
       </div>
 
       <div className="header-right">
-        <Badge count={0}>
+        <Badge count={10}>
           <BellOutlined style={{ fontSize: 20 }} className="bellOutlined" />
         </Badge>
 
         <Dropdown menu={{ items }}>
           <Button type="text" className="avatar">
-            <Avatar
-              src={
-                UserStore.userInfo ? cos + "/" + UserStore.userInfo.avatar : ""
-              }
-            />{" "}
-            React admin
+            <Avatar src={UserStore.userInfo.avatar} /> React admin
           </Button>
         </Dropdown>
       </div>

@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Row, Col, Form, Button, Avatar, Space, message } from "antd";
+import { Row, Col, Form, Button, Avatar, Space } from "antd";
 import { useImmer } from "use-immer";
 import { LoadingOutlined } from "@ant-design/icons";
 import { updateUserInfo } from "./api";
-import { cos } from "@/utils/global";
-import RoleStore from "@/mobx/system/role";
+import IResponse from "@/interfaces/common";
 import AtForm from "@/components/at-form";
 import userInfoStore from "@/mobx/userInfo";
+import "./index.scss";
 import IUser from "@/pages/system/user/interface";
 import AtUpload from "@/components/at-upload";
-import "./index.scss";
 
 function BaseSetting() {
+  const imageUrl =
+    "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
   const [form] = Form.useForm<any>();
   const editUserFormRef = useRef<any>();
   const [layout] = useImmer<string>("vertical");
@@ -39,7 +40,7 @@ function BaseSetting() {
     {
       type: "text",
       label: "账号",
-      name: "username",
+      name: "account",
       placeholder: "账号",
       colSpan: 24,
       disabled: true,
@@ -64,21 +65,14 @@ function BaseSetting() {
       colSpan: 24,
     },
     {
-      type: "treeSelect",
-      multiple: true,
+      type: "text",
       label: "角色",
       name: "roles",
       colSpan: 24,
       disabled: true,
-      treeData: RoleStore.allTree,
-      fieldNames: {
-        label: "name",
-        value: "id",
-      },
     },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [avatar, setAvatar] = useState<string>("");
 
   useEffect(() => {
     const formRef: any = editUserFormRef.current;
@@ -108,13 +102,11 @@ function BaseSetting() {
                     .validateFields()
                     .then((result: IUser) => {
                       setLoading(true);
-                      result.avatar = avatar;
-                      updateUserInfo(result).then((res: any) => {
+                      updateUserInfo(result).then((res: IResponse) => {
                         if (res.code == 200) {
                           setLoading(false);
                           result.avatar = userInfoStore.userInfo.avatar;
                           userInfoStore.update(result);
-                          message.success(res.msg);
                         }
                       });
                     })
@@ -134,20 +126,11 @@ function BaseSetting() {
             <div>
               <Avatar
                 size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                src={cos + "/" + userInfoStore.userInfo.avatar}
+                src={imageUrl}
               />
             </div>
             <div>
-              <AtUpload
-                onChange={(res: any) => {
-                  if (res.code == 200) {
-                    setAvatar(res.data);
-                    userInfoStore.userInfo.avatar = res.data;
-                    message.success("上传成功");
-                  }
-                }}
-                beforeUpload={() => {}}
-              ></AtUpload>
+              <AtUpload onChange={() => {}} beforeUpload={() => {}}></AtUpload>
             </div>
           </Space>
         </Col>

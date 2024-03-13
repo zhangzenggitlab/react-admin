@@ -17,7 +17,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import { IColumn } from "@/interfaces/IAtTable";
-import { getDepartment, editDepartment, addDepartment ,delDepartmentById} from "./api";
+import { getDepartment, editDepartment, addDepartment } from "./api";
 import ISearch from "./interface";
 import IDepartment from "@/interfaces/IDepartment";
 import EditDepartment from "./editDepartment";
@@ -90,7 +90,7 @@ function Department() {
       title: "操作",
       dataIndex: "control",
       align: "center",
-      render: (text, record) => (
+      render: (text, record, index) => (
         <Space>
           <Button
             type="link"
@@ -107,9 +107,9 @@ function Department() {
             title="提示"
             description="确认删除?"
             onConfirm={() => {
-              delDepartmentById({id:record.id}).then(()=>{
-                getDepartmentfn();
-              })
+              setDataSoruce((draf) => {
+                draf.splice(index, 1);
+              });
             }}
             onCancel={() => {}}
             okText="是"
@@ -124,12 +124,15 @@ function Department() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [dataSource, setDataSoruce] = useImmer<Array<IDepartment>>([]);
   const [total, setTotal] = useState<number>(0);
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+  };
   const [justify] = useState<string>("space-between");
   const editFormRef = useRef<any>(null);
   const [editForm, setEditForm] = useState<any>({
     id: 0,
     name: "",
-    status: 1,
+    state: 1,
     parentId: 0,
   });
   const formBtnNode = (
@@ -138,7 +141,7 @@ function Department() {
         type="primary"
         icon={<SearchOutlined />}
         onClick={() => {
-          const val = formRef.current.getFormValue();
+          const val = formRef.current.getFormValue(); 
           setPage(1);
           setSearch({
             page,
@@ -160,28 +163,19 @@ function Department() {
     </Space>
   );
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
-
-  const getDepartmentfn = async () => {
-    getDepartment(search)
-      .then((res: any) => {
-        setDataSoruce(res.data.data);
-        setTotal(res.data.total);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
     setLoading(true);
-    getDepartmentfn();
+    getDepartment(search).then((res: any) => {
+      setTimeout(() => {
+        setDataSoruce(res.data.list);
+        setTotal(res.data.total)
+        setLoading(false);
+      }, 200);
+    });
     return () => {
       setDataSoruce([]);
     };
-  }, [page, pageSize, search]);
+  }, [search]);
 
   return (
     <div className="default-contant">
@@ -263,11 +257,8 @@ function Department() {
                 editFormRef.current.validateFields().then((res: any) => {
                   if (editForm.id) {
                     res.id = editForm.id;
-                    editDepartment(res).then(() => {
-                      getDepartmentfn();
-                      setOpenDrawer(false);
-                    });
-
+                    editDepartment(res);
+                    setOpenDrawer(false);
                     return;
                   }
                   addDepartment(res).then((res) => {

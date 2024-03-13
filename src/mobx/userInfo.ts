@@ -8,6 +8,7 @@ class UserStore {
      }
 
      @observable userInfo: Partial<IUser> = {};
+
      @action.bound init = async () => {
           runInAction(() => {
                getUserInfo().then(res => {
@@ -19,15 +20,10 @@ class UserStore {
 
      @action.bound update = async (userInfo: Partial<IUser>): Promise<any> => {
           runInAction(() => {
-               updateUserInfo(userInfo).then(() => {
-                    this.init()
+               updateUserInfo(userInfo).then((res: any) => {
+                    console.log(res);
+                    this.userInfo = userInfo;
                })
-          });
-     }
-
-     @action.bound updateLocal = async (userInfo: Partial<IUser>): Promise<any> => {
-          runInAction(() => {
-               this.userInfo = userInfo;
           });
      }
 

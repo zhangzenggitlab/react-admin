@@ -9,42 +9,40 @@ import { login } from "@/api/index";
 import { useNavigate } from "react-router-dom";
 import userInfoStore from "@/mobx/userInfo";
 import menuStore from "@/mobx/system/menu";
-import RoleStore from "@/mobx/system/role";
+
 function Account() {
   const [loadings, setLoadings] = useState<boolean>(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const onFinish = () => {
     setLoadings(true);
-    const username = form.getFieldValue("account");
+    const account = form.getFieldValue("account");
     const password = form.getFieldValue("password");
 
-    login({
-      username,
-      password,
-    })
+    login(account, password)
       .then((res) => {
         if (res.code == 200) {
           message.success("登录成功");
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data);
           // 获取用户信息
           userInfoStore.init();
-          RoleStore.getAllTree();
           menuStore.getRouters().then(() => {
             navigate("/workplace");
           });
-
-          return;
+        } else {
+          message.error(res.msg);
         }
 
-        message.error(res.msg);
-      })
-      .finally(() => {
         setLoadings(false);
+      })
+      .catch((err: any) => {
+        console.log(err);
+        message.error("登录失败", err);
       });
   };
 
   const onFinishFailed = () => {
+    console.log(form);
     message.error("Submit failed!");
   };
 
