@@ -1,0 +1,11 @@
+each(range(40px), {
+  .gap-@{index} {
+    gap: (@value);
+  }
+  .gap-x-@{index} {
+    gap: 0 (@value);
+  }
+  .gap-y-@{index} {
+    gap: (@value) 0;
+  }
+});

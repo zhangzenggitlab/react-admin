@@ -1,0 +1,81 @@
+each(range(40px), {
+  .fs-@{index} {
+    font-size: (@value);
+  }
+
+
+  .ti-@{index} {
+    text-indent: (@value);
+  }
+
+  .lh-@{index} {
+    line-height: (@value);
+  }
+
+});
+
+each(range(9), {
+  .fw-@{index} {
+    font-weight: (@index * 100);
+  }
+});
+
+.fw-b {
+  font-weight: bold;
+}
+
+.ta-c {
+  text-align: center;
+}
+
+.ta-e {
+  text-align: end;
+}
+
+.ta-j {
+  text-align: justify;
+}
+
+.ta-l {
+  text-align: left;
+}
+
+.ta-r {
+  text-align: right;
+}
+
+.td-dashed {
+  text-decoration: dashed;
+}
+
+.td-dotted {
+  text-decoration: dotted;
+}
+
+.td-dotted {
+  text-decoration: double;
+}
+
+each(range(10px), {
+  .ls-@{index} {
+    letter-spacing: (@value);
+  }
+});
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.text {
+  &.upper {
+    text-transform: uppercase;
+  }
+  &.lower {
+    text-transform: lowercase;
+  }
+  &.cap {
+    text-transform: capitalize;
+  }
+}

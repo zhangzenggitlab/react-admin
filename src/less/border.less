@@ -1,0 +1,53 @@
+@borderStyle: dotted, dashed, solid, inset, outset, double, groove, ridge, none,
+  hidden;
+
+.border {
+  each(@borderStyle, {
+    &.b-@{value} {
+      border-style: (@value);
+    }
+
+    &.bts-@{value} {
+      border-top-style: dotted;
+    }
+
+    &.bbs-@{value} {
+      border-bottom-style: dashed;
+    }
+
+    &.bls-@{value} {
+      border-left-style: solid;
+    }
+
+    &.brs-@{value} {
+      border-right-style: solid;
+    }
+
+  });
+}
+
+each(range(40px), {
+  .bw-@{index} {
+    border: (@value);
+  }
+
+  .br-@{index} {
+    border-radius: (@value);
+  }
+
+  &.btw-@{index} {
+    border-top:@value;
+  }
+
+  &.bbw-@{index} {
+    border-bottom: @value;
+  }
+
+  &.blw-@{index} {
+    border-left: @value;
+  }
+
+  &.brw-@{index} {
+    border-right: @value;
+  }
+});

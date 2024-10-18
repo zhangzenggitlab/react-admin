@@ -1,0 +1,14 @@
+.slide-up-enter-active {
+  transform: translateY(0px);
+  transition: all 0.1s ease-out;
+}
+
+.slide-up-leave-active {  transform: translateY(0px);
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
