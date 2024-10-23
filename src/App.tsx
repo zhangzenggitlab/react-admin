@@ -1,9 +1,8 @@
 import { BaseRouter } from '@/lib'
-import { router } from '@/router'
 
-const App = ()=>{
+const App = () => {
 
-  return <BaseRouter router={router}></BaseRouter>
+  return <BaseRouter></BaseRouter>
 }
 
 export default App

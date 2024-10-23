@@ -1,12 +1,13 @@
-import { RouterProvider, RouterProviderProps } from 'react-router-dom'
+import { RouterProviderProps,BrowserRouter } from 'react-router-dom'
 
-interface BaseRouterProps extends RouterProviderProps {
-  beforeEnter?: <T>() => Promise<Awaited<T>>;
+import {GetRoutes} from '@/router/router.tsx'
+
+export type BaseRouterProps = RouterProviderProps
+
+const BaseRouter = () => {
+
+  return <BrowserRouter><GetRoutes /></BrowserRouter>
 }
 
-const BaseRouter = (props: BaseRouterProps) => {
-
-  return <RouterProvider router={props.router} />
-}
 
 export { BaseRouter }
