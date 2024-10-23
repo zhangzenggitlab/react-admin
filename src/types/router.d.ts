@@ -6,6 +6,6 @@ declare global {
   export type RouterProps = Omit<RouteObject, 'element'> & {
     name?: string
     title?: string
-    element?: () => React.ReactNode | Promise<any>
+    element?: () => React.ReactNode | Promise<unknown>
   }
 }

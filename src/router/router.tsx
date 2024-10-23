@@ -24,6 +24,5 @@ const GetRoutes = () => {
   return useRoutes(baseRouters)
 }
 
-console.log(RouterModules)
-
+ 
 export { GetRoutes }
