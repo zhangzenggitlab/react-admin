@@ -25,4 +25,4 @@ const GetRoutes = () => {
 }
 
  
-export { GetRoutes }
+export { GetRoutes,RouterModules }
