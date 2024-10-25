@@ -24,5 +24,5 @@ const GetRoutes = () => {
   return useRoutes(baseRouters)
 }
 
- 
+console.log(Login.aa())
 export { GetRoutes,RouterModules }
