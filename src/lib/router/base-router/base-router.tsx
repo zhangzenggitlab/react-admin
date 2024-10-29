@@ -1,12 +1,15 @@
-import { RouterProvider,RouterProviderProps } from 'react-router-dom'
+import { RouterProvider, RouterProviderProps } from 'react-router-dom'
 
-interface BaseRouterProps extends RouterProviderProps{
-  beforeEnter?: <T>() => Promise<Awaited<T>>;
-}
+type BaseRouterProps = RouterProviderProps
 
+/**
+ * 基础路由模式
+ * @param props
+ * @constructor
+ */
 const BaseRouter = (props:BaseRouterProps) => {
 
-  return <RouterProvider router={props.router} />
+  return <RouterProvider router={props.router} fallbackElement={<>loading</>} {...props} />
 }
 
 export { BaseRouter };

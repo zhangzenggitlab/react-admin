@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
     element: <Home></Home>,
   },
   {
-    path: '/login/:id?',
+    path: '/login',
     element: <Login></Login>,
   },
 ])
