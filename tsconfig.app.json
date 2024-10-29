@@ -25,5 +25,5 @@
     },
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src","@/**/*.tsx"]
+  "include": ["src", "@/**/*.tsx", "@/**/*.tsx", "src/**/*.d.ts"]
 }
