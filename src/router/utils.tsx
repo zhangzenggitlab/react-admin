@@ -3,7 +3,7 @@ import Login from '@/pages/login/login.tsx'
 import Home from '@/pages/home/home.tsx'
 
 /** 动态加载文件夹下router.ts 命名的路由文件*/
-const routerModules = import.meta.glob('@/pages/**/router.ts', {
+const routerModules: Record<string, Router.RouterProps> = import.meta.glob('@/pages/**/router.ts', {
   eager: true,
 })
 
