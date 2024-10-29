@@ -3,9 +3,11 @@ import React from 'react'
 
 declare global {
   /** 定义路由 */
-  export type RouterProps = Omit<RouteObject, 'element'> & {
+  export type RouterProps = Omit<RouteObject> & {
     name?: string
     title?: string
-    element?: () => React.ReactNode | Promise<unknown>
+    path?: string
+    element?: () => React.ReactNode | Promise<unknown> | null
+    children?:RouterProps[]
   }
 }

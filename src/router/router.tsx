@@ -1,28 +1,12 @@
-import { useRoutes } from 'react-router-dom'
+import { useRoutes  } from 'react-router-dom'
 
-/** 动态加载文件夹下router.ts 命名的路由文件*/
-const RouterModules = import.meta.glob('@/pages/**/router.ts', {
-  eager: true,
-})
-
-import Home from '@/pages/home/home'
-import Login from '@/pages/login/login'
-
-const baseRouters = [
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/',
-    element: <Home />,
-    children: [],
-  },
-]
+import {initRouters,baseRouters} from './utils'
+import type { RouteObject } from 'react-router/dist/lib/context'
 
 const GetRoutes = () => {
-  return useRoutes(baseRouters)
+  return useRoutes(baseRouters as RouteObject[])
 }
 
-console.log(Login.aa())
-export { GetRoutes,RouterModules }
+initRouters()
+
+export { GetRoutes }
