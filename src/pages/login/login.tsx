@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 
-const Login = ()=>{
-  return <div>
-    <Link to='/'>home</Link>
-    Login</div>;
+const Login = () => {
+  return <><Link to="/">home</Link>
+    Login</>
 }
 
-export default Login;
+Login.aa = () => {
+  console.log(111)
+}
+export default Login

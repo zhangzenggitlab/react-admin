@@ -1,15 +1,13 @@
-import { RouterProvider, RouterProviderProps } from 'react-router-dom'
+import { RouterProviderProps,BrowserRouter } from 'react-router-dom'
 
-type BaseRouterProps = RouterProviderProps
+import {GetRoutes} from '@/router/router.tsx'
 
-/**
- * 基础路由模式
- * @param props
- * @constructor
- */
-const BaseRouter = (props:BaseRouterProps) => {
+export type BaseRouterProps = RouterProviderProps
 
-  return <RouterProvider router={props.router} fallbackElement={<>loading</>} {...props} />
+const BaseRouter = () => {
+
+  return <BrowserRouter><GetRoutes /></BrowserRouter>
 }
 
-export { BaseRouter };
+
+export { BaseRouter }
