@@ -1,5 +1,6 @@
 import { useRouterNavigate } from '@/lib'
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 const Home: React.FC = () => {
   const navigate = useRouterNavigate()
@@ -11,9 +12,19 @@ const Home: React.FC = () => {
           navigate('/login')
         }}
       >
-        按钮
+        login
       </button>
-      <div>React</div>
+
+      <button
+        onClick={() => {
+          navigate('/user')
+        }}
+      >
+        user
+      </button>
+
+
+      <Outlet></Outlet>
     </>
   )
 }

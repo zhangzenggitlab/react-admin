@@ -1,9 +1,7 @@
 declare namespace Router {
-  export interface RouterPropsMeta {
-    /** 权限码,页面权限 */
-    permissionCode?: string | number
-    /** 是否显示在左侧菜单 */
-    slider?: boolean
+  /** 页面模块路由名称*/
+  interface PageRouter{
+    routers:RouterProps[]
   }
 
   /** 菜单路由 */
@@ -13,6 +11,15 @@ declare namespace Router {
     path: string
     children?: RouterProps[]
     meta?: RouterPropsMeta
-    element?: () => React.ReactNode | Promise<unknown> | null
+    element?: (() => React.ReactNode | Promise<unknown> | null) |JSX.Element
+    Component?: React.ComponentType<typeof Router>
   }
+
+  export interface RouterPropsMeta {
+    /** 权限码,页面权限 */
+    permissionCode?: string | number
+    /** 是否显示在左侧菜单 */
+    slider?: boolean
+  }
+
 }

@@ -1,9 +1,11 @@
-import { MenuProps } from 'antd'
+import {lazy} from 'react'
+
 import Login from '@/pages/login/login.tsx'
 import Home from '@/pages/home/home.tsx'
 
+
 /** 动态加载文件夹下router.ts 命名的路由文件*/
-const routerModules: Record<string, Router.RouterProps> = import.meta.glob('@/pages/**/router.ts', {
+const routerModules: Record<string, Router.PageRouter> = import.meta.glob('@/pages/**/router.ts', {
   eager: true,
 })
 
@@ -15,11 +17,12 @@ const baseRouters: Router.RouterProps[] = [
   {
     path: '/',
     element: <Home />,
+    children:[]
   },
 ]
 
 function initRouters() {
-  const routers: Router.RouterProps[] = Object.values(routerModules)
+  const routers= Object.values(routerModules)
 
   for (const router of routers) {
     addRouter(router.routers)
@@ -28,21 +31,24 @@ function initRouters() {
 
 /**
  * 动态增加路由
- * @param router 路由对象
+ * @param routers
  */
-function addRouter(routers: Router.RouterProps[]): MenuProps[] {
-  const router = routers.map((item) => {
+function addRouter(routers: Router.RouterProps[]):Router.RouterProps[] {
+  return routers.map((item) => {
+
+    baseRouters[1]?.children?.push({
+...item,
+      Component:lazy(item.element)
+    })
+
     return {
       key: item.path,
+      path: item.path,
       label: item.title,
+      children:item.children ? addRouter(item.children):[],
     }
-  })
-
-  return router
-  // console.log({
-  //   ...routers,
-  //   Component: router.routers[0].element,
-  // })
+  }) || []
 }
+
 
 export { routerModules, initRouters, baseRouters }

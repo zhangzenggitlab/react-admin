@@ -1,4 +1,4 @@
-export const routers: RouterProps[] = [
+export const routers: Router.RouterProps[] = [
   {
     title: 'user',
     path: '/user',
