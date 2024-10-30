@@ -1,8 +1,6 @@
-import { RouterProviderProps, BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 import { GetRoutes } from '@/router/router.tsx'
-
-export type BaseRouterProps = RouterProviderProps
 
 const BaseRouter = () => {
   return (
