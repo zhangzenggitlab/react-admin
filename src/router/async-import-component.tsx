@@ -1,7 +1,8 @@
 import React from 'react'
+import {} from '@/pages/user/user-add/user-add'
 
-interface AsyncImportComponentProps extends Omit<RouterConfig, 'element'> {
-  element: () => Promise<any>
+export interface AsyncImportComponentProps extends Omit<RouterConfig, 'element'> {
+  element?: () => Promise<any> | null
 }
 
 const AsyncImportComponent = (props: AsyncImportComponentProps) => {
