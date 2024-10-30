@@ -9,8 +9,14 @@ const AsyncImportComponent: PageProps<AsyncImportComponentProps> = (props) => {
 
   React.useEffect(() => {
     if (typeof props.element === 'function') {
-      props?.element?.()?.then(({ default: Element }) => {
-        setLazyElement(<Element {...props} />)
+      props?.element?.()?.then(async ({ default: Element }) => {
+        let res: Awaited<ReturnType<typeof Element.beforeEnter>>
+
+        if (Element?.beforeEnter) {
+          res = await Element?.beforeEnter()
+        }
+
+        setLazyElement(<Element {...props} {...res} />)
       })
     }
   }, [])
