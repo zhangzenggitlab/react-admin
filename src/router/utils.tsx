@@ -1,14 +1,13 @@
-import { lazy } from 'react'
-
 import Login from '@/pages/login/login.tsx'
 import Home from '@/pages/home/home.tsx'
+import AsyncImportComponent from './async-import-component'
 
 /** 动态加载文件夹下router.ts 命名的路由文件*/
 const routerModules: Record<string, Router.PageRouter> = import.meta.glob('@/pages/**/router.ts', {
   eager: true,
 })
 
-const baseRouters: Router.RouterProps[] = [
+const baseRouters: RouterConfig[] = [
   {
     path: '/login',
     element: <Login />,
@@ -32,13 +31,13 @@ function initRouters() {
  * 动态增加路由
  * @param routers
  */
-function addRouter(routers: Router.RouterProps[]): Router.RouterProps[] {
+function addRouter(routers: RouterConfig[]): RouterConfig[] {
   return (
     routers.map((item) => {
       if (typeof item.element === 'function') {
         baseRouters[1]?.children?.push({
-          Component: lazy(item.element as any),
           ...item,
+          element: <AsyncImportComponent {...(item as any)}></AsyncImportComponent>,
         })
       }
 

@@ -9,10 +9,8 @@ declare namespace Router {
     name?: string
     title?: string
     path: string
-    children?: RouterProps[]
     meta?: RouterPropsMeta
-    element?: (() => React.ReactNode | Promise<unknown> | null) | JSX.Element
-    Component?: React.ComponentType | null
+    element?: (() => React.ReactNode | Promise<unknown> | null) | React.ReactNode
   }
 
   export interface RouterPropsMeta {
