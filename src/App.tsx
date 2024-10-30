@@ -1,8 +1,13 @@
+import { Suspense } from 'react'
+
 import { BaseRouter } from '@/lib'
 
 const App = () => {
-
-  return <BaseRouter></BaseRouter>
+  return (
+    <Suspense>
+      <BaseRouter></BaseRouter>
+    </Suspense>
+  )
 }
 
 export default App
