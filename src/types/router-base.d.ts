@@ -1,4 +1,4 @@
-declare namespace Router {
+declare namespace RouterBase {
   /** 页面模块路由名称*/
   interface PageRouter {
     routers: RouterProps[]
