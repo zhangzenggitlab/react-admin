@@ -2,12 +2,19 @@ interface Page {
   num: string
 }
 
-const UserList: PageProps<Page> = () => {
+interface Before {
+  id: string
+}
+const UserList: PageProps<Page, Before> = () => {
   return <>user-list</>
 }
 
-UserList.beforeEnter = async () => {
+UserList.beforeEnter = async (props) => {
   console.log(111)
-  return '1'
+  return new Promise((resolve) => {
+    resolve({
+      num: '1',
+    })
+  })
 }
 export default UserList

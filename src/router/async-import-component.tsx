@@ -4,7 +4,7 @@ interface AsyncImportComponentProps extends Omit<RouterConfig, 'element'> {
   element: () => Promise<any>
 }
 
-const AsyncImportComponent: PageProps<AsyncImportComponentProps> = (props) => {
+const AsyncImportComponent = (props: AsyncImportComponentProps) => {
   const [LazyElement, setLazyElement] = React.useState<React.ReactElement | null>(null)
 
   React.useEffect(() => {

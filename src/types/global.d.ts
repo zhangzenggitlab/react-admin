@@ -7,13 +7,11 @@ declare global {
       children?: RouterConfig[]
     }
 
-  interface PageFc extends React.FC {
-    aa: any
-  }
+  interface PageFc extends React.FC {}
 
   /** 页面props */
-  export interface PageProps<T> extends React.FC<T> {
+  export interface PageProps<P, B> extends React.FC<P> {
     /** 路由页面进入触发，用来加载初始化数据 */
-    beforeEnter?: (...args: T) => Promise<T>
+    beforeEnter?: (...args: B) => Promise<P>
   }
 }
