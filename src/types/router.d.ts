@@ -12,7 +12,7 @@ declare namespace Router {
     children?: RouterProps[]
     meta?: RouterPropsMeta
     element?: (() => React.ReactNode | Promise<unknown> | null) |JSX.Element
-    Component?: React.ComponentType<typeof Router>
+    Component?: React.ComponentType | null
   }
 
   export interface RouterPropsMeta {
