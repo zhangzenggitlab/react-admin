@@ -12,7 +12,7 @@ declare global {
   }
 
   /** 页面props */
-  export interface PageProps<T> extends React.FC {
+  export interface PageProps<T> extends React.FC<T> {
     /** 路由页面进入触发，用来加载初始化数据 */
     beforeEnter?: (...args: T) => Promise<T>
   }
