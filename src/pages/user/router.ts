@@ -5,11 +5,11 @@ export const routers: RouterConfig[] = [
     element: () => import('./user-list/user-list.tsx'),
 
     children: [
-      {
-        title: 'user-add',
-        path: '/user/add',
-        element: () => import('./user-add/user-add.tsx'),
-      },
+
     ],
+  }, {
+    title: 'user-add',
+    path: '/user/add/:id',
+    element: () => import('./user-add/user-add.tsx'),
   },
 ]
