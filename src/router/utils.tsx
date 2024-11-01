@@ -38,6 +38,7 @@ function addRouter(routers: RouterConfig[]): RouterConfig[] {
         baseRouters[1]?.children?.push({
           ...item,
           element: <AsyncImportComponent {...(item as unknown as AsyncImportComponentProps)}></AsyncImportComponent>,
+          children:[]
         })
       }
 

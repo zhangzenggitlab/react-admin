@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 export interface AsyncImportComponentProps extends Omit<RouterConfig, 'element' | 'children'> {
-  element?: () => Promise<unknown> | null
+  element?: () => Promise<any> | null
 }
 
 const AsyncImportComponent = (props: AsyncImportComponentProps) => {
