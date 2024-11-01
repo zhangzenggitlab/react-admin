@@ -1,35 +1,37 @@
-import { useRouterNavigate } from '@/lib'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+
+import { useRouterNavigate } from '@/lib'
+import { Button } from '@/components'
 
 const Home: React.FC = () => {
   const navigate = useRouterNavigate()
 
   return (
-    <div className='flex gap-20'>
-      <button
+    <div className="flex gap-20">
+      <Button
         onClick={() => {
           navigate('/login')
         }}
       >
         login
-      </button>
+      </Button>
 
-      <button
+      <Button
         onClick={() => {
           navigate('/user')
         }}
       >
         user
-      </button>
+      </Button>
 
-      <button
+      <Button
         onClick={() => {
           navigate('/user/add/2')
         }}
       >
         user-add
-      </button>
+      </Button>
       <Outlet></Outlet>
     </div>
   )
