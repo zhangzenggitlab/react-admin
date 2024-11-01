@@ -1,4 +1,4 @@
-export const routers: Router.RouterProps[] = [
+export const routers: RouterConfig[] = [
   {
     title: 'menu',
     path: '/menu',

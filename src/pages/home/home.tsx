@@ -6,7 +6,7 @@ const Home: React.FC = () => {
   const navigate = useRouterNavigate()
 
   return (
-    <>
+    <div className='flex gap-20'>
       <button
         onClick={() => {
           navigate('/login')
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
         user-add
       </button>
       <Outlet></Outlet>
-    </>
+    </div>
   )
 }
 

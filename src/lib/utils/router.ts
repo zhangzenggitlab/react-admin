@@ -8,7 +8,6 @@ const useRouterNavigate = () => {
   return (path: string, options?: { replace?: boolean; state?: RouterOptionsStatusType }) => {
     navigate(path, options)
   }
-
 }
 
 export { useRouterNavigate }
