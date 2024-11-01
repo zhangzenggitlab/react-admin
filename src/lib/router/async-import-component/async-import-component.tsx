@@ -5,7 +5,7 @@ export interface AsyncImportComponentProps extends Omit<RouterConfig, 'element' 
   element?: () => Promise<any> | null
 }
 
-const AsyncImportComponent = (props: AsyncImportComponentProps) => {
+export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
   const [LazyElement, setLazyElement] = React.useState<React.ReactElement | null>(null)
 
   // 获取params,query,state等数据
@@ -29,4 +29,3 @@ const AsyncImportComponent = (props: AsyncImportComponentProps) => {
   return LazyElement
 }
 
-export default AsyncImportComponent

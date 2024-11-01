@@ -7,12 +7,12 @@ declare global {
       children?: RouterConfig[]
     }
 
-  interface BaseFc<B, P> extends React.FC<P>{
+  interface BaseFc<B, P> extends React.FC<P> {
     /**
-     * 再页面进入之前触发,用来加载页面前置数据
+     * 在页面进入之前触发,用来加载页面前置数据
      * B => beforeEnter参数类型,如详情页需要传递id,之后查询详情,在异步函数调用结束之前不会显示组件(可用来做骨架屏或者loading)
      * P => 组件返回值，如详情页的详解接口查询完成，返回详情数据,可以直接通过props访
      */
-     beforeEnter?: (...args: B[]) => Promise<P>
-   }
+    beforeEnter?: (...args: B[]) => Promise<P>
+  }
 }

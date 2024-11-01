@@ -1,6 +1,7 @@
 import Login from '@/pages/login/login.tsx'
 import Home from '@/pages/home/home.tsx'
-import AsyncImportComponent, { type AsyncImportComponentProps } from './async-import-component'
+import {AsyncImportComponent} from '@/lib/router/async-import-component/async-import-component'
+import  {  AsyncImportComponentProps } from '@/lib'
 
 /** 动态加载文件夹下router.ts 命名的路由文件*/
 const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.ts', {
