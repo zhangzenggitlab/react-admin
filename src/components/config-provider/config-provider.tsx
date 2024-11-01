@@ -5,7 +5,13 @@ type ConfigProviderProps = { children: React.ReactNode }
 
 const ConfigProvider = (props: ConfigProviderProps) => {
 
-  return <AntConfigProvider>{props.children}</AntConfigProvider>
+  return <AntConfigProvider theme={{
+    components: {
+      Form: {
+        itemMarginBottom:0
+      },
+    },
+  }}>{props.children}</AntConfigProvider>
 }
 
 export { ConfigProvider }

@@ -1,41 +1,37 @@
-import { useHttp } from '@/lib'
-import React from 'react'
+import { FilterForm } from '@/components'
+import { Form,Input } from 'antd'
 
-interface PageProps {
-  num: string
-}
-
-interface BeforeProps {
-  id: string
-}
-
-interface User {
+interface FormItem {
   name: string
 }
-const UserList: BaseFc<BeforeProps, PageProps> = () => {
-  const { getData, data } = useHttp(getList, {}, true)
 
-  async function getList(): Promise<User> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          name: 'z',
-        })
-      }, 300)
-    })
-  }
-
-  React.useEffect(() => {
-    getData().then((res) => {
-      console.log(res.name)
-    })
-  }, [])
+const UserList= () => {
+  const [form] = Form.useForm<FormItem>()
 
   return (
-    <>
-      user-list
-      <p>{JSON.stringify(data)}</p>
-    </>
+    <FilterForm form={form}>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+      <Form.Item name='name' label='姓名' rules={[{required:true}]}>
+        <Input placeholder='请输入'/>
+      </Form.Item>
+    </FilterForm>
   )
 }
 

@@ -14,7 +14,7 @@ export const Button = (props: ButtonProps) => {
       loading={loading}
       {...props}
       onClick={() => {
-        if (isAsyncFunction(props?.onClick)) {
+        if (props?.onClick && isAsyncFunction(props?.onClick)) {
           setLoading(true)
           props?.onClick?.()?.finally(() => {
             setLoading(false)
