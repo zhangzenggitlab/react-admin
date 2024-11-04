@@ -9,7 +9,7 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
   const [LazyElement, setLazyElement] = React.useState<React.ReactElement | null>(null)
 
   // 获取params,query,state等数据
-  const { state } = useLocation()
+  const location = useLocation()
   const params = useParams()
 
   React.useEffect(() => {
@@ -21,10 +21,10 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
           res = await Element?.beforeEnter({ ...params })
         }
 
-        setLazyElement(<Element {...props} {...res} {...state} />)
+        setLazyElement(<Element {...props} {...res} location={location} />)
       })
     }
-  }, [props, location, params])
+  }, [props, params,location])
 
   return LazyElement
 }

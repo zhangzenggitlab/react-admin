@@ -27,7 +27,11 @@ const Home: React.FC = () => {
 
       <Button
         onClick={() => {
-          navigate('/user/add/2')
+          navigate('/user/add/2',{
+state:{
+  name:"zzz"
+}
+          })
         }}
       >
         user-add

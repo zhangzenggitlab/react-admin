@@ -6,6 +6,7 @@ interface BeforeProps {
 
 interface PageParams {
   detail?: number
+  location: { state:any }
 }
 
 const columns: TableColumnProps[] = [{
