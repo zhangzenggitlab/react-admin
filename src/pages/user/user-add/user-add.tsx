@@ -1,4 +1,5 @@
 import { Table, TableColumnProps } from '@/components/table'
+import {usePagination} from '@/hooks'
 
 interface BeforeProps {
   id: string
@@ -31,12 +32,12 @@ const data = [{
 }, {
   id: 2,
   name: 'name2',
-  age: '2',
 }]
 
-
 const UserAdd: BaseFc<BeforeProps, PageParams> = () => {
-  return <Table columns={columns} dataSource={data}>UserAdd</Table>
+  const { total,setTotal,onSearch,onRefresh,pagination } = usePagination()
+
+  return <Table columns={columns} dataSource={data} pagination={pagination}>UserAdd</Table>
 }
 
 export default UserAdd

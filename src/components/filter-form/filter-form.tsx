@@ -62,7 +62,7 @@ export const FilterForm = (props: FormProps) => {
 
 const filterForm = css`
   .filter-form-control {
-    right: 0;
+    right: 24px;
     bottom: 4px;
   }
 `
