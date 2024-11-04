@@ -1,9 +1,13 @@
 import React from 'react'
 import clsx from 'clsx'
 import { Form, FormProps as AntFormProps } from 'antd'
+import {css} from '@emotion/react'
 
 import { Button } from '@/components'
 
+const style = css`
+  margin-top: 40px;
+  `
 export interface FormProps extends AntFormProps {
   children?: React.ReactNode
   /** 查询按钮 */
@@ -16,6 +20,8 @@ const DEFINE = {
   rowHeight: 32,
 }
 
+console.log(style)
+
 export const FilterForm = (props: FormProps) => {
   const { rowHeight = DEFINE.rowHeight } = props
   const [collapsed, setCollapsed] = React.useState<boolean>(false)
@@ -24,7 +30,7 @@ export const FilterForm = (props: FormProps) => {
               style={{ height: collapsed ? rowHeight + 'px' : 'auto' }}>
     <Form {...props} className="filter-form flex gap-24 wrap">{props.children}</Form>
 
-    <div className={clsx(collapsed ? '' : 'absolute filter-form-control', 'flex gap-10')}>
+    <div className={clsx(collapsed ? style : 'absolute filter-form-control', 'flex gap-10')} >
       <Button type="primary" onClick={() => {
         props.onSearch?.()
       }}>查询</Button>
@@ -38,5 +44,6 @@ export const FilterForm = (props: FormProps) => {
     </div>
   </div>
 }
+
 
 
