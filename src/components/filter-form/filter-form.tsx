@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import React from 'react'
 import clsx from 'clsx'
 import { Form, FormProps as AntFormProps } from 'antd'
@@ -17,13 +15,6 @@ export interface FormProps extends AntFormProps {
 const DEFINE = {
   rowHeight: 32,
 }
-// 定义卡片的基础样式
-const cardStyle = css`
-  padding: 20px;
-  border-radius: 10px;
-  transition: transform 0.2s;
-  cursor: pointer;
-`;
 
 export const FilterForm = (props: FormProps) => {
   const { rowHeight = DEFINE.rowHeight } = props
@@ -32,12 +23,7 @@ export const FilterForm = (props: FormProps) => {
   return <div className={clsx('flex start-x ovh p-x-24 p-y-4 width ovh relative form')}
               style={{ height: collapsed ? rowHeight + 'px' : 'auto' }}>
     <Form {...props} className="filter-form flex gap-24 wrap">{props.children}</Form>
-    <div
-      className={clsx(cardStyle)}
 
-    >
-     ss
-    </div>
     <div className={clsx(collapsed ? '' : 'absolute filter-form-control', 'flex gap-10')}>
       <Button type="primary" onClick={() => {
         props.onSearch?.()
