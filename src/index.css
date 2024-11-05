@@ -1,13 +1,4 @@
-@import '@/less/common.less';
-@import '@/less/text.less';
-@import '@/less/border.less';
-@import '@/less/flex.less';
-@import '@/less/color.less';
-@import '@/less/animation.less';
-@import '@/less/color.less';
-@import '@/less/box.less';
-@import '@/less/gap.less';
-
+@import '@/less/index.less';
 :root {
   --bar-height: 56px;
 }

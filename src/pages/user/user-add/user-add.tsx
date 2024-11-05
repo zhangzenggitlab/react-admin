@@ -35,9 +35,9 @@ const data = [{
 }]
 
 const UserAdd: BaseFc<BeforeProps, PageParams> = () => {
-  const { total,setTotal,onSearch,onRefresh,pagination } = usePagination()
+  const {pagination } = usePagination()
 
-  return <Table columns={columns} dataSource={data} pagination={pagination}>UserAdd</Table>
+  return <Table columns={columns} dataSource={data} pagination={pagination} >UserAdd</Table>
 }
 
 export default UserAdd

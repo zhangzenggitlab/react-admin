@@ -9,24 +9,26 @@ export interface PageProps extends PaginationProps  {
 export const usePagination = (props?: PageProps) => {
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSize] = React.useState(10)
-  const [total, setTotal] = React.useState(10)
+  const [total, setTotal] = React.useState(0)
 
-  const onShowSizeChange: TablePaginationConfig['onShowSizeChange'] = (current, pageSize) => {
+  const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, size) => {
     setPage(current)
-    setPageSize(pageSize)
+    setPageSize(size)
     onSearch?.()
   }
 
-  const showTotal: TablePaginationConfig['showTotal'] = (total) => ` ${total} items`
+  const showTotal: PaginationProps['showTotal'] = (total) => `共 ${total} 条`
 
-  const pagination = React.useState<TablePaginationConfig>({
+  const pagination:TablePaginationConfig = {
     showSizeChanger: true,
     showQuickJumper: true,
     size: 'small',
-    onShowSizeChange: { onShowSizeChange },
-    showTotal: { showTotal },
-    onChange: { onShowSizeChange },
-  })
+    onShowSizeChange: onShowSizeChange,
+    showTotal:showTotal,
+    onChange: onShowSizeChange,
+    total,
+    pageSize
+  }
 
   /** 搜索使用第一页 */
   function onSearch() {
@@ -37,7 +39,6 @@ export const usePagination = (props?: PageProps) => {
   function onRefresh() {
     props?.onSearch?.()
   }
-
 
   return {
     page,

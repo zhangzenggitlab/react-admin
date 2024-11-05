@@ -19,7 +19,7 @@ const DEFINE = {
 
 export const FilterForm = (props: FormProps) => {
   const { rowHeight = DEFINE.rowHeight, children } = props
-  const [collapsed, setCollapsed] = React.useState<boolean>(false)
+  const [collapsed, setCollapsed] = React.useState<boolean>(true)
 
   return (
     <div
