@@ -40,12 +40,4 @@ const UserAdd: BaseFc<BeforeProps, PageParams> = () => {
   return <Table columns={columns} dataSource={data} pagination={pagination}>UserAdd</Table>
 }
 
-UserAdd.beforeEnter = async () => {
-
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve()
-    }, 2000)
-  })
-}
 export default UserAdd

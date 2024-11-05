@@ -2,6 +2,7 @@ import React from 'react'
 import { Button as AntButton, ButtonProps as AntButtonProps } from 'antd'
 
 import { isAsyncFunction } from '@/lib'
+
 export interface ButtonProps extends AntButtonProps {
   onClick?: () => Promise<any> | any
 }
