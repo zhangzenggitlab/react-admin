@@ -1,5 +1,8 @@
 import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
+import { LoadingOutlined } from '@ant-design/icons'
+
+import { Skeleton, Spin } from '@/components'
 
 export interface AsyncImportComponentProps extends Omit<RouterConfig, 'element' | 'children'> {
   element?: () => Promise<any> | null
@@ -17,6 +20,14 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
       props?.element?.()?.then(async ({ default: Element }) => {
         let res: Awaited<ReturnType<typeof Element.beforeEnter>>
 
+        if (props?.meta?.loading === 'skeleton') {
+          setLazyElement(<Skeleton />)
+        }
+
+        if (props?.meta?.loading === 'spin') {
+          setLazyElement(<Spin spinning={true} indicator={<LoadingOutlined spin />} />)
+        }
+
         if (Element?.beforeEnter) {
           res = await Element?.beforeEnter({ ...params })
         }
@@ -24,7 +35,7 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
         setLazyElement(<Element {...props} {...res} location={location} />)
       })
     }
-  }, [props, params,location])
+  }, [props, params, location])
 
   return LazyElement
 }

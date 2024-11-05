@@ -1,3 +1,5 @@
 export * from './config-provider'
 export * from './button'
 export * from './filter-form'
+export * from './skeleton'
+export * from './spin'

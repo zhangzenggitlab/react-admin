@@ -4,8 +4,8 @@ import { RouteObject } from 'react-router-dom'
 declare global {
   type RouterConfig = RouterBase.RouterProps &
     Omit<RouteObject, 'element' | 'children'> & {
-      children?: RouterConfig[]
-    }
+    children?: RouterConfig[]
+  }
 
   interface BaseFc<B, P> extends React.FC<P> {
     /**

@@ -18,5 +18,9 @@ declare namespace RouterBase {
     permissionCode?: string | number
     /** 是否显示在左侧菜单 */
     slider?: boolean
+    /** 标题 */
+    title?: string | number
+    /** 页面切换loading*/
+    loading?: 'skeleton' | 'spin' | false
   }
 }

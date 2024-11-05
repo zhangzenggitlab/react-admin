@@ -9,6 +9,9 @@ export const routers: RouterConfig[] = [
         title: 'user-add',
         path: '/user/add/:id',
         element: () => import('./user-add/user-add.tsx'),
+        meta: {
+          title: 'user',
+        },
       },
     ],
   },
