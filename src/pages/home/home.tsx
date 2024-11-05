@@ -1,12 +1,12 @@
 import React from 'react'
 import { SettingOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Menu } from 'antd'
+import { Menu, Breadcrumb } from 'antd'
 import { clsx } from 'clsx'
 import { css } from '@emotion/css'
 
 import { Header } from '@/layout'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 const Home: React.FC = () => {
   type MenuItem = Required<MenuProps>['items'][number]
@@ -38,6 +38,12 @@ const Home: React.FC = () => {
 
   const [collapsed, setCollapsed] = React.useState(false)
 
+  const location = useLocation()
+
+  React.useEffect(() => {
+    console.log(location)
+  }, [location])
+
   return (
     <div className={clsx('home flex col height', home)}>
       <Header collapsed={collapsed} setCollapsed={setCollapsed} />
@@ -48,6 +54,23 @@ const Home: React.FC = () => {
         </div>
 
         <div className="width p-x-20 p-y-20">
+          <Breadcrumb
+            items={[
+              {
+                title: 'Home',
+              },
+              {
+                title: <a href="">Application Center</a>,
+              },
+              {
+                title: <a href="">Application List</a>,
+              },
+              {
+                title: 'An Application',
+              },
+            ]}
+            className="pb-20"
+          />
           <Outlet />
         </div>
       </div>
