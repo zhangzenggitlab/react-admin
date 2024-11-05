@@ -1,16 +1,28 @@
 @import '@/less/index.less';
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    SimSun, sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --bar-height: 56px;
 }
 
-html,body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
   display: flex;
   place-items: center;
 }
-#root{
+
+#root {
   width: 100%;
   height: 100%;
 }
