@@ -1,7 +1,7 @@
 import Login from '@/pages/login/login.tsx'
 import Home from '@/pages/home/home.tsx'
-import {AsyncImportComponent} from '@/lib/router/async-import-component/async-import-component'
-import  {  AsyncImportComponentProps } from '@/lib'
+import { AsyncImportComponent } from '@/lib/router/async-import-component/async-import-component'
+import { AsyncImportComponentProps } from '@/lib'
 
 /** 动态加载文件夹下router.ts 命名的路由文件*/
 const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.ts', {
@@ -39,7 +39,7 @@ function addRouter(routers: RouterConfig[]): RouterConfig[] {
         baseRouters[1]?.children?.push({
           ...item,
           element: <AsyncImportComponent {...(item as unknown as AsyncImportComponentProps)}></AsyncImportComponent>,
-          children:[]
+          children: [],
         })
       }
 

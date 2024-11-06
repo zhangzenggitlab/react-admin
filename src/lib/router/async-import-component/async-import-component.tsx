@@ -32,11 +32,10 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
           res = await Element?.beforeEnter({ ...params })
         }
 
-        setLazyElement(<Element {...props} {...res} location={location} title={props.title} route={props}/>)
+        setLazyElement(<Element {...props} {...res} location={location} title={props.title} route={props} />)
       })
     }
   }, [props, params, location])
 
   return LazyElement
 }
-

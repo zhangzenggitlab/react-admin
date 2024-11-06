@@ -8,8 +8,9 @@ declare namespace RouterBase {
   export type RouterProps = {
     name?: string
     title?: string
-    path: string
+    path?: string
     meta?: RouterPropsMeta
+    redirect?: string
     element?: (() => React.ReactNode | Promise<unknown> | null) | React.ReactNode
   }
 
