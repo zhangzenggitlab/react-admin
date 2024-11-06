@@ -4,7 +4,7 @@ import { AsyncImportComponent } from '@/lib/router/async-import-component/async-
 import { AsyncImportComponentProps } from '@/lib'
 
 /** 动态加载文件夹下router.ts 命名的路由文件*/
-const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.ts', {
+const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.tsx', {
   eager: true,
 })
 

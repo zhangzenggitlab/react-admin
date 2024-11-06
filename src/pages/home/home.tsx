@@ -8,9 +8,11 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Header } from '@/layout'
 import { useRouterNavigate } from '@/lib'
 
-const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.ts', {
+const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.tsx', {
   eager: true,
 })
+
+console.log(routerModules)
 
 type MenuItem = Required<MenuProps>['items'][number]
 type BreadCrumbType = {
@@ -57,9 +59,7 @@ function createMenuByRoute(routers: RouterConfig[]): MenuItem[] {
       }
     }) || []
 
-  const filterMenu = routerMenu.filter((item) => item?.slider !== false) as MenuItem[]
-
-  return filterMenu
+  return routerMenu.filter((item) => item?.slider !== false) as MenuItem[]
 }
 
 const Home: React.FC = () => {
@@ -73,10 +73,12 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
+    const openKeys: string[] = []
+
     const breads =
       path.map((_, index) => {
         const url = `/${path.slice(0, index + 1).join('/')}`
-
+        openKeys.push(url)
         return {
           title: <a>{menuFlat[url].title}</a>,
         }
@@ -84,6 +86,7 @@ const Home: React.FC = () => {
 
     setSelectKeys([location.pathname])
     setBreadcrumb(breads)
+    setOpenKeys(openKeys)
   }, [location])
 
   return (
@@ -103,6 +106,7 @@ const Home: React.FC = () => {
               routerNavigate(key)
             }}
             onOpenChange={(openKeys) => {
+              console.log(openKeys)
               setOpenKeys(openKeys)
             }}
           />

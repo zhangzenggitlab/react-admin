@@ -4,7 +4,7 @@ export const routers: RouterConfig[] = [
   {
     title: '系统管理',
     path: '/system',
-    // icon: () => import(SettingOutlined as string),
+    icon: <SettingOutlined />,
     children: [
       {
         title: '菜单管理',
