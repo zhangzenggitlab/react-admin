@@ -11,6 +11,7 @@ declare namespace RouterBase {
     path?: string
     meta?: RouterPropsMeta
     redirect?: string
+    icon?: React.ReactNode
     element?: (() => React.ReactNode | Promise<unknown> | null) | React.ReactNode
   }
 

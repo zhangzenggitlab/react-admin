@@ -50,6 +50,7 @@ function createMenuByRoute(routers: RouterConfig[]): MenuItem[] {
       return {
         key: item.path,
         path: item.path,
+        icon: item.icon,
         label: item.title,
         children: item.children ? createMenuByRoute(item.children) : null,
         slider: item.meta?.slider,

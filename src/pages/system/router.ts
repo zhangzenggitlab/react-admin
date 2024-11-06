@@ -1,7 +1,10 @@
+import { SettingOutlined } from '@ant-design/icons'
+
 export const routers: RouterConfig[] = [
   {
     title: '系统管理',
     path: '/system',
+    // icon: () => import(SettingOutlined as string),
     children: [
       {
         title: '菜单管理',
