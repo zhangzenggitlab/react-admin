@@ -3,7 +3,7 @@ import type { MenuProps, BreadcrumbProps } from 'antd'
 import { Breadcrumb, Menu } from 'antd'
 import { clsx } from 'clsx'
 import { css } from '@emotion/css'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, NavLink } from 'react-router-dom'
 
 import { Header } from '@/layout'
 import { useRouterNavigate } from '@/lib'
@@ -80,7 +80,7 @@ const Home: React.FC = () => {
         const url = `/${path.slice(0, index + 1).join('/')}`
         openKeys.push(url)
         return {
-          title: <a>{menuFlat[url].title}</a>,
+          title: <NavLink to={url}>{menuFlat[url].title}</NavLink>,
         }
       }) || []
 

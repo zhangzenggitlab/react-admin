@@ -2,10 +2,14 @@ import React from 'react'
 import { RouteObject } from 'react-router-dom'
 
 declare global {
+  /**
+   * 路由配置
+   * 定义的路由自动作为home的子路由
+   */
   type RouterConfig = RouterBase.RouterProps &
     Omit<RouteObject, 'element' | 'children'> & {
-    children?: RouterConfig[]
-  }
+      children?: RouterConfig[]
+    }
 
   interface BaseFc<B, P> extends React.FC<P> {
     /**
@@ -14,5 +18,16 @@ declare global {
      * P => 组件返回值，如详情页的详解接口查询完成，返回详情数据,可以直接通过props访
      */
     beforeEnter?: (...args: B[]) => Promise<P>
+  }
+
+  /**
+   * 页面基类
+   */
+  interface BasePage {
+    title?: string | React.ReactNode | JSX.Element
+    className?: string
+    style?: any
+    children?: JSX.Element | string | React.ReactNode
+    [key: string]: any
   }
 }
