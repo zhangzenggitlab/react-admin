@@ -28,6 +28,7 @@ declare global {
    */
   interface BasePage {
     title?: string | React.ReactNode | JSX.Element
+    children?: JSX.Element | string | React.ReactNode
     [key: string]: any
   }
 
