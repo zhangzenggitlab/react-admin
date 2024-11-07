@@ -29,6 +29,8 @@ declare global {
   interface BasePage {
     title?: string | React.ReactNode | JSX.Element
     children?: JSX.Element | string | React.ReactNode
+    /** 路由对象 */
+    router:RouterConfig,
     [key: string]: any
   }
 

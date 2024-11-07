@@ -16,7 +16,11 @@ export const routers: RouterConfig[] = [
         title: '用户管理',
         path: '/system/user',
         element: () => import('./system-user/system-user-list/system-user-list.tsx'),
+        drawer: [{
+          name: 'system-detail',
+        }],
         children: [{
+          name: 'system-detail',
           title: '用户详情',
           path: '/system/user/detail/:id',
           element: () => import('./system-user/system-user-detail/system-user-detail.tsx'),

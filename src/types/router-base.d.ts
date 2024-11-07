@@ -13,6 +13,8 @@ declare namespace RouterBase {
     redirect?: string
     icon?: React.ReactNode
     element?: (() => React.ReactNode | Promise<unknown> | null) | React.ReactNode
+    /** 支持抽屉形式打开的组件 */
+    drawer?: DrawerProps[]
   }
 
   export interface RouterPropsMeta {
@@ -24,5 +26,11 @@ declare namespace RouterBase {
     title?: string | number
     /** 页面切换loading*/
     loading?: 'skeleton' | 'spin' | false
+  }
+
+  /** 抽屉 */
+  export interface DrawerProps {
+    /** 路由name */
+    name: string
   }
 }
