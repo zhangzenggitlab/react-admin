@@ -4,6 +4,7 @@ import { css } from '@emotion/css'
 
 export interface DrawerProps extends AntDrawerProps {
   title?: string
+  open: boolean
 }
 
 export const Drawer = (props: DrawerProps) => {

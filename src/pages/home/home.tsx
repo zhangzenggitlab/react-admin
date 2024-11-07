@@ -6,7 +6,6 @@ import { css } from '@emotion/css'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Header } from '@/layout'
-import {Drawer} from '@/components'
 
 const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.tsx', {
   eager: true,
@@ -47,12 +46,14 @@ function createMenuByRoute(routers: RouterConfig[]): MenuItem[] {
         }
       }
 
+      const children = item.children ? createMenuByRoute(item.children) : []
+
       return {
         key: item.path,
         path: item.path,
         icon: item.icon,
         label: item.title,
-        children: item.children ? createMenuByRoute(item.children) : null,
+        children: children?.length > 0 ? children : null,
         slider: item.meta?.slider,
       }
     }) || []
@@ -65,9 +66,9 @@ const Home: React.FC = () => {
   const [breadcrumb, setBreadcrumb] = React.useState<BreadCrumbItemType>([])
   const [openKeys, setOpenKeys] = React.useState<string[]>([])
   const [selectKeys, setSelectKeys] = React.useState<string[]>([])
+
   const location = useLocation()
   const navigate = $.useRouterNavigate()
-  const [drawer] = React.useState<React.ReactNode>()
 
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
@@ -78,7 +79,7 @@ const Home: React.FC = () => {
         const url = `/${path.slice(0, index + 1).join('/')}`
         openKeys.push(url)
         return {
-          title: <NavLink to={url}>{menuFlat[url].title}</NavLink>,
+          title: <NavLink to={url}>{menuFlat?.[url]?.title}</NavLink>,
         }
       }) || []
 
@@ -114,8 +115,6 @@ const Home: React.FC = () => {
           <Outlet />
         </div>
       </div>
-
-      <Drawer>{drawer}</Drawer>
     </div>
   )
 }
