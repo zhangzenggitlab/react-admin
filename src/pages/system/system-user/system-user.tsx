@@ -1,5 +1,5 @@
-import { FilterForm, Panel } from '@/components'
-import { Form, Input } from 'antd'
+import { FilterForm, Panel, Table } from '@/components'
+import { Form, Input, TableColumnProps } from 'antd'
 
 interface FormItem {
   name?: string
@@ -9,6 +9,14 @@ interface FormItem {
 const SystemUser = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
 
+  const columns: TableColumnProps[] = [{
+    dataIndex: 'name',
+    title: '姓名',
+  }]
+
+  console.log($.usePagination)
+
+  console.log(_TITLE_)
   return (
     <Panel title={props.title}>
       <Panel.Item className="mt-20">
@@ -22,7 +30,9 @@ const SystemUser = (props: RouterConfig) => {
         </FilterForm>
       </Panel.Item>
 
-      <Panel.Item className="mt-20" title="表格"></Panel.Item>
+      <Panel.Item className="mt-20">
+        <Table columns={columns} className="mt-16" />
+      </Panel.Item>
     </Panel>
   )
 }

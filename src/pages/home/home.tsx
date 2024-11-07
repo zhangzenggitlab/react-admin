@@ -1,9 +1,9 @@
 import React from 'react'
-import type { MenuProps, BreadcrumbProps } from 'antd'
+import type { BreadcrumbProps, MenuProps } from 'antd'
 import { Breadcrumb, Menu } from 'antd'
 import { clsx } from 'clsx'
 import { css } from '@emotion/css'
-import { Outlet, useLocation, NavLink } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Header } from '@/layout'
 import { useRouterNavigate } from '@/lib'
@@ -62,7 +62,6 @@ function createMenuByRoute(routers: RouterConfig[]): MenuItem[] {
 
 const Home: React.FC = () => {
   const routerNavigate = useRouterNavigate()
-
   const [collapsed, setCollapsed] = React.useState(false)
   const [breadcrumb, setBreadcrumb] = React.useState<BreadCrumbItemType>([])
   const [openKeys, setOpenKeys] = React.useState<string[]>([])
@@ -121,15 +120,15 @@ const Home: React.FC = () => {
 export default Home
 
 const home = css`
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
 
-  .menu {
-    display: flex;
-    z-index: 19;
-    width: 100%;
-    flex-shrink: 0;
-    line-height: 56px;
-    border-block-end: 1px solid rgba(5, 5, 5, 0.06);
-    background-color: transparent;
-  }
+    .menu {
+        display: flex;
+        z-index: 19;
+        width: 100%;
+        flex-shrink: 0;
+        line-height: 56px;
+        border-block-end: 1px solid rgba(5, 5, 5, 0.06);
+        background-color: transparent;
+    }
 `

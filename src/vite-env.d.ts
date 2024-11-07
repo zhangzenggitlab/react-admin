@@ -11,3 +11,4 @@ declare module '*.bmp'
 declare module '*.tiff'
 
 declare const _TITLE_: string
+

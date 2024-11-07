@@ -1,7 +1,10 @@
 import React from 'react'
 import { RouteObject } from 'react-router-dom'
+import * as lib from '@/lib'
 
 declare global {
+  declare const $:typeof lib
+
   /**
    * 路由配置
    * 定义的路由自动作为home的子路由

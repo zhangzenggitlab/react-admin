@@ -1,8 +1,11 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
+import inject from '@rollup/plugin-inject'
 
-// https://vitejs.dev/config/
+const rootPath = process.cwd()
+const srcPath = path.resolve(rootPath, 'src')
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
@@ -10,7 +13,13 @@ export default defineConfig(({ mode }) => {
     define: {
       _TITLE_: JSON.stringify(env.VITE_TITLE),
     },
-    plugins: [react()],
+    plugins: [react(),
+      inject({
+        modules: {
+          $: [path.join(srcPath, 'lib'), '*'],
+        },
+        include: ['**/*.ts', '**/*.tsx'],
+      })],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
