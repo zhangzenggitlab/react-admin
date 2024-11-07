@@ -1,10 +1,9 @@
 import { css } from '@emotion/css'
 import { clsx } from 'clsx'
-import { Input, Avatar, Dropdown, MenuProps } from 'antd'
-import { ShareAltOutlined, LeftOutlined } from '@ant-design/icons'
+import { Avatar, Dropdown, Input, MenuProps } from 'antd'
+import { LeftOutlined, ShareAltOutlined } from '@ant-design/icons'
 
 import { Button } from '@/components'
-import Logo from '@/assets/react.svg'
 
 interface HeaderProps {
   collapsed?: boolean
@@ -27,8 +26,8 @@ export const Header = (props: HeaderProps) => {
   return (
     <header className={clsx(header, 'flex between center-y')}>
       <span className="flex center-y gap-10">
-        <img src={Logo} alt="logo" className="logo" />
-        <h1 className="title fs-18 fw-6">Ant Design Pro</h1>
+        {/*<img src={Logo} alt="logo" className="logo" />*/}
+        <h1 className="title fs-18 fw-6">{_TITLE_} </h1>
 
         <span
           className={clsx(collapsed ? '' : 'collapsed-menu-icon', 'cup collapsed')}
@@ -60,7 +59,7 @@ export const Header = (props: HeaderProps) => {
 }
 
 const header = css`
-  display: flex;
+    display: flex;
     height: 56px;
     line-height: 56px;
     z-index: 19;
@@ -73,36 +72,41 @@ const header = css`
     backdrop-filter: blur(8px);
     transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-  padding: 0 20px;
-  .logo {
-    height: 28px;
-  }
-  .title {
-    color: rgba(0, 0, 0, 0.88);
-  }
-  .avatar {
-    flex-shrink: 0;
-  }
-  .collapsed {
-    inset-block-start: 18px;
-    z-index: 101;
-    width: 24px;
-    height: 24px;
-    text-align: center;
-    border-radius: 40px;
-    inset-inline-end: -13px;
-    transition: transform 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    cursor: pointer;
-    color: rgba(0, 0, 0, 0.25);
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(25, 15, 15, 0.07), 0 0 1px 0 rgba(0, 0, 0, 0.08);
-  }
-  .collapsed-menu-icon {
-    transition: 0.2s;
-    transform: rotate(180deg);
-  }
+    padding: 0 20px;
+
+    .logo {
+        height: 28px;
+    }
+
+    .title {
+        color: rgba(0, 0, 0, 0.88);
+    }
+
+    .avatar {
+        flex-shrink: 0;
+    }
+
+    .collapsed {
+        inset-block-start: 18px;
+        z-index: 101;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        border-radius: 40px;
+        inset-inline-end: -13px;
+        transition: transform 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.25);
+        background-color: #ffffff;
+        box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(25, 15, 15, 0.07), 0 0 1px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .collapsed-menu-icon {
+        transition: 0.2s;
+        transform: rotate(180deg);
+    }
 `

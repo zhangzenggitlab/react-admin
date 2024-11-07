@@ -19,12 +19,13 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
     if (typeof props.element === 'function') {
       props?.element?.()?.then(async ({ default: Element }) => {
         let res: Awaited<ReturnType<typeof Element.beforeEnter>>
+        const loading = props?.meta?.loading || 'skeleton'
 
-        if (props?.meta?.loading === 'skeleton') {
+        if (loading === 'skeleton') {
           setLazyElement(<Skeleton />)
         }
 
-        if (props?.meta?.loading === 'spin') {
+        if (loading === 'spin') {
           setLazyElement(<Spin spinning={true} indicator={<LoadingOutlined spin />} />)
         }
 
