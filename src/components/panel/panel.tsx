@@ -3,7 +3,7 @@ import { theme } from 'antd'
 import clsx from 'clsx'
 
 import { PanelItem } from './panel-item'
-export interface PanelProps extends BasePage {
+export interface PanelProps extends BaseComponent {
   loading?: boolean
 }
 

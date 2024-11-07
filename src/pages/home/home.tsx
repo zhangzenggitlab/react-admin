@@ -6,7 +6,6 @@ import { css } from '@emotion/css'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Header } from '@/layout'
-import { useRouterNavigate } from '@/lib'
 
 const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.tsx', {
   eager: true,
@@ -61,12 +60,12 @@ function createMenuByRoute(routers: RouterConfig[]): MenuItem[] {
 }
 
 const Home: React.FC = () => {
-  const routerNavigate = useRouterNavigate()
   const [collapsed, setCollapsed] = React.useState(false)
   const [breadcrumb, setBreadcrumb] = React.useState<BreadCrumbItemType>([])
   const [openKeys, setOpenKeys] = React.useState<string[]>([])
   const [selectKeys, setSelectKeys] = React.useState<string[]>([])
   const location = useLocation()
+  const navigate = $.useRouterNavigate()
 
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
@@ -100,7 +99,7 @@ const Home: React.FC = () => {
             openKeys={openKeys}
             selectedKeys={selectKeys}
             onClick={({ key }) => {
-              routerNavigate(key)
+              navigate(key)
             }}
             onOpenChange={(openKeys) => {
               setOpenKeys(openKeys)

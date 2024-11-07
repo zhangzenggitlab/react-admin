@@ -28,6 +28,13 @@ declare global {
    */
   interface BasePage {
     title?: string | React.ReactNode | JSX.Element
+    [key: string]: any
+  }
+
+  /**
+   * 组件基类
+   */
+  interface BaseComponent  {
     className?: string
     style?: any
     children?: JSX.Element | string | React.ReactNode

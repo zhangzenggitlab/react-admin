@@ -14,7 +14,7 @@ export const routers: RouterConfig[] = [
       {
         title: '用户管理',
         path: '/system/user',
-        element: () => import('./system-user/system-user'),
+        element: () => import('./system-user/system-user-list/system-user-list.tsx'),
       },
     ],
   },

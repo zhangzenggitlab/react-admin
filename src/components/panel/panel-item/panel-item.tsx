@@ -2,9 +2,8 @@ import { css } from '@emotion/css'
 import { theme } from 'antd'
 import clsx from 'clsx'
 
-export interface PanelItemProps extends BasePage {
+export interface PanelItemProps extends BaseComponent {
   loading?: boolean
-  children?: JSX.Element | string
   rightNodes?: JSX.Element | string | null
 }
 
