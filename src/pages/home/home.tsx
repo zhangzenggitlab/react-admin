@@ -12,8 +12,6 @@ const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@
   eager: true,
 })
 
-console.log(routerModules)
-
 type MenuItem = Required<MenuProps>['items'][number]
 type BreadCrumbType = {
   [key: string]: any
@@ -106,7 +104,6 @@ const Home: React.FC = () => {
               routerNavigate(key)
             }}
             onOpenChange={(openKeys) => {
-              console.log(openKeys)
               setOpenKeys(openKeys)
             }}
           />

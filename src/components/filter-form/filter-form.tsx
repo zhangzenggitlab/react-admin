@@ -85,6 +85,6 @@ const filterForm = css`
     bottom: 4px;
   }
   .ant-form-item:last-child {
-    padding-right: 120px;
+    padding-right: 150px;
   }
 `
