@@ -6,6 +6,7 @@ import { css } from '@emotion/css'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Header } from '@/layout'
+import {Drawer} from '@/components'
 
 const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.tsx', {
   eager: true,
@@ -66,6 +67,7 @@ const Home: React.FC = () => {
   const [selectKeys, setSelectKeys] = React.useState<string[]>([])
   const location = useLocation()
   const navigate = $.useRouterNavigate()
+  const [drawer] = React.useState<React.ReactNode>()
 
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
@@ -112,6 +114,8 @@ const Home: React.FC = () => {
           <Outlet />
         </div>
       </div>
+
+      <Drawer>{drawer}</Drawer>
     </div>
   )
 }
