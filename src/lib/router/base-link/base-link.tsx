@@ -1,16 +1,9 @@
+import { Link, LinkProps as ReactLinkProps } from 'react-router-dom'
 
-import {
-  LinkProps as ReactLinkProps,
-  Link
-} from 'react-router-dom'
+export type  LinkProps = ReactLinkProps
 
-export interface LinkProps extends ReactLinkProps {
- id?:string
+export const BaseLink = (props: LinkProps) => {
+
+  return <Link {...props}></Link>
 }
 
- const BaseLink = (props:LinkProps)=>{
-
-   return <Link {...props}></Link>
-}
-
-export {BaseLink}

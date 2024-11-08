@@ -1,6 +1,8 @@
-import { FilterForm, Panel, Table } from '@/components'
 import { Form, Input } from 'antd'
 import React from 'react'
+
+import { FilterForm, Panel, Table } from '@/components'
+import { BasePreviewLink } from '@/lib'
 
 interface FormItem {
   name?: string
@@ -16,6 +18,7 @@ interface DataType {
 const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
   const [data, setData] = React.useState<DataType[]>()
+
   const columns = $.AntTableColumns([{
     dataIndex: 'name',
     title: '姓名',
@@ -28,9 +31,7 @@ const SystemUserList = (props: RouterConfig) => {
     width: 80,
     fixed: 'right',
     render: (_, record) => {
-      return <><a onClick={() => {
-        console.log(record)
-      }}>编辑</a></>
+      return <BasePreviewLink to={`/system/user/detail/${record.account}`}>编辑</BasePreviewLink>
     },
   }])
 

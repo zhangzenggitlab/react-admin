@@ -47,7 +47,7 @@ export const Header = (props: HeaderProps) => {
 
         <Dropdown menu={{ items }}>
           <Avatar
-            src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1"
+            src=""
             shape="circle"
             className="avatar"
             size="small"
