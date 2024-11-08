@@ -17,13 +17,23 @@ export const routers: RouterConfig[] = [
         path: '/system/user',
         element: () => import('./system-user/system-user-list/system-user-list.tsx'),
         drawer: [{
-          name: 'system-detail',
+          name: 'user-detail',
+        },{
+          name: 'user-add',
         }],
         children: [{
-          name: 'system-detail',
+          name: 'user-detail',
           title: '用户详情',
           path: '/system/user/detail/:id',
           element: () => import('./system-user/system-user-detail/system-user-detail.tsx'),
+          meta: {
+            slider: false,
+          },
+        }, {
+          name: 'user-add',
+          title: '用户新增',
+          path: '/system/user/add',
+          element: () => import('./system-user/system-user-add/system-user-add.tsx'),
           meta: {
             slider: false,
           },

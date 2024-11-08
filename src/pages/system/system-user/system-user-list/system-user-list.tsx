@@ -1,7 +1,7 @@
 import { Form, Input } from 'antd'
 import React from 'react'
 
-import { FilterForm, Panel, Table } from '@/components'
+import { Button, FilterForm, Panel, Table } from '@/components'
 import { BasePreviewLink } from '@/lib'
 
 interface FormItem {
@@ -56,6 +56,7 @@ const SystemUserList = (props: RouterConfig) => {
         </FilterForm>
       </Panel.Item>
 
+      <div><BasePreviewLink to={'/system/user/add'}> <Button>新增</Button></BasePreviewLink></div>
       <Panel.Item className="mt-20">
         <Table columns={columns} className="mt-16" dataSource={data} />
       </Panel.Item>
