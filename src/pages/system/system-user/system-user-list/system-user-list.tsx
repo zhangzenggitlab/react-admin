@@ -56,8 +56,8 @@ const SystemUserList = (props: RouterConfig) => {
         </FilterForm>
       </Panel.Item>
 
-      <div><BasePreviewLink to={'/system/user/add'}> <Button>新增</Button></BasePreviewLink></div>
-      <Panel.Item className="mt-20">
+      <Panel.Item className="mt-20" rightNodes={<div><BasePreviewLink to={'/system/user/add'}>
+        <Button ghost type={'primary'}>新增</Button></BasePreviewLink></div>}>
         <Table columns={columns} className="mt-16" dataSource={data} />
       </Panel.Item>
     </Panel>

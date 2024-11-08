@@ -82,7 +82,7 @@ const Home: React.FC = () => {
         openKeys.push(url)
         selectKeys.push(url)
 
-        if (menuFlat?.[url]?.title){
+        if (menuFlat?.[url]?.title) {
           return {
             title: <NavLink to={url}>{menuFlat?.[url]?.title}</NavLink>,
           }
@@ -91,7 +91,7 @@ const Home: React.FC = () => {
       }) || []
 
     setSelectKeys(selectKeys)
-    setBreadcrumb(breads.filter(i=>i.title))
+    setBreadcrumb(breads.filter(i => i.title))
     setOpenKeys(openKeys)
   }, [location])
 
@@ -100,6 +100,8 @@ const Home: React.FC = () => {
       <Header collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div className="height flex">
+        <div className="height aside-menu" style={{ width: collapsed ? '80px' : '265px' }}>
+        </div>
         <div className="height menu" style={{ width: collapsed ? '80px' : '265px' }}>
           <Menu
             items={items}
@@ -116,8 +118,7 @@ const Home: React.FC = () => {
             }}
           />
         </div>
-        <div className="height aside-menu" style={{ width: collapsed ? '80px' : '265px' }}>
-        </div>
+
         <div className="width p-x-20 p-y-20">
           <Breadcrumb items={breadcrumb} className="pb-20" />
           <Outlet />
@@ -143,8 +144,8 @@ const home = css`
         position: fixed;
         top: var(--bar-height);
     }
-    
-    .aside-menu{
+
+    .aside-menu {
         display: flex;
         z-index: 19;
         width: 100%;

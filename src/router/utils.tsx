@@ -1,5 +1,7 @@
 import Login from '@/pages/login/login.tsx'
-import Home from '@/pages/home/home.tsx'
+import Home from '@/pages/common/home/home.tsx'
+import Error from '@/pages/common/error/error.tsx'
+import NotFound from '@/pages/common/not-found/not-found.tsx'
 import { AsyncImportComponent } from '@/lib/router/async-import-component/async-import-component'
 import { AsyncImportComponentProps } from '@/lib'
 
@@ -16,8 +18,18 @@ const baseRouters: RouterConfig[] = [
   {
     path: '/',
     element: <Home />,
-    children: [],
+    children: [{
+      path: '/error',
+      element: <Error />,
+      children: [],
+    },
+      {
+        path: '/not-found',
+        element: <NotFound />,
+        children: [],
+      }],
   },
+
 ]
 
 function initRouters() {
@@ -65,7 +77,7 @@ function registerDrawer(parent: RouterConfig, drawer: RouterBase.DrawerProps[], 
   drawer.forEach(item => {
     const findChild = children.find(i => item.name == i.name)
 
-    if (!parent.children){
+    if (!parent.children) {
       parent.children = []
     }
 
