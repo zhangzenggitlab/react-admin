@@ -78,13 +78,17 @@ const Home: React.FC = () => {
       path.map((_, index) => {
         const url = `/${path.slice(0, index + 1).join('/')}`
         openKeys.push(url)
-        return {
-          title: <NavLink to={url}>{menuFlat?.[url]?.title}</NavLink>,
+
+        if (menuFlat?.[url]?.title){
+          return {
+            title: <NavLink to={url}>{menuFlat?.[url]?.title}</NavLink>,
+          }
         }
+        return { title: null }
       }) || []
 
     setSelectKeys([location.pathname])
-    setBreadcrumb(breads)
+    setBreadcrumb(breads.filter(i=>i.title))
     setOpenKeys(openKeys)
   }, [location])
 
