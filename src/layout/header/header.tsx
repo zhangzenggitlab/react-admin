@@ -1,7 +1,7 @@
 import { css } from '@emotion/css'
 import { clsx } from 'clsx'
-import { Avatar, Dropdown, MenuProps } from 'antd'
-import { LeftOutlined } from '@ant-design/icons'
+import { Avatar, Badge, Dropdown, MenuProps, Modal } from 'antd'
+import { BellOutlined, LeftOutlined } from '@ant-design/icons'
 
 interface HeaderProps {
   collapsed?: boolean
@@ -10,14 +10,27 @@ interface HeaderProps {
 
 export const Header = (props: HeaderProps) => {
   const { collapsed, setCollapsed } = props
+  const navigate = $.utils.useNavigate()
+
   const items: MenuProps['items'] = [
     {
       label: '修改密码',
       key: '1',
     },
     {
-      label: '退出登录',
+      label: <a onClick={() => {
+        Modal.confirm({
+          title: '提示!',
+          content: '确认退出?',
+          okText: '确认',
+          cancelText: '取消',
+          onOk: async () => {
+            navigate('/login')
+          },
+        })
+      }}>退出登录</a>,
       key: '2',
+
     },
   ]
 
@@ -38,6 +51,9 @@ export const Header = (props: HeaderProps) => {
       </span>
 
       <span className="flex gap-20 center-y around">
+         <Badge count={0}>
+             <BellOutlined />
+         </Badge>
         <Dropdown menu={{ items }}>
           <Avatar
             src=""

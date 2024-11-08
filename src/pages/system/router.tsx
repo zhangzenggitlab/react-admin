@@ -18,7 +18,7 @@ export const routers: RouterConfig[] = [
         element: () => import('./system-user/system-user-list/system-user-list.tsx'),
         drawer: [{
           name: 'user-detail',
-        },{
+        }, {
           name: 'user-add',
         }],
         children: [{

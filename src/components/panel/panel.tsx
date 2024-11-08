@@ -3,16 +3,23 @@ import { theme } from 'antd'
 import clsx from 'clsx'
 
 import { PanelItem } from './panel-item'
+import React from 'react'
+
 export interface PanelProps extends BaseComponent {
   loading?: boolean
 }
 
-export const Panel = (props: PanelProps) => {
+type BasePanel = {
+  Item: typeof PanelItem
+  [key:string] :any
+}
+
+export const Panel = (props: PanelProps):any => {
   const { fontSizeXL, colorTextHeading } = theme.getDesignToken()
   const { title = '', children = '' } = props
 
   return (
-    <div className={clsx(panel, 'panel')} >
+    <div className={clsx(panel, 'panel')}>
       <div style={{ color: colorTextHeading, fontSize: fontSizeXL }}>{title}</div>
       <div>{children}</div>
     </div>
@@ -22,8 +29,8 @@ export const Panel = (props: PanelProps) => {
 Panel.Item = PanelItem
 
 const panel = css`
-  .panel {
-    .title {
+    .panel {
+        .title {
+        }
     }
-  }
 `

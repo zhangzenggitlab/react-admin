@@ -2,10 +2,9 @@
 
 import { initRouters, baseRouters } from './utils'
 
-const GetRoutes = () => {
+ export const GetRoutes = () => {
   return useRoutes(baseRouters as RouteObject[])
 }
 
 initRouters()
 
-export { GetRoutes }

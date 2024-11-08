@@ -1,28 +1,28 @@
-@import '@/less/index.less';
+@import '@/lib/less/index.less';
 
 * {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     SimSun, sans-serif;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 :root {
-  --bar-height: 56px;
+    --bar-height: 56px;
 }
 
 html,
 body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  display: flex;
-  place-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    place-items: center;
 }
 
 #root {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }

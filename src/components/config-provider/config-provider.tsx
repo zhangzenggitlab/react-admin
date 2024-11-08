@@ -2,7 +2,7 @@ import React from 'react'
 import { ConfigProvider as AntConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 
-type ConfigProviderProps = { children: React.ReactNode }
+type ConfigProviderProps = BaseComponent
 
 const ConfigProvider = (props: ConfigProviderProps) => {
   return (

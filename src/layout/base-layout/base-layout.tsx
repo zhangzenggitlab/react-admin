@@ -8,6 +8,7 @@ export const BaseLayout = (props: BasePage) => {
   const [open, setOpen] = React.useState(false)
   const location = useLocation()
   const navigate = useNavigate()
+
   React.useEffect(() => {
     const path = location.pathname.indexOf('/preview')
 

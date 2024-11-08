@@ -3,7 +3,7 @@ import { RouteObject } from 'react-router-dom'
 import * as lib from '@/lib'
 
 declare global {
-  declare const $:typeof lib
+  const $: typeof lib
 
   /**
    * 路由配置
@@ -11,8 +11,8 @@ declare global {
    */
   type RouterConfig = RouterBase.RouterProps &
     Omit<RouteObject, 'element' | 'children'> & {
-      children?: RouterConfig[]
-    }
+    children?: RouterConfig[]
+  }
 
   interface BaseFc<B, P> extends React.FC<P> {
     /**
@@ -30,17 +30,27 @@ declare global {
     title?: string | React.ReactNode | JSX.Element
     children?: JSX.Element | string | React.ReactNode
     /** 路由对象 */
-    router:RouterConfig,
+    router: RouterConfig,
+
     [key: string]: any
   }
 
   /**
    * 组件基类
    */
-  interface BaseComponent  {
+  interface BaseComponent {
     className?: string
     style?: any
     children?: JSX.Element | string | React.ReactNode
     [key: string]: any
+  }
+
+  /**
+   * 下拉框使用
+   */
+  interface OptionsValueType{
+    label?:string
+    value?:string |number
+    [key:string]:any
   }
 }
