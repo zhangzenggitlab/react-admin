@@ -73,11 +73,14 @@ const Home: React.FC = () => {
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
     const openKeys: string[] = []
+    const selectKeys: string[] = []
 
     const breads =
       path.map((_, index) => {
         const url = `/${path.slice(0, index + 1).join('/')}`
+
         openKeys.push(url)
+        selectKeys.push(url)
 
         if (menuFlat?.[url]?.title){
           return {
@@ -87,7 +90,7 @@ const Home: React.FC = () => {
         return { title: null }
       }) || []
 
-    setSelectKeys([location.pathname])
+    setSelectKeys(selectKeys)
     setBreadcrumb(breads.filter(i=>i.title))
     setOpenKeys(openKeys)
   }, [location])

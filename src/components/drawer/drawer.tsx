@@ -8,9 +8,9 @@ export interface DrawerProps extends AntDrawerProps {
 }
 
 export const Drawer = (props: DrawerProps) => {
-  const { children = null, title = '' } = props
+  const { children = null, title = '',maskClosable = true } = props
 
-  return (<AntDrawer {...props}>
+  return (<AntDrawer maskClosable={maskClosable} {...props}>
     <div className={clsx(drawer, 'flex between')}>
       <span>{title}</span>
       <span>打开新窗口</span>
