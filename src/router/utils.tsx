@@ -29,7 +29,11 @@ const baseRouters: RouterConfig[] = [
         children: [],
       }],
   },
-
+  {
+    path:'*',
+    element: <NotFound />,
+    children: [],
+  }
 ]
 
 function initRouters() {

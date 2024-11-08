@@ -1,8 +1,6 @@
 import React from 'react'
 import { Button as AntButton, ButtonProps as AntButtonProps } from 'antd'
 
-import { isAsyncFunction } from '@/lib'
-
 export interface ButtonProps extends AntButtonProps {
   onClick?: () => Promise<any> | any
 }
@@ -15,7 +13,7 @@ export const Button = (props: ButtonProps) => {
       loading={loading}
       {...props}
       onClick={() => {
-        if (props?.onClick && isAsyncFunction(props?.onClick)) {
+        if (props?.onClick && $.utils.isAsyncFunction(props?.onClick)) {
           setLoading(true)
 
           props?.onClick?.()?.finally(() => {

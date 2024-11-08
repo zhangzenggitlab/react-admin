@@ -1,3 +1,3 @@
-export * from './router'
-export * from './utils'
-export * from './hooks'
+export *  from './router'
+export * as utils from './utils'
+export * as hooks from './hooks'

@@ -1,6 +1,7 @@
 import {  useLocation, } from 'react-router-dom'
 
-import { BaseLink } from '@/lib'
+// import { BaseLi } from '@/lib'
+import {BaseLink} from '@/lib'
 
 export interface BasePreviewLinkProps extends BaseComponent{
   /** 路由path */

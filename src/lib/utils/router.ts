@@ -1,4 +1,4 @@
-import { NavigateOptions, useLocation, useNavigate } from 'react-router-dom'
+import { NavigateOptions, useLocation, useNavigate as ReactUseNavigate } from 'react-router-dom'
 
 export interface UsePreviewNavigateProps extends NavigateOptions {
   /**  跳转抽屉name */
@@ -10,8 +10,8 @@ export interface UsePreviewNavigateProps extends NavigateOptions {
 /**
  * 路由跳转
  */
-export const useRouterNavigate = () => {
-  const navigate = useNavigate()
+export const useNavigate = () => {
+  const navigate = ReactUseNavigate()
 
   return (path: string, options?: NavigateOptions) => {
     navigate(path, options)

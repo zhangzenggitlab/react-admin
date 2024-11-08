@@ -68,7 +68,7 @@ const Home: React.FC = () => {
   const [selectKeys, setSelectKeys] = React.useState<string[]>([])
 
   const location = useLocation()
-  const navigate = $.useRouterNavigate()
+  const navigate = $.utils.useNavigate()
 
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
