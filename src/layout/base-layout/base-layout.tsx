@@ -13,10 +13,16 @@ export const BaseLayout = (props: BasePage) => {
 
     if (path != -1) {
       const pathname = location.pathname.substring(0,path)
+
       if (location.pathname.indexOf(pathname,path) != -1){
         setOpen(true)
+      }else {
+        setOpen(false)
       }
+    }else{
+      setOpen(false)
     }
+
   }, [location])
 
   return <>
