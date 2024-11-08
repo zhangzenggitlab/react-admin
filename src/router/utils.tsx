@@ -36,15 +36,16 @@ function addRouter(routers: RouterConfig[]): RouterConfig[] {
   return (
     routers.map((item) => {
       if (typeof item.element === 'function') {
-        baseRouters[1]?.children?.push({
+        const router = {
           ...item,
           element: <AsyncImportComponent {...(item as unknown as AsyncImportComponentProps)}></AsyncImportComponent>,
           children: [],
-        })
-      }
+        }
+        baseRouters[1]?.children?.push(router)
 
-      if (item.path && item.drawer?.length > 0) {
-        registerDrawer(item.path, item?.drawer || [], item.children || [])
+        if (router.path && router?.drawer && router?.drawer?.length > 0) {
+          registerDrawer(router, router?.drawer || [], item.children || [])
+        }
       }
 
       return {
@@ -60,15 +61,20 @@ function addRouter(routers: RouterConfig[]): RouterConfig[] {
 /**
  * 注册抽屉路由
  */
-function registerDrawer(parentPath: string, drawer: RouterBase.DrawerProps[], children: RouterConfig[]) {
+function registerDrawer(parent: RouterConfig, drawer: RouterBase.DrawerProps[], children: RouterConfig[]) {
   drawer.forEach(item => {
     const findChild = children.find(i => item.name == i.name)
-    baseRouters.push({
+
+    if (!parent.children){
+      parent.children = []
+    }
+
+    parent?.children?.push({
       ...findChild,
       element: <AsyncImportComponent {...(findChild as unknown as AsyncImportComponentProps)}></AsyncImportComponent>,
-      children: [],
-      path: parentPath + '/preview' + findChild?.path,
+      path: parent.path + '/preview' + findChild?.path,
     })
+
   })
 }
 

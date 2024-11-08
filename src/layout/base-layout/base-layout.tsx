@@ -1,22 +1,23 @@
 import React from 'react'
 import { Drawer } from '@/components'
-import { useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 export const BaseLayout = (props: BasePage) => {
-  const [open] = React.useState(false)
+  const [open,setOpen] = React.useState(false)
   const location = useLocation()
 
   React.useEffect(() => {
-    // console.log(props.router)
-    // console.log(location)
-
-    const path = location.pathname.indexOf("/preview")
-
-    console.log(path)
+    const path = location.pathname.indexOf('/preview')
+    if (path != -1) {
+      setOpen(true)
+    }
   }, [location])
 
   return <>
     {props.children}
-    <Drawer open={open} />
+    {
+      props.router.drawer &&
+      <Drawer open={open}><Outlet></Outlet></Drawer>
+    }
   </>
 }
