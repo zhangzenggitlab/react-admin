@@ -1,9 +1,7 @@
 import { css } from '@emotion/css'
 import { clsx } from 'clsx'
-import { Avatar, Dropdown, Input, MenuProps } from 'antd'
-import { LeftOutlined, ShareAltOutlined } from '@ant-design/icons'
-
-import { Button } from '@/components'
+import { Avatar, Dropdown, MenuProps } from 'antd'
+import { LeftOutlined } from '@ant-design/icons'
 
 interface HeaderProps {
   collapsed?: boolean
@@ -40,11 +38,6 @@ export const Header = (props: HeaderProps) => {
       </span>
 
       <span className="flex gap-20 center-y around">
-        <Input.Search placeholder="请输入。。。" />
-        <Button icon={<ShareAltOutlined />} shape="round">
-          分享
-        </Button>
-
         <Dropdown menu={{ items }}>
           <Avatar
             src=""
