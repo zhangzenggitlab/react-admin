@@ -19,7 +19,7 @@ const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
   const [data, setData] = React.useState<DataType[]>()
 
-  const columns = $.AntTableColumns([{
+  const columns = $.ant.AntTableColumns([{
     dataIndex: 'name',
     title: '姓名',
   }, {

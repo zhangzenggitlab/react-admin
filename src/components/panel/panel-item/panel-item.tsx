@@ -8,14 +8,19 @@ export interface PanelItemProps extends BaseComponent {
 }
 
 export const PanelItem = (props: PanelItemProps) => {
-  const { borderRadius, colorBgContainer, padding, fontSizeLG } = theme.getDesignToken()
+  const { borderRadius, colorBgContainer, padding, fontSizeLG, boxShadowTertiary } = theme.getDesignToken()
 
   const { title = '', children = '', rightNodes = null, className = '', style = {} } = props
 
   return (
     <div
       className={clsx(panel, 'panel', className)}
-      style={{ borderRadius: borderRadius, backgroundColor: colorBgContainer, padding: padding, ...style }}
+      style={{
+        borderRadius: borderRadius,
+        backgroundColor: colorBgContainer,
+        padding: padding, ...style,
+        boxShadow: boxShadowTertiary,
+      }}
     >
       <div className="title flex between">
         <span style={{ fontSize: fontSizeLG }}>{title}</span>

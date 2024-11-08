@@ -116,7 +116,8 @@ const Home: React.FC = () => {
             }}
           />
         </div>
-
+        <div className="height aside-menu" style={{ width: collapsed ? '80px' : '265px' }}>
+        </div>
         <div className="width p-x-20 p-y-20">
           <Breadcrumb items={breadcrumb} className="pb-20" />
           <Outlet />
@@ -129,9 +130,21 @@ const Home: React.FC = () => {
 export default Home
 
 const home = css`
-    background-color: #f5f5f5;
+    background: linear-gradient(#ffffff, #f5f5f5 28%);
 
     .menu {
+        display: flex;
+        z-index: 19;
+        width: 100%;
+        flex-shrink: 0;
+        line-height: 56px;
+        border-block-end: 1px solid rgba(5, 5, 5, 0.06);
+        background-color: transparent;
+        position: fixed;
+        top: var(--bar-height);
+    }
+    
+    .aside-menu{
         display: flex;
         z-index: 19;
         width: 100%;

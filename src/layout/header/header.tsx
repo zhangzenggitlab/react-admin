@@ -71,8 +71,9 @@ const header = css`
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-
     padding: 0 20px;
+    position: sticky;
+    top: 0;
 
     .logo {
         height: 28px;

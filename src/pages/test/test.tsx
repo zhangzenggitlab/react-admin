@@ -4,7 +4,6 @@ import { Outlet } from 'react-router-dom'
 import { useRouterNavigate } from '@/lib'
 import { Button } from '@/components'
 
-
 const Home: React.FC = () => {
   const navigate = useRouterNavigate()
 

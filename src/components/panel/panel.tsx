@@ -12,7 +12,7 @@ export const Panel = (props: PanelProps) => {
   const { title = '', children = '' } = props
 
   return (
-    <div className={clsx(panel, 'panel')}>
+    <div className={clsx(panel, 'panel')} >
       <div style={{ color: colorTextHeading, fontSize: fontSizeXL }}>{title}</div>
       <div>{children}</div>
     </div>
