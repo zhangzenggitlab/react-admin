@@ -1,9 +1,17 @@
 import React from 'react'
-import type { TablePaginationConfig,PaginationProps  } from 'antd'
+import type { PaginationProps , TablePaginationConfig as AntTablePaginationConfig} from 'antd'
 
-export interface PageProps extends PaginationProps  {
+export interface PageProps extends PaginationProps {
   /** 搜索 */
   onSearch: () => any
+}
+
+interface TablePaginationConfig extends AntTablePaginationConfig{
+  onShowSizeChange: PaginationProps['onShowSizeChange']
+  showTotal:PaginationProps['showTotal']
+  onChange:PaginationProps['onShowSizeChange']
+  total:number
+  pageSize:number
 }
 
 export const usePagination = (props?: PageProps) => {
@@ -19,15 +27,15 @@ export const usePagination = (props?: PageProps) => {
 
   const showTotal: PaginationProps['showTotal'] = (total) => `共 ${total} 条`
 
-  const pagination:TablePaginationConfig = {
+  const pagination: TablePaginationConfig = {
     showSizeChanger: true,
     showQuickJumper: true,
     size: 'small',
     onShowSizeChange: onShowSizeChange,
-    showTotal:showTotal,
+    showTotal: showTotal,
     onChange: onShowSizeChange,
     total,
-    pageSize
+    pageSize,
   }
 
   /** 搜索使用第一页 */
@@ -47,6 +55,6 @@ export const usePagination = (props?: PageProps) => {
     onSearch,
     onRefresh,
     setTotal,
-    total
+    total,
   }
 }

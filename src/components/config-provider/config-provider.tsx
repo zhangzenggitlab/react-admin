@@ -10,9 +10,6 @@ const ConfigProvider = (props: ConfigProviderProps) => {
       locale={zhCN}
       theme={{
         components: {
-          Form: {
-            itemMarginBottom: 0,
-          },
           Menu: {
             itemSelectedBg: 'rgba(0, 0, 0, 0.04)',
             itemSelectedColor: 'rgba(0, 0, 0, 0.9)',

@@ -1,29 +1,16 @@
 import React from 'react'
-import { Form, Input, Select, TreeSelect } from 'antd'
+import { Form, Input, Popconfirm, Select, TreeSelect } from 'antd'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { BasePreviewLink } from '@/lib'
 import { departmentList, StatusEnum } from '../define.ts'
 
-interface FormItem {
-  name?: string
-  account?: string
-  phone?: string
-  mail?: string
-  /** 全部,启用,禁用 */
-  status?: '0' | '1' | '2',
-  createTime?: string
-}
-
-interface DataType {
-  id?: number
-  account?: string
-  name?: string
+interface FormItem extends UserEntity.User {
 }
 
 const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
-  const [data, setData] = React.useState<DataType[]>()
+  const [data, setData] = React.useState<Partial<FormItem>[]>()
 
   const columns = $.utils.ant.AntTableColumns([
     {
@@ -33,27 +20,45 @@ const SystemUserList = (props: RouterConfig) => {
     {
       dataIndex: 'account',
       title: '账号',
-    }, {
+    },
+    {
       dataIndex: 'mail',
       title: '邮箱',
-    }, {
+    },
+    {
       dataIndex: 'phone',
       title: '手机号',
-    }, {
+    },
+    {
       dataIndex: 'status',
       title: '状态',
-    }, {
+    },
+    {
       dataIndex: 'createTime',
       title: '创建时间',
-      valueType:'date'
+      valueType: 'date',
     },
     {
       dataIndex: 'control',
       title: '操作',
-      width: 80,
+      width: 120,
       fixed: 'right',
       render: (_, record) => {
-        return <BasePreviewLink to={`/system/user/detail/${record.account}`}>编辑</BasePreviewLink>
+        return (
+          <div className={'flex gap-10'}>
+            <BasePreviewLink to={`/system/user/detail/${record.account}`}>编辑</BasePreviewLink>
+
+            <Popconfirm
+              title="提示"
+              description="确定删除?"
+              onConfirm={() => {
+                console.log(11)
+              }}
+            >
+              <a>删除</a>
+            </Popconfirm>
+          </div>
+        )
       },
     },
   ])
@@ -64,7 +69,7 @@ const SystemUserList = (props: RouterConfig) => {
         id: 1,
         account: '1',
         name: '站',
-        createTime:1731140382
+        createTime: 1731140382,
       },
     ])
   }, [])
@@ -83,17 +88,15 @@ const SystemUserList = (props: RouterConfig) => {
             <Input placeholder="请输入" />
           </Form.Item>
           <Form.Item name="status" label="状态">
-            <Select placeholder="请选择" options={$.utils.enumToOptions(StatusEnum)} allowClear
-                    style={{ width: 180 }} />
-          </Form.Item>
-          <Form.Item name="departmenId" label="部门">
-            <TreeSelect
-              showSearch
+            <Select
               placeholder="请选择"
+              options={$.utils.enumToOptions(StatusEnum)}
               allowClear
               style={{ width: 180 }}
-              treeData={departmentList}
             />
+          </Form.Item>
+          <Form.Item name="departmenId" label="部门">
+            <TreeSelect showSearch placeholder="请选择" allowClear style={{ width: 180 }} treeData={departmentList} />
           </Form.Item>
         </FilterForm>
       </Panel.Item>

@@ -9,12 +9,7 @@ export interface PanelProps extends BaseComponent {
   loading?: boolean
 }
 
-type BasePanel = {
-  Item: typeof PanelItem
-  [key:string] :any
-}
-
-export const Panel = (props: PanelProps):any => {
+export const Panel = (props: PanelProps) => {
   const { fontSizeXL, colorTextHeading } = theme.getDesignToken()
   const { title = '', children = '' } = props
 

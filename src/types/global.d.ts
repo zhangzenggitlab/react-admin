@@ -14,7 +14,7 @@ declare global {
     children?: RouterConfig[]
   }
 
-  interface BaseFc<B, P> extends React.FC<P> {
+  interface BaseFc<B, P extends BasePage> extends React.FC<P> {
     /**
      * 在页面进入之前触发,用来加载页面前置数据
      * B => beforeEnter参数类型,如详情页需要传递id,之后查询详情,在异步函数调用结束之前不会显示组件(可用来做骨架屏或者loading)
@@ -31,7 +31,6 @@ declare global {
     children?: JSX.Element | string | React.ReactNode
     /** 路由对象 */
     router: RouterConfig,
-
     [key: string]: any
   }
 

@@ -80,11 +80,16 @@ export const FilterForm = (props: FormProps) => {
 }
 
 const filterForm = css`
-  .filter-form-control {
-    right: 24px;
-    bottom: 4px;
-  }
-  .ant-form-item:last-child {
-    padding-right: 150px;
-  }
+    .filter-form-control {
+        right: 24px;
+        bottom: 4px;
+    }
+
+    .ant-form-item {
+        margin-bottom: 0;
+    }
+
+    .ant-form-item:last-child {
+        padding-right: 150px;
+    }
 `
