@@ -13,7 +13,6 @@ export const Drawer = (props: DrawerProps) => {
   return (<AntDrawer maskClosable={maskClosable} {...props}>
     <div className={clsx(drawer, 'flex between')}>
       <span>{title}</span>
-      <span>打开新窗口</span>
     </div>
     {children}
   </AntDrawer>)

@@ -1,8 +1,6 @@
 import React from 'react'
 
-const BaseContext = () => {
-
+export const BaseContext = () => {
   return React.createContext({})
 }
 
-export { BaseContext }

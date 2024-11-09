@@ -7,7 +7,10 @@ const BaseRouter = () => {
   return (
     <BrowserRouter>
       <ConfigProvider>
-        <GetRoutes />
+
+          <GetRoutes />
+
+
       </ConfigProvider>
     </BrowserRouter>
   )
