@@ -1,43 +1,39 @@
 import React from 'react'
-import { ConfigProvider, Modal } from '@/components'
+import { Modal, ModalProps } from '@/components'
 
 import { usePopup } from '@/lib/hooks'
 
 export interface BaseModalProps {
   children?: JSX.Element
   onOk?: () => Promise<any>
+  render:any
 }
 
 interface BaseModalStates {
 }
 
-abstract class BaseController extends React.Component<BaseModalProps, BaseModalStates> {
+interface OpenProps extends ModalProps, BaseComponent {
+}
+
+abstract class BaseController<T extends BaseModalProps, S extends BaseModalStates> extends React.Component<T, S> {
   abstract async onOk()
 }
 
-export class BaseModal extends BaseController {
-  state = {
-    age: 1,
+export class BaseModal extends React.Component<BaseModalProps, BaseModalStates> {
+  constructor(props, state) {
+    super(props, state)
+    this.props = props
+    this.state = state
   }
 
-  constructor(props) {
-    super(props)
+   open(props: OpenProps) {
+    const { children } = props
+    console.log(this)
+
+    usePopup().open({
+      children: <Modal open={true} onOk={() => {
+      }}>{this.render()}</Modal>,
+    })
   }
-
-
-  // open() {
-  //   let self = this
-  //   usePopup().open({
-  //     children: <ConfigProvider> <Modal open={true} onOk={() => {
-  //       this.onOk().then(r => {
-  //       })
-  //     }}>{this.render()}</Modal></ConfigProvider>,
-  //   })
-  // }
-
-  async onOk(): Promise<any> {
-    console.log('ok')
-  }
-
-
 }
+

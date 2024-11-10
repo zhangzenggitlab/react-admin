@@ -1,69 +1,35 @@
-import { BaseModal, ConfigProvider, Modal } from '@/components'
-import React from 'react'
-import { usePopup } from '@/lib/hooks'
-
-// export class UserAddDialog extends BaseModal {
-//
-//   constructor(props) {
-//     super(props)
-//   }
-//
-//   redDom(){
-//
-//     return <>111</>
-//   }
-//
-//   render() {
-//     // const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form
-//     console.log( this.props)
-//     return (
-//       <Form onClick={() => {
-//       }}>
-//         <Form.Item name={'age'} label={'年龄'}>
-//           <Input />
-//         </Form.Item>
-//
-//       </Form>
-//     )
-//   }
-// }
-//
-//
-// export const userAddDialog = new UserAddDialog()
+import { BaseModal } from '@/components'
 
 export class UserAddDialog extends BaseModal {
-  form: any = null
-
-  constructor() {
-    super({})
-
-    this.state = {
-      age: 1,
-    }
+  static defaultProps = {
+    color: 'blue',
   }
 
-  init() {
-    // this.form = Form.useForm()
+  state = {
+    age: 1,
   }
-
-  open() {
-    let self = this
-    usePopup().open({
-      children:
-        <ConfigProvider> <Modal open={true} onOk={() => {
-        }}>{this.render()}</Modal></ConfigProvider>,
-    })
-  }
+  // constructor(props,state) {
+  //   super(props, state)
+  //   this.state = state
+  //   this.props = props
+  // }
 
   render() {
 
-    return <button onClick={() => {
-
-      this.setState({
-        age: 3,
-      })
-    }}>{this.state.age}</button>
+    return (
+      <button
+        onClick={() => {
+          console.log(this.state.age)
+          this.setState({
+            age: ++this.state.age,
+          })
+        }}
+      >
+        {this.state.age}
+      </button>
+    )
   }
 }
+
 
 export const userAddDialog = new UserAddDialog()

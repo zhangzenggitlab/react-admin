@@ -35,7 +35,6 @@ export const usePopup = () => {
   }
 }
 
-
 const popup = css`
     .popup {
         position: fixed;
