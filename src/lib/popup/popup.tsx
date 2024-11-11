@@ -3,9 +3,7 @@ import React from 'react'
 
 import { ConfigProvider } from '@/components'
 
-interface OpenDialogProps extends BaseComponent{
-
-}
+type OpenDialogProps = BaseComponent
 
 export const createPopup = (props:OpenDialogProps)=>{
   let popup = document.getElementById('popup')

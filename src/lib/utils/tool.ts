@@ -28,13 +28,13 @@ export function enumToOptions(enumData: Record<string, any>): OptionsValueType[]
  */
 export const formatDate = (dateStr: number | Date, format: string = 'YYYY-MM-dd hh:mm:ss') => {
   // 10位数时间戳需要转为13位
-  if (typeof dateStr === 'number' && dateStr.toString().length === 10){
+  if (typeof dateStr === 'number' && dateStr.toString().length === 10) {
     dateStr = dateStr * 1000
   }
 
   const date = new Date(dateStr)
 
-  const map:Record<string, any> = {
+  const map: Record<string, any> = {
     Y: date.getFullYear(), // 月份
     M: date.getMonth() + 1, // 月份
     d: date.getDate(), // 日
