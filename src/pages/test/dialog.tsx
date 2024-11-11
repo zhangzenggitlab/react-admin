@@ -1,5 +1,6 @@
-import { BaseModal, Button, Options } from '@/components'
 import React from 'react'
+
+import { BaseModal, Button, Options } from '@/components'
 
 class Dialog extends BaseModal {
   options: Options = {

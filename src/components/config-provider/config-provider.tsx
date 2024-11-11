@@ -1,4 +1,3 @@
-import React from 'react'
 import { ConfigProvider as AntConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 
