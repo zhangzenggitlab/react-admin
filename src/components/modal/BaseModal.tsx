@@ -4,7 +4,7 @@ import { Modal, ModalProps } from '@/components'
 import { createPopup } from '@/lib'
 
 interface openModalProps {
-  render: () => JSX.Element
+  render: () => React.ReactDOM
 }
 
 export interface Options extends ModalProps {
