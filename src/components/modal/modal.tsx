@@ -7,9 +7,20 @@ export interface ModalProps extends Omit<AntModalProps, 'onOk'> {
 
 export const Modal = (props: ModalProps) => {
   const { children, ...prop } = props
-  const [confirmLoading,setConfirmLoading] = React.useState<boolean>(false)
+  const [confirmLoading, setConfirmLoading] = React.useState<boolean>(false)
 
-  return <AntModal {...prop} confirmLoading={confirmLoading} onOk={() =>props?.onOk?.()?.finally(()=>setConfirmLoading(true)) }>
+  return <AntModal destroyOnClose {...prop} confirmLoading={confirmLoading} onOk={() => {
+
+    if (props?.onOk && $.utils.isAsyncFunction(props?.onOk)) {
+      setConfirmLoading(true)
+      return props?.onOk?.()?.finally(() => {
+        setConfirmLoading(false)
+      })
+    } else {
+      return props?.onOk?.()
+    }
+
+  }}>
     {children}
   </AntModal>
 }

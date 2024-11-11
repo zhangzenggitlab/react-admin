@@ -10,6 +10,7 @@ class Dialog extends BaseModal {
 
   render = () => {
     const [state, setState] = React.useState(2)
+
     return (
       <Button onClick={() => {
         setState(Math.random())

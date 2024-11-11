@@ -28,10 +28,16 @@ export const OpenModal = (props: OpenModal) => {
   return <Modal {...props} open={open} onCancel={() => {
     props?.onCancel?.()
     setOpen(false)
-  }} onOk={async () => {
-    props?.onOk?.()?.finally(() => {
+  }} onOk={() => {
+    if (props?.onOk && $.utils.isAsyncFunction(props?.onOk)) {
+      setOpen(true)
+      props?.onOk?.()?.finally(() => {
+        setOpen(false)
+      })
+    } else {
+      props?.onOk?.()
       setOpen(false)
-    })
+    }
   }}>{props.render()}</Modal>
 }
 
