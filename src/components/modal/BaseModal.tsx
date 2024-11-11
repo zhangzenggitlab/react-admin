@@ -15,15 +15,7 @@ export interface Options extends ModalProps {
 type OpenModal = openModalProps & Options
 
 export const OpenModal = (props: OpenModal) => {
-  const [open, setOpen] = React.useState<boolean>(false)
-
-  React.useEffect(() => {
-    setOpen(true)
-
-    return () => {
-      setOpen(false)
-    }
-  }, [])
+  const [open, setOpen] = React.useState<boolean>(true)
 
   return <Modal {...props} open={open} onCancel={() => {
     props?.onCancel?.()
