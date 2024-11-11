@@ -8,7 +8,7 @@ export function isAsyncFunction(func: any) {
  * @param enumData
  */
 export function enumToOptions(enumData: Record<string, any>): OptionsValueType[] {
-  let options: OptionsValueType[] = []
+  const options: OptionsValueType[] = []
 
   for (const option in enumData) {
     options.push({
@@ -34,7 +34,7 @@ export const formatDate = (dateStr: number | Date, format: string = 'YYYY-MM-dd 
 
   const date = new Date(dateStr)
 
-  const map = {
+  const map:Record<string, any> = {
     Y: date.getFullYear(), // 月份
     M: date.getMonth() + 1, // 月份
     d: date.getDate(), // 日

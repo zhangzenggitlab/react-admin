@@ -1,39 +1,48 @@
 import React from 'react'
+
 import { Modal, ModalProps } from '@/components'
+import { createPopup } from '@/lib'
 
-import { usePopup } from '@/lib/hooks'
-
-export interface BaseModalProps {
-  children?: JSX.Element
-  onOk?: () => Promise<any>
-  render:any
+interface openModalProps {
+  render: () => JSX.Element
 }
 
-interface BaseModalStates {
+export interface Options extends ModalProps {
+  title: string
+  onCancel?: () => void
 }
 
-interface OpenProps extends ModalProps, BaseComponent {
+type OpenModal = openModalProps & Options
+
+export const OpenModal = (props: OpenModal) => {
+  const [open, setOpen] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    setOpen(true)
+
+    return () => {
+      setOpen(false)
+    }
+  }, [])
+
+  return <Modal {...props} open={open} onCancel={() => {
+    props?.onCancel?.()
+    setOpen(false)
+  }} onOk={async () => {
+    props?.onOk?.()?.finally(() => {
+      setOpen(false)
+    })
+  }}>{props.render()}</Modal>
 }
 
-abstract class BaseController<T extends BaseModalProps, S extends BaseModalStates> extends React.Component<T, S> {
-  abstract async onOk()
-}
+export abstract class BaseModal {
+  abstract options: Options
 
-export class BaseModal extends React.Component<BaseModalProps, BaseModalStates> {
-  constructor(props, state) {
-    super(props, state)
-    this.props = props
-    this.state = state
-  }
+  abstract render(): JSX.Element
 
-   open(props: OpenProps) {
-    const { children } = props
-    console.log(this)
-
-    usePopup().open({
-      children: <Modal open={true} onOk={() => {
-      }}>{this.render()}</Modal>,
+  open(options?: Options) {
+    createPopup({
+      children: <OpenModal render={this.render} {...this.options} {...options}></OpenModal>,
     })
   }
 }
-

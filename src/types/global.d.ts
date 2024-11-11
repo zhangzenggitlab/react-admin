@@ -21,6 +21,8 @@ declare global {
      * P => 组件返回值，如详情页的详解接口查询完成，返回详情数据,可以直接通过props访
      */
     beforeEnter?: (...args: B[]) => Promise<P>
+
+    open?: (...args: B[]) => Promise<void>
   }
 
   /**

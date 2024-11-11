@@ -4,8 +4,6 @@ import { Form, Input, Popconfirm, Select, TreeSelect } from 'antd'
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { BasePreviewLink } from '@/lib'
 import { departmentList, StatusEnum } from '../define.ts'
-import { userAddDialog,UserAddDialog } from '@/pages/system/system-user/dialog/user-add-dialog.tsx'
-
 
 interface FormItem extends UserEntity.User {
 }
@@ -111,13 +109,6 @@ const SystemUserList = (props: RouterConfig) => {
             }}>
               新增
             </Button>
-
-            <Button ghost type={'primary'} onClick={() => {
-              userAddDialog.open({})
-            }}>
-              新增
-            </Button>
-<UserAddDialog></UserAddDialog>
           </div>
         }
       >
