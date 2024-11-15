@@ -1,6 +1,6 @@
 export enum StatusEnum {
-  '启用' = '1',
-  '禁用' = '2'
+  启用 = '1',
+  禁用 = '2'
 }
 
 export const departmentList = [{

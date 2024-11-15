@@ -8,5 +8,7 @@ declare namespace UserEntity {
     /** 全部,启用,禁用 */
     status: '0' | '1' | '2'
     createTime: string | number
+    /** 所在部门名称 */
+    departmentName: string
   }
 }

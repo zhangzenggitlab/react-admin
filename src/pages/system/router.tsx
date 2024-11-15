@@ -33,7 +33,7 @@ export const routers: RouterConfig[] = [
           name: 'user-add',
           title: '用户新增',
           path: '/system/user/add',
-          element: () => import('./system-user/system-user-add/system-user-add.tsx'),
+          element: () => import('./system-user/modal/system-user-add.tsx'),
           meta: {
             slider: false,
           },

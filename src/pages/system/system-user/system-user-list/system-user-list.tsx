@@ -1,9 +1,11 @@
 import React from 'react'
-import { Form, Input, Popconfirm, Select, TreeSelect } from 'antd'
+import { Dropdown, Form, Input, Popconfirm, Select, Tag, TreeSelect } from 'antd'
+import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { BasePreviewLink } from '@/lib'
 import { departmentList, StatusEnum } from '../define.ts'
+import {SystemUserAdd} from '../modal'
 
 interface FormItem extends UserEntity.User {
 }
@@ -22,16 +24,19 @@ const SystemUserList = (props: RouterConfig) => {
       title: '账号',
     },
     {
+      dataIndex: 'phone',
+      title: '手机号',
+    }, {
       dataIndex: 'mail',
       title: '邮箱',
     },
     {
-      dataIndex: 'phone',
-      title: '手机号',
-    },
-    {
       dataIndex: 'status',
       title: '状态',
+      render: (status) => {
+
+        return <Tag color={StatusEnum.启用 ? 'green' : 'red'}>{StatusEnum.启用 ? '启用' : '禁用'}</Tag>
+      },
     },
     {
       dataIndex: 'createTime',
@@ -41,13 +46,12 @@ const SystemUserList = (props: RouterConfig) => {
     {
       dataIndex: 'control',
       title: '操作',
-      width: 120,
+      width: 160,
       fixed: 'right',
       render: (_, record) => {
         return (
           <div className={'flex gap-10'}>
             <BasePreviewLink to={`/system/user/detail/${record.account}`}>编辑</BasePreviewLink>
-
             <Popconfirm
               title="提示"
               description="确定删除?"
@@ -57,6 +61,18 @@ const SystemUserList = (props: RouterConfig) => {
             >
               <a>删除</a>
             </Popconfirm>
+
+            <Dropdown menu={{
+              items: [{
+                label: '分配角色',
+                key: '1',
+              }],
+            }}>
+              <a onClick={(e) => e.preventDefault()}>
+                <EllipsisOutlined />
+              </a>
+            </Dropdown>
+
           </div>
         )
       },
@@ -69,6 +85,7 @@ const SystemUserList = (props: RouterConfig) => {
         id: 1,
         account: '1',
         name: '站',
+        status: '1',
         createTime: 1731140382,
       },
     ])
@@ -82,6 +99,9 @@ const SystemUserList = (props: RouterConfig) => {
             <Input placeholder="请输入" />
           </Form.Item>
           <Form.Item name="account" label="账号">
+            <Input placeholder="请输入" />
+          </Form.Item>
+          <Form.Item name="phone" label="手机号码">
             <Input placeholder="请输入" />
           </Form.Item>
           <Form.Item name="mail" label="邮箱">

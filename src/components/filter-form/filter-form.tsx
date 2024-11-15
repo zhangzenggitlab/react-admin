@@ -90,6 +90,6 @@ const filterForm = css`
     }
 
     .ant-form-item:last-child {
-        padding-right: 150px;
+        padding-right: 200px;
     }
 `
