@@ -10,7 +10,6 @@ export const Modal = (props: ModalProps) => {
   const [confirmLoading, setConfirmLoading] = React.useState<boolean>(false)
 
   return <AntModal destroyOnClose {...prop} confirmLoading={confirmLoading} onOk={() => {
-
     if (props?.onOk && $.utils.isAsyncFunction(props?.onOk)) {
       setConfirmLoading(true)
       return props?.onOk?.()?.finally(() => {

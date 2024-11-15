@@ -5,7 +5,7 @@ import { EllipsisOutlined } from '@ant-design/icons'
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { BasePreviewLink } from '@/lib'
 import { departmentList, StatusEnum } from '../define.ts'
-import {SystemUserAdd} from '../modal'
+import { systemUserAdd } from '../modal'
 
 interface FormItem extends UserEntity.User {
 }
@@ -126,6 +126,9 @@ const SystemUserList = (props: RouterConfig) => {
         rightNodes={
           <div>
             <Button ghost type={'primary'} onClick={() => {
+              systemUserAdd.open({
+
+              })
             }}>
               新增
             </Button>
