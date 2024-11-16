@@ -126,9 +126,7 @@ const SystemUserList = (props: RouterConfig) => {
         rightNodes={
           <div>
             <Button ghost type={'primary'} onClick={() => {
-              systemUserAdd.open({
-
-              })
+              systemUserAdd.open()
             }}>
               新增
             </Button>

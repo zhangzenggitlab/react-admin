@@ -1,29 +1,18 @@
 import { Form, Input, Select, TreeSelect } from 'antd'
-import { departmentList, StatusEnum } from '@/pages/system/system-user/define.ts'
 import React from 'react'
-import { BaseModal, Options } from '@/components'
 
-interface FormItem extends UserEntity.User {
-}
+import { BaseModal, Options } from '@/components'
+import { departmentList, StatusEnum } from '@/pages/system/system-user/define.ts'
+
+interface FormItem extends UserEntity.User {}
 
 interface BeforeProps {
-  /**
-   * 编辑需要使用id
-   */
   id?: string
 }
 
 export class SystemUserAdd extends BaseModal<BeforeProps> {
   options: Options = {
     title: '新增',
-    onOk:async ()=>{
-      return new Promise(resolve => {
-        setTimeout(()=>{
-          console.log(11)
-          resolve()
-        },1000)
-      })
-    }
   }
 
   render() {
