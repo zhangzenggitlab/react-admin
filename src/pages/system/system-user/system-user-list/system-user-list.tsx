@@ -3,7 +3,6 @@ import { Dropdown, Form, Input, Popconfirm, Select, Tag, TreeSelect } from 'antd
 import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
-import { BasePreviewLink } from '@/lib'
 import { departmentList, StatusEnum } from '../define.ts'
 import { systemUserAdd } from '../modal'
 
@@ -14,7 +13,7 @@ const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
   const [data, setData] = React.useState<Partial<FormItem>[]>()
 
-  const columns = $.utils.ant.AntTableColumns([
+  const columns = $.utils.ant.AntTableColumns<FormItem>([
     {
       dataIndex: 'name',
       title: '姓名',
@@ -26,7 +25,8 @@ const SystemUserList = (props: RouterConfig) => {
     {
       dataIndex: 'phone',
       title: '手机号',
-    }, {
+    },
+    {
       dataIndex: 'mail',
       title: '邮箱',
     },
@@ -34,8 +34,7 @@ const SystemUserList = (props: RouterConfig) => {
       dataIndex: 'status',
       title: '状态',
       render: (status) => {
-
-        return <Tag color={StatusEnum.启用 ? 'green' : 'red'}>{StatusEnum.启用 ? '启用' : '禁用'}</Tag>
+        return <Tag color={StatusEnum.启用 == status ? 'green' : 'red'}>{StatusEnum.启用 ? '启用' : '禁用'}</Tag>
       },
     },
     {
@@ -51,7 +50,15 @@ const SystemUserList = (props: RouterConfig) => {
       render: (_, record) => {
         return (
           <div className={'flex gap-10'}>
-            <BasePreviewLink to={`/system/user/detail/${record.account}`}>编辑</BasePreviewLink>
+            <a
+              onClick={() => {
+                systemUserAdd.open({
+                  form: record,
+                })
+              }}
+            >
+              编辑
+            </a>
             <Popconfirm
               title="提示"
               description="确定删除?"
@@ -62,17 +69,20 @@ const SystemUserList = (props: RouterConfig) => {
               <a>删除</a>
             </Popconfirm>
 
-            <Dropdown menu={{
-              items: [{
-                label: '分配角色',
-                key: '1',
-              }],
-            }}>
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: '分配角色',
+                    key: '1',
+                  },
+                ],
+              }}
+            >
               <a onClick={(e) => e.preventDefault()}>
                 <EllipsisOutlined />
               </a>
             </Dropdown>
-
           </div>
         )
       },
@@ -125,9 +135,13 @@ const SystemUserList = (props: RouterConfig) => {
         className="mt-20"
         rightNodes={
           <div>
-            <Button ghost type={'primary'} onClick={() => {
-              systemUserAdd.open()
-            }}>
+            <Button
+              ghost
+              type={'primary'}
+              onClick={() => {
+                systemUserAdd.open()
+              }}
+            >
               新增
             </Button>
           </div>

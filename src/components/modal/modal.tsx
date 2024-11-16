@@ -16,21 +16,27 @@ export const Modal = (props: ModalProps) => {
   const [confirmLoading, setConfirmLoading] = React.useState<boolean>(false)
   const [open, setOpen] = React.useState(true)
 
-  return <AntModal destroyOnClose {...prop} open={open} confirmLoading={confirmLoading} onOk={() => {
-    if (props?.onOk && $.utils.isAsyncFunction(props?.onOk)) {
+  function okCallBack() {
+    if (onOk && $.utils.isAsyncFunction(onOk)) {
       setConfirmLoading(true)
-      return props?.onOk?.()?.finally(() => {
+      return onOk?.()?.then(() => {
         setConfirmLoading(false)
         setOpen(false)
-      })
-    } else {
-      props?.onOk?.()
-      setOpen(false)
+      }).catch(() => setConfirmLoading(false))
     }
-  }} onCancel={(e) => {
-    onCancel(e)
+
+    props?.onOk?.()
     setOpen(false)
-  }}>
-    {children}
-  </AntModal>
+  }
+
+  return <AntModal destroyOnClose
+                   open={open}
+                   children={children}
+                   {...prop}
+                   confirmLoading={confirmLoading}
+                   onOk={okCallBack}
+                   onCancel={(e) => {
+                     onCancel(e)
+                     setOpen(false)
+                   }} />
 }

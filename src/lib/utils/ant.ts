@@ -1,6 +1,8 @@
 import { TableColumnProps } from 'antd'
+import type * as React from 'react'
+import { RenderedCell } from 'rc-table/lib/interface'
 
-export interface AntTableColumnsProps extends TableColumnProps {
+export interface AntTableColumnsProps<T = Record<string, any>> extends Omit<TableColumnProps, 'render'> {
   /**
    * 日期类型则进行格式化
    * date:完整显示
@@ -9,19 +11,23 @@ export interface AntTableColumnsProps extends TableColumnProps {
    * mouth:精确到月
    */
   valueType?: 'date' | 'day' | 'year' | 'mouth'
+  render?: (value: any, record: T, index: number) => React.ReactNode | RenderedCell<any>;
 }
 
 /**
  * AntTableColumn 处理
  * @param columns
- * @constructor
+ * @constructor `
  */
-export const AntTableColumns = <T extends AntTableColumnsProps>(columns: T[]): T[] => {
-  const column: T[] = []
+export const AntTableColumns = <T>(columns: AntTableColumnsProps<T>[]): AntTableColumnsProps<T>[] => {
+  const column: AntTableColumnsProps<T>[] = []
 
   for (const e of columns) {
     if (e.render) {
-      column.push(e)
+      column.push({
+        ...e,
+        render: (value, record: T, index) => e.render?.(value, record, index),
+      })
     }
 
     if (!e.render) {
@@ -34,15 +40,14 @@ export const AntTableColumns = <T extends AntTableColumnsProps>(columns: T[]): T
         },
       })
     }
-
   }
 
   return column
 }
 
-
 function returnByValueType(type: AntTableColumnsProps['valueType'], str: number): string {
   let val = '-'
+
   switch (type) {
     case 'date':
       val = $.utils.formatDate(str, 'YYYY-MM-dd hh:mm:ss')
