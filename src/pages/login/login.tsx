@@ -13,7 +13,7 @@ interface FormItem {
 
 const Login = () => {
   const { colorTextDescription } = theme.getDesignToken()
-  const navigate = $.utils.useNavigate()
+  const navigate = $.utils.router.useNavigate()
 
   const [form] = Form.useForm<FormItem>()
   const items: TabsProps['items'] = [

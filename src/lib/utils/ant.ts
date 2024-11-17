@@ -45,25 +45,39 @@ export const AntTableColumns = <T>(columns: AntTableColumnsProps<T>[]): AntTable
   return column
 }
 
-function returnByValueType(type: AntTableColumnsProps['valueType'], str: number): string {
+/**
+ * 根据valueType格式化日期
+ * @param type
+ * @param str
+ */
+export function returnByValueType(type: AntTableColumnsProps['valueType'], str: number): string {
   let val = '-'
 
   switch (type) {
     case 'date':
-      val = $.utils.formatDate(str, 'YYYY-MM-dd hh:mm:ss')
+      val = $.utils.tool.formatDate(str, 'YYYY-MM-dd hh:mm:ss')
       break
     case 'day':
-      val = $.utils.formatDate(str, 'YYYY-MM-dd')
+      val = $.utils.tool.formatDate(str, 'YYYY-MM-dd')
       break
     case 'mouth':
-      val = $.utils.formatDate(str, 'YYYY-MM')
+      val = $.utils.tool.formatDate(str, 'YYYY-MM')
       break
     case 'year':
-      val = $.utils.formatDate(str, 'YYYY')
+      val = $.utils.tool.formatDate(str, 'YYYY')
       break
     default:
       break
   }
 
   return val
+}
+
+/**
+ * 过滤treeSelect筛选
+ * @param inputValue
+ * @param treeNode
+ */
+export function filterTreeNode(inputValue, treeNode) {
+  return treeNode.title.indexOf(inputValue) > -1
 }

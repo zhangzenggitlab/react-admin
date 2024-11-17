@@ -1,7 +1,7 @@
 import { Button, Result } from 'antd'
 
 const NotFound = () => {
-  const navigate = $.utils.useNavigate()
+  const navigate = $.utils.router.useNavigate()
 
   return <Result
     status="404"

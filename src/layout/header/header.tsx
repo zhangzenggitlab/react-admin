@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export const Header = (props: HeaderProps) => {
   const { collapsed, setCollapsed } = props
-  const navigate = $.utils.useNavigate()
+  const navigate = $.utils.router.useNavigate()
 
   const items: MenuProps['items'] = [
     {

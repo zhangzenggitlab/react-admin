@@ -20,7 +20,8 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
     return this.submit()
   }
 
-  submit() {}
+  submit() {
+  }
 
   render() {
     const [form] = Form.useForm<FormItem>()
@@ -32,7 +33,7 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
     }
 
     return (
-      <Form form={form}>
+      <Form form={form} labelCol={{ span: 3 }}>
         <Form.Item name="name" label="姓名" rules={[{ required: true }]}>
           <Input placeholder="请输入" />
         </Form.Item>
@@ -43,10 +44,11 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
           <Input placeholder="请输入" />
         </Form.Item>
         <Form.Item name="status" label="状态" rules={[{ required: true }]}>
-          <Select placeholder="请选择" allowClear options={$.utils.enumToOptions(StatusEnum)} />
+          <Select placeholder="请选择" allowClear options={$.utils.tool.enumToOptions(StatusEnum)} />
         </Form.Item>
         <Form.Item name="departmenId" label="部门" rules={[{ required: true }]}>
-          <TreeSelect showSearch placeholder="请选择" allowClear treeData={departmentList} />
+          <TreeSelect showSearch placeholder="请选择" filterTreeNode={$.utils.ant.filterTreeNode} allowClear
+                      treeData={departmentList} />
         </Form.Item>
       </Form>
     )

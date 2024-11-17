@@ -11,10 +11,7 @@ export interface Options extends ModalProps {
   title?: string
 }
 
-type OpenModal = openModalProps & Options & {
-  /** 是否添加子容器样式 */
-  contentStyle?: boolean
-}
+type OpenModal = openModalProps & Options
 
 export const OpenModal = (props: OpenModal) => {
   return <Modal {...props} >

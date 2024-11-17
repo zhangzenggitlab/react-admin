@@ -15,7 +15,7 @@ export const Button = (props: ButtonProps) => {
       loading={loading}
       {...prop}
       onClick={() => {
-        if (props?.onClick && $.utils.isAsyncFunction(props?.onClick)) {
+        if (props?.onClick && $.utils.tool.isAsyncFunction(props?.onClick)) {
           setLoading(true)
 
           props?.onClick?.()?.finally(() => {

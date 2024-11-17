@@ -1,20 +1,27 @@
 import React from 'react'
-import type { PaginationProps , TablePaginationConfig as AntTablePaginationConfig} from 'antd'
+import type { PaginationProps, TablePaginationConfig as AntTablePaginationConfig } from 'antd'
+
+type RequestType = () => Promise<any>
 
 export interface PageProps extends PaginationProps {
   /** 搜索 */
-  onSearch: () => any
+  // onSearch: () => any
 }
 
-interface TablePaginationConfig extends AntTablePaginationConfig{
+interface TablePaginationConfig extends AntTablePaginationConfig {
   onShowSizeChange: PaginationProps['onShowSizeChange']
-  showTotal:PaginationProps['showTotal']
-  onChange:PaginationProps['onShowSizeChange']
-  total:number
-  pageSize:number
+  showTotal: PaginationProps['showTotal']
+  onChange: PaginationProps['onShowSizeChange']
+  total: number
+  pageSize: number
 }
 
-export const usePagination = (props?: PageProps) => {
+/**
+ * 分页
+ * @param requestFn 异步请求,加载数据
+ * @param props 配置
+ */
+export const usePagination = (requestFn: RequestType, props?: PageProps) => {
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSize] = React.useState(10)
   const [total, setTotal] = React.useState(0)
@@ -45,7 +52,7 @@ export const usePagination = (props?: PageProps) => {
 
   /** 刷新 */
   function onRefresh() {
-    props?.onSearch?.()
+    requestFn?.()
   }
 
   return {

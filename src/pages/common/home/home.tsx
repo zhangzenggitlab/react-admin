@@ -68,7 +68,7 @@ const Home: React.FC = () => {
   const [selectKeys, setSelectKeys] = React.useState<string[]>([])
 
   const location = useLocation()
-  const navigate = $.utils.useNavigate()
+  const navigate = $.utils.router.useNavigate()
 
   React.useEffect(() => {
     const path = location.pathname.split('/').filter((i) => i)
@@ -104,10 +104,10 @@ const Home: React.FC = () => {
         </div>
         <div className="height menu" style={{ width: collapsed ? '80px' : '265px' }}>
           <Menu
-            items={items}
-            inlineCollapsed={collapsed}
             mode="inline"
             className="height"
+            items={items}
+            inlineCollapsed={collapsed}
             openKeys={openKeys}
             selectedKeys={selectKeys}
             onClick={({ key }) => {

@@ -17,7 +17,7 @@ export const Modal = (props: ModalProps) => {
   const [open, setOpen] = React.useState(true)
 
   function okCallBack() {
-    if (onOk && $.utils.isAsyncFunction(onOk)) {
+    if (onOk && $.utils.tool.isAsyncFunction(onOk)) {
       setConfirmLoading(true)
       return onOk?.()?.then(() => {
         setConfirmLoading(false)

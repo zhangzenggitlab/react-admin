@@ -89,6 +89,13 @@ const SystemUserList = (props: RouterConfig) => {
     },
   ])
 
+  const {} = $.hooks.useHttp(getData)
+  const { total, setTotal, onSearch, onRefresh, pagination } = $.hooks.usePagination(getData)
+
+  async function getData() {
+
+  }
+
   React.useEffect(() => {
     setData([
       {
@@ -120,13 +127,15 @@ const SystemUserList = (props: RouterConfig) => {
           <Form.Item name="status" label="状态">
             <Select
               placeholder="请选择"
-              options={$.utils.enumToOptions(StatusEnum)}
+              options={$.utils.tool.enumToOptions(StatusEnum)}
               allowClear
               style={{ width: 180 }}
             />
           </Form.Item>
           <Form.Item name="departmenId" label="部门">
-            <TreeSelect showSearch placeholder="请选择" allowClear style={{ width: 180 }} treeData={departmentList} />
+            <TreeSelect showSearch placeholder="请选择" filterTreeNode={(inputValue, treeNode) =>
+              treeNode.data.props.label.indexOf(inputValue) !== -1} treeNodeFilterProp="label" allowClear
+                        style={{ width: 180 }} treeData={departmentList} />
           </Form.Item>
         </FilterForm>
       </Panel.Item>
@@ -147,7 +156,8 @@ const SystemUserList = (props: RouterConfig) => {
           </div>
         }
       >
-        <Table columns={columns} dataSource={data} style={{ width: '100%' }} className={'mt-16'} />
+        <Table columns={columns} dataSource={data} style={{ width: '100%' }} className={'mt-16'}
+               pagination={pagination} />
       </Panel.Item>
     </Panel>
   )
