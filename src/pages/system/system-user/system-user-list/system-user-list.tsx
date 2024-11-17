@@ -11,8 +11,6 @@ interface FormItem extends UserEntity.User {
 
 const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
-  // const [data, setData] = React.useState<Partial<FormItem>[]>()
-
   const columns = $.utils.ant.AntTableColumns<FormItem>([
     {
       dataIndex: 'name',
@@ -89,7 +87,20 @@ const SystemUserList = (props: RouterConfig) => {
     },
   ])
 
-  const { getData, data, loading } = $.hooks.useHttp(getTableData, [])
+  const { getData, data, loading } = $.hooks.useHttp(getTableData, [{
+    id:1,
+    name:"超级管理员",
+    account:"admin",
+    phone:"1808*****59",
+    status:'1'
+  },{
+    id:2,
+    name:"用户管理员",
+    account:"user",
+    phone:"1808*****59",
+    status:'2'
+  }])
+
   const { setTotal, onSearch, onRefresh, pagination } = $.hooks.usePagination(getTableData)
 
   async function getTableData() {}

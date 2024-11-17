@@ -3,35 +3,43 @@ import React from 'react'
 import { Modal, ModalProps } from '@/components'
 import { createPopup } from '@/lib'
 
-interface openModalProps {
-  render: () => React.ReactNode
-}
-
-export interface Options extends ModalProps {
+/**
+ * modal配置（与ant-design配置一致）
+ */
+export interface OptionsType extends ModalProps {
   title?: string
 }
 
-type OpenModal = openModalProps & Options
+type OpenModalType<T> = {
+  /** modal标题 */
+  title?: string
+  options: OptionsType
+  render: (...args: T[]) => React.ReactNode
+  renderProps?: T
+}
 
-export const OpenModal = (props: OpenModal) => {
-  return <Modal {...props} >
+function OpenModal<T>(props: OpenModalType<T>) {
+  return <Modal {...props.options}>
     <div style={{ padding: 20 }}>
-      {props.render()}
+      {props.render(props.renderProps)}
     </div>
   </Modal>
 }
 
 export abstract class BaseModal<T extends Record<string, any>> {
-  abstract options: Options
-  abstract render(): React.ReactNode
+  abstract options: OptionsType
 
-  props = {} as T
+  abstract render(props: T): React.ReactNode
 
-  open(options?: Options & T) {
-    const prop = { ...this.options, ...options }
+  props? = {} as T
+
+  open(options?: OptionsType & T) {
+    this.props = options
 
     createPopup({
-      children: <OpenModal render={this.render.bind(this)} {...prop} title={prop.title} />,
+      children: <OpenModal<T> render={this.render.bind(this)} title={this.options.title} options={this.options}
+                              renderProps={options}
+      />,
     })
   }
 }

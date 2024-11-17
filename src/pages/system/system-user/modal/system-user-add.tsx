@@ -1,7 +1,8 @@
 import { Form, Input, Select, TreeSelect } from 'antd'
 
-import { BaseModal, Options } from '@/components'
+import { BaseModal, OptionsType } from '@/components'
 import { departmentList, StatusEnum } from '@/pages/system/system-user/define.ts'
+import React from 'react'
 
 type FormItem = UserEntity.User
 
@@ -11,7 +12,7 @@ interface BeforeProps {
 }
 
 export class SystemUserAdd extends BaseModal<BeforeProps> {
-  options: Options = {
+  options: OptionsType = {
     title: '新增',
     onOk: this.ok.bind(this),
   }
@@ -23,9 +24,8 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
   submit() {
   }
 
-  render() {
+  render(props: BeforeProps) {
     const [form] = Form.useForm<FormItem>()
-
     this.submit = async () => {
       const values = form.getFieldsValue()
       console.log(values)
