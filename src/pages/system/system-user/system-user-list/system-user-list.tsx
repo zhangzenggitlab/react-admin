@@ -11,7 +11,7 @@ interface FormItem extends UserEntity.User {
 
 const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
-  const [data, setData] = React.useState<Partial<FormItem>[]>()
+  // const [data, setData] = React.useState<Partial<FormItem>[]>()
 
   const columns = $.utils.ant.AntTableColumns<FormItem>([
     {
@@ -89,23 +89,13 @@ const SystemUserList = (props: RouterConfig) => {
     },
   ])
 
-  const {} = $.hooks.useHttp(getData)
-  const { total, setTotal, onSearch, onRefresh, pagination } = $.hooks.usePagination(getData)
+  const { getData, data, loading } = $.hooks.useHttp(getTableData, [])
+  const { setTotal, onSearch, onRefresh, pagination } = $.hooks.usePagination(getTableData)
 
-  async function getData() {
-
-  }
+  async function getTableData() {}
 
   React.useEffect(() => {
-    setData([
-      {
-        id: 1,
-        account: '1',
-        name: '站',
-        status: '1',
-        createTime: 1731140382,
-      },
-    ])
+
   }, [])
 
   return (
@@ -156,8 +146,8 @@ const SystemUserList = (props: RouterConfig) => {
           </div>
         }
       >
-        <Table columns={columns} dataSource={data} style={{ width: '100%' }} className={'mt-16'}
-               pagination={pagination} />
+        <Table style={{ width: '100%' }} className={'mt-16'} columns={columns} dataSource={data}
+               pagination={pagination} loading={loading} />
       </Panel.Item>
     </Panel>
   )

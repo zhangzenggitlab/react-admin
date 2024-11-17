@@ -9,7 +9,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   const [loading, setLoading] = React.useState(defaultLoading)
   const [err, setErr] = React.useState()
 
-  async function fn(...args: Parameters<T>) {
+  async function fn(...args: Parameters<T>[]) {
     setLoading(true)
 
     return request(...args)
@@ -27,7 +27,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   }
 
   return {
-    getData: (...args: Parameters<T>) => fn(...args),
+    getData: (...args: Parameters<T>[]) => fn(...args),
     data,
     loading,
     err,
