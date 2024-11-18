@@ -95,7 +95,7 @@ const SystemUserList = (props: RouterConfig) => {
 
   React.useEffect(() => {
     getData().then((res) => {
-      setTotal(res.total)
+      setTotal(res)
     })
   }, [])
 
