@@ -12,7 +12,7 @@ type OpenModalType<T> = {
 export function OpenModal<T>(props: OpenModalType<T>) {
   return <Modal {...props.options}>
     <div style={{ padding: 20 }}>
-      {props.render(props.renderProps)}
+      {props.render(props.renderProps!)}
     </div>
   </Modal>
 }
