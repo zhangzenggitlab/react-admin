@@ -2,7 +2,7 @@ import { TableColumnProps } from 'antd'
 import type * as React from 'react'
 import { RenderedCell } from 'rc-table/lib/interface'
 
-export interface AntTableColumnsProps<T = Record<string, any>> extends Omit<TableColumnProps, 'render'> {
+export interface AntTableColumnsProps<T = any> extends Omit<TableColumnProps, 'render'> {
   /**
    * 日期类型则进行格式化
    * date:完整显示
@@ -16,17 +16,16 @@ export interface AntTableColumnsProps<T = Record<string, any>> extends Omit<Tabl
 
 /**
  * AntTableColumn 处理
- * @param columns
- * @constructor `
+ * @param columns  AntDesign->Table配置
  */
-export const AntTableColumns = <T>(columns: AntTableColumnsProps<T>[]): AntTableColumnsProps<T>[] => {
-  const column: AntTableColumnsProps<T>[] = []
+export const AntTableColumns = <T>(columns: AntTableColumnsProps<T>[]) => {
+  const column: AntTableColumnsProps[] = []
 
   for (const e of columns) {
     if (e.render) {
       column.push({
         ...e,
-        render: (value, record: T, index) => e.render?.(value, record, index),
+        render: (value, record, index) => e.render?.(value, record, index),
       })
     }
 
@@ -78,6 +77,6 @@ export function returnByValueType(type: AntTableColumnsProps['valueType'], str: 
  * @param inputValue
  * @param treeNode
  */
-export function filterTreeNode(inputValue, treeNode) {
+export function filterTreeNode(inputValue: string, treeNode: any) {
   return treeNode.title.indexOf(inputValue) > -1
 }

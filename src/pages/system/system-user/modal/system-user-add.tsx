@@ -2,13 +2,11 @@ import { Form, Input, Select, TreeSelect } from 'antd'
 
 import { BaseModal, OptionsType } from '@/components'
 import { departmentList, StatusEnum } from '@/pages/system/system-user/define.ts'
-import React from 'react'
 
 type FormItem = UserEntity.User
 
 interface BeforeProps {
-  id?: string
-  form: FormItem
+  form: Partial<FormItem>
 }
 
 export class SystemUserAdd extends BaseModal<BeforeProps> {
@@ -24,8 +22,9 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
   submit() {
   }
 
-  render(props: BeforeProps) {
+  render() {
     const [form] = Form.useForm<FormItem>()
+
     this.submit = async () => {
       const values = form.getFieldsValue()
       console.log(values)

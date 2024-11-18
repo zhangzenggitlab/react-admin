@@ -6,8 +6,7 @@ import { Button, FilterForm, Panel, Table } from '@/components'
 import { departmentList, StatusEnum } from '../define.ts'
 import { systemUserAdd } from '../modal'
 
-interface FormItem extends UserEntity.User {
-}
+type FormItem = UserEntity.User
 
 const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
@@ -32,7 +31,7 @@ const SystemUserList = (props: RouterConfig) => {
       dataIndex: 'status',
       title: '状态',
       render: (status) => {
-        return <Tag color={StatusEnum.启用 == status ? 'green' : 'red'}>{StatusEnum.启用 ? '启用' : '禁用'}</Tag>
+        return <Tag color={StatusEnum.启用 == status ? 'green' : 'red'}>{StatusEnum.启用 == status ? '启用' : '禁用'}</Tag>
       },
     },
     {
@@ -87,26 +86,37 @@ const SystemUserList = (props: RouterConfig) => {
     },
   ])
 
-  const { getData, data, loading } = $.hooks.useHttp(getTableData, [{
-    id:1,
-    name:"超级管理员",
-    account:"admin",
-    phone:"1808*****59",
-    status:'1'
-  },{
-    id:2,
-    name:"用户管理员",
-    account:"user",
-    phone:"1808*****59",
-    status:'2'
-  }])
+  const { getData, data, loading } = $.hooks.useHttp(getTableData, [])
 
-  const { setTotal, onSearch, onRefresh, pagination } = $.hooks.usePagination(getTableData)
+  const { pagination } = $.hooks.usePagination(getTableData)
 
-  async function getTableData() {}
+  async function getTableData(): Promise<FormItem[]> {
+
+    return new Promise(resolve => {
+      resolve([{
+        id: 1,
+        name: '超级管理员',
+        account: 'admin',
+        phone: '1808*****59',
+        status: '1',
+        mail: '',
+        createTime: '2019-08-02',
+        departmentName: '',
+      }, {
+        id: 2,
+        name: '用户管理员',
+        account: 'user',
+        phone: '1808*****59',
+        status: '2',
+        mail: '',
+        createTime: '2019-08-02',
+        departmentName: '',
+      }])
+    })
+  }
 
   React.useEffect(() => {
-
+    getData()
   }, [])
 
   return (
