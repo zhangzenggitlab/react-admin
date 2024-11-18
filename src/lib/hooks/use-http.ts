@@ -3,7 +3,7 @@ import React from 'react'
 export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   request: T,
   defaultData: Partial<Awaited<ReturnType<T>>>,
-  defaultLoading: boolean = false
+  defaultLoading: boolean = false,
 ) => {
   const [data, setData] = React.useState(defaultData)
   const [loading, setLoading] = React.useState(defaultLoading)
@@ -27,7 +27,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   }
 
   return {
-    getData: (...args: Parameters<T>[]) => fn(...args),
+    getData: (...args: Parameters<T>[]): Promise<Awaited<ReturnType<T>>> => fn(...args),
     data,
     loading,
     err,
