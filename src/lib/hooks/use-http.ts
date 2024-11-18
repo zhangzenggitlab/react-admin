@@ -13,7 +13,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
     setLoading(true)
 
     return request(...args)
-      .then((res: Partial<Awaited<ReturnType<T>>>) => {
+      .then((res) => {
         setData(res)
         return res
       })
