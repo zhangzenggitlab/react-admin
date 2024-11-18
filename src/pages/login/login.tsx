@@ -47,7 +47,7 @@ const Login = () => {
 
           <Form.Item className={'width'}>
             <Button type={'primary'} className={'width'} size={'large'} onClick={() => {
-              form.validateFields().then((res) => {
+              form.validateFields().then(() => {
                 navigate('/system/user')
               })
             }}>登录</Button>
