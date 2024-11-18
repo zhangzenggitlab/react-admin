@@ -5,7 +5,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   defaultData: Partial<Awaited<ReturnType<T>>>,
   defaultLoading: boolean = false
 ) => {
-  const [data, setData] = React.useState<Partial<Awaited<ReturnType<T>>>>(defaultData)
+  const [data, setData] = React.useState(defaultData)
   const [loading, setLoading] = React.useState(defaultLoading)
   const [err, setErr] = React.useState()
 
