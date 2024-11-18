@@ -1,5 +1,6 @@
 import React from 'react'
 import { RouteObject } from 'react-router-dom'
+
 import * as lib from '@/lib'
 
 declare global {
@@ -21,7 +22,6 @@ declare global {
      * P => 组件返回值，如详情页的详解接口查询完成，返回详情数据,可以直接通过props访
      */
     beforeEnter?: (...args: B[]) => Promise<P>
-
     open?: (...args: B[]) => Promise<void>
   }
 
@@ -33,6 +33,7 @@ declare global {
     children?: JSX.Element | string | React.ReactNode
     /** 路由对象 */
     router: RouterConfig,
+
     [key: string]: any
   }
 
@@ -43,15 +44,23 @@ declare global {
     className?: string
     style?: any
     children?: JSX.Element | string | React.ReactNode
+
     [key: string]: any
   }
 
   /**
    * 下拉框使用
    */
-  interface OptionsValueType{
-    label?:string
-    value?:string |number
-    [key:string]:any
+  interface OptionsValueType {
+    label?: string
+    value?: string | number
+
+    [key: string]: any
   }
+
+  /**
+   * 分页接口直接接受当前type
+   * T 返回数据类型
+   */
+  type PageListType<T> = Request.Response<Request.PageType<T>>
 }

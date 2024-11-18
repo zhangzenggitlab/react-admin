@@ -31,7 +31,8 @@ const SystemUserList = (props: RouterConfig) => {
       dataIndex: 'status',
       title: '状态',
       render: (status) => {
-        return <Tag color={StatusEnum.启用 == status ? 'green' : 'red'}>{StatusEnum.启用 == status ? '启用' : '禁用'}</Tag>
+        return <Tag
+          color={StatusEnum.启用 == status ? 'green' : 'red'}>{StatusEnum.启用 == status ? '启用' : '禁用'}</Tag>
       },
     },
     {
@@ -86,33 +87,10 @@ const SystemUserList = (props: RouterConfig) => {
     },
   ])
 
-  const { getData, data, loading } = $.hooks.useHttp(getTableData, [])
-
+  const { getData, data, loading } = $.hooks.useHttp($.api.userList, {})
   const { pagination } = $.hooks.usePagination(getTableData)
 
-  async function getTableData(): Promise<FormItem[]> {
-
-    return new Promise(resolve => {
-      resolve([{
-        id: 1,
-        name: '超级管理员',
-        account: 'admin',
-        phone: '1808*****59',
-        status: '1',
-        mail: '',
-        createTime: '2019-08-02',
-        departmentName: '',
-      }, {
-        id: 2,
-        name: '用户管理员',
-        account: 'user',
-        phone: '1808*****59',
-        status: '2',
-        mail: '',
-        createTime: '2019-08-02',
-        departmentName: '',
-      }])
-    })
+  async function getTableData() {
   }
 
   React.useEffect(() => {
@@ -167,7 +145,7 @@ const SystemUserList = (props: RouterConfig) => {
           </div>
         }
       >
-        <Table style={{ width: '100%' }} className={'mt-16'} columns={columns} dataSource={data}
+        <Table style={{ width: '100%' }} className={'mt-16'} columns={columns} dataSource={data.data?.data || []}
                pagination={pagination} loading={loading} />
       </Panel.Item>
     </Panel>

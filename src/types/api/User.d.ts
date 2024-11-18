@@ -1,5 +1,9 @@
 declare namespace UserApi {
-  interface UserList{
 
+  interface UserListParams {
+    page: number
+    pageSize: number
   }
+
+  type UserListRes = PageListType<UserEntity.User>
 }

@@ -1,13 +1,25 @@
 /**
- * 请求
+ * http请求ts类型
  */
 declare namespace Request {
   /**
-   * 接口返回
+   * 所有接口返回基类
    */
-  export interface Response {
+  export interface Response<T> {
     msg: string,
-    code: number
-    data:any
+    /** */
+    code: 200 | 401 | 500
+    data: T
+  }
+
+  /**
+   * 分页
+   * 列表接口一般会继承当前类
+   */
+  interface PageType<T> {
+    page: number,
+    pageSize: number
+    total: number
+    data: T[]
   }
 }
