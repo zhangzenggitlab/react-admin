@@ -88,13 +88,13 @@ const SystemUserList = (props: RouterConfig) => {
   ])
 
   const { getData, data, loading } = $.hooks.useHttp($.api.userList, {})
-  const { setTotal,pagination } = $.hooks.usePagination(getTableData)
+  const { setTotal, pagination } = $.hooks.usePagination(getTableData)
 
   async function getTableData() {
   }
 
   React.useEffect(() => {
-    getData().then((res)=>{
+    getData().then((res) => {
       setTotal(res.total)
     })
   }, [])
@@ -134,17 +134,15 @@ const SystemUserList = (props: RouterConfig) => {
       <Panel.Item
         className="mt-20"
         rightNodes={
-          <div>
-            <Button
-              ghost
-              type={'primary'}
-              onClick={() => {
-                systemUserAdd.open()
-              }}
-            >
-              新增
-            </Button>
-          </div>
+          <Button
+            ghost
+            type={'primary'}
+            onClick={() => {
+              systemUserAdd.open()
+            }}
+          >
+            新增
+          </Button>
         }
       >
         <Table style={{ width: '100%' }} className={'mt-16'} columns={columns} dataSource={data.data || []}
