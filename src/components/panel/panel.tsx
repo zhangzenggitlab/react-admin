@@ -2,7 +2,6 @@ import { theme } from 'antd'
 import clsx from 'clsx'
 
 import { PanelItem } from './panel-item'
-import React from 'react'
 
 export interface PanelProps extends BaseComponent {
   loading?: boolean
