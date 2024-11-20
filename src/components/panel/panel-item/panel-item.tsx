@@ -5,11 +5,11 @@ import clsx from 'clsx'
 export interface PanelItemProps extends BaseComponent {
   loading?: boolean
   rightNodes?: JSX.Element | string | null
+  title?:string
 }
 
 export const PanelItem = (props: PanelItemProps) => {
   const { borderRadius, colorBgContainer, padding, fontSizeLG, boxShadowTertiary } = theme.getDesignToken()
-
   const { title = '', children = '', rightNodes = null, className = '', style = {} } = props
 
   return (

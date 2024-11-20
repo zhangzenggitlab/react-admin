@@ -1,3 +1,5 @@
+import React, { ForwardRefExoticComponent } from 'react'
+
 import { theme } from 'antd'
 import clsx from 'clsx'
 
@@ -5,9 +7,16 @@ import { PanelItem } from './panel-item'
 
 export interface PanelProps extends BaseComponent {
   loading?: boolean
+  title?:string
 }
 
-export const Panel = (props: PanelProps) => {
+interface PanelType {
+  Item: typeof PanelItem
+}
+
+type PanelNodeType = <T>(props: T) => React.ReactNode
+
+export const Panel = React.forwardRef((props: PanelProps) => {
   const { fontSizeXL, colorTextHeading } = theme.getDesignToken()
   const { title = '', children = '' } = props
 
@@ -17,7 +26,7 @@ export const Panel = (props: PanelProps) => {
       <div>{children}</div>
     </div>
   )
-}
+}) as ForwardRefExoticComponent<PanelProps> as unknown as PanelType & PanelNodeType
 
 Panel.Item = PanelItem
 
