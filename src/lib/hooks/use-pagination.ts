@@ -4,8 +4,8 @@ import type { PaginationProps, TablePaginationConfig as AntTablePaginationConfig
 type RequestType = () => Promise<any>
 
 export interface PageProps extends PaginationProps {
-  /** 搜索 */
-  // onSearch: () => any
+  /** 立即执行传进来的函数 */
+  immediate: boolean
 }
 
 interface TablePaginationConfig extends AntTablePaginationConfig {
@@ -19,9 +19,11 @@ interface TablePaginationConfig extends AntTablePaginationConfig {
 /**
  * 分页
  * @param requestFn 异步请求,加载数据
- * @param props 配置
+ * @param config 配置
  */
-export const usePagination = (requestFn: RequestType, props?: PageProps) => {
+export const usePagination = (requestFn: RequestType, config?: PageProps) => {
+
+
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSize] = React.useState(10)
   const [total, setTotal] = React.useState(0)
@@ -45,9 +47,16 @@ export const usePagination = (requestFn: RequestType, props?: PageProps) => {
     pageSize,
   }
 
+  React.useEffect(() => {
+    if (config?.immediate) {
+      requestFn()
+    }
+  }, [])
+
   /** 搜索使用第一页 */
   function onSearch() {
     setPage(1)
+    requestFn?.()
   }
 
   /** 刷新 */

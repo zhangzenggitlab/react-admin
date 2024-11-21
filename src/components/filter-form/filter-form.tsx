@@ -19,7 +19,7 @@ const DEFINE = {
 }
 
 export const FilterForm = (props: FormProps) => {
-  const { rowHeight = DEFINE.rowHeight, children } = props
+  const { rowHeight = DEFINE.rowHeight, children,onSearch = ()=>{},...prop } = props
   const [collapsed, setCollapsed] = React.useState<boolean>(true)
   const [hidden, setHidden] = React.useState(false)
   const filterFormRef = React.useRef<HTMLDivElement>(null)
@@ -44,14 +44,14 @@ export const FilterForm = (props: FormProps) => {
       style={{ height: collapsed ? rowHeight + 'px' : 'auto' }}
       ref={filterFormRef}
     >
-      <Form {...props} className="filter-form flex gap-24 wrap">
+      <Form {...prop} className="filter-form flex gap-24 wrap">
         {children}
       </Form>
       <div className={clsx(collapsed ? filterForm : 'absolute filter-form-control', 'flex gap-10')}>
         <Button
           type="primary"
           onClick={() => {
-            props.onSearch?.()
+            onSearch?.()
           }}
         >
           查询

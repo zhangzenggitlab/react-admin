@@ -88,7 +88,7 @@ const SystemUserList = (props: RouterConfig) => {
   ])
 
   const { getData, data, loading } = $.hooks.useHttp($.api.userList, {})
-  const { setTotal, pagination } = $.hooks.usePagination(getTableData)
+  const { setTotal, pagination,onSearch } = $.hooks.usePagination(getTableData)
 
   async function getTableData() {
   }
@@ -102,7 +102,7 @@ const SystemUserList = (props: RouterConfig) => {
   return (
     <Panel title={props.title}>
       <Panel.Item className="mt-20">
-        <FilterForm form={form}>
+        <FilterForm form={form} onSearch={onSearch}>
           <Form.Item name="name" label="姓名">
             <Input placeholder="请输入" />
           </Form.Item>

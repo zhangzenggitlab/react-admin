@@ -17,6 +17,7 @@ export interface AntTableColumnsProps<T = any> extends Omit<TableColumnProps, 'r
 /**
  * AntTableColumn 处理
  * @param columns  AntDesign->Table配置
+ * T 泛型一般传递render第二个参数对象的ts类型
  */
 export const AntTableColumns = <T>(columns: AntTableColumnsProps<T>[]) => {
   const column: AntTableColumnsProps[] = []
