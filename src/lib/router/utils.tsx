@@ -4,7 +4,6 @@ import Error from '@/pages/common/error/error.tsx'
 import NotFound from '@/pages/common/not-found/not-found.tsx'
 import { AsyncImportComponent } from '@/lib/router/async-import-component/async-import-component.tsx'
 import { AsyncImportComponentProps } from '@/lib'
-import { Test } from '@/pages/test/test.tsx'
 
 /** 动态加载文件夹下router.ts 命名的路由文件*/
 const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@/pages/**/router.tsx', {
@@ -30,11 +29,7 @@ const baseRouters: RouterConfig[] = [
         children: [],
       }],
   },
-  {
-    path: '/test',
-    element: <Test />,
-    children: [],
-  },
+
   {
     path: '*',
     element: <NotFound />,

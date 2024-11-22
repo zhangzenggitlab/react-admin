@@ -4,11 +4,9 @@ import { Dropdown, Form, Input, Popconfirm } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
-import { systemUserAdd } from '@/pages/system/system-user/modal'
+import { menuModal } from '../modal'
 
-export interface FormItem {
-  name: string
-}
+type FormItem = MenuApi.MenuListParams
 
 interface SystemMenuProps {
   title: string
@@ -20,7 +18,7 @@ interface ColumnsProps {
 const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
   const columns = $.utils.ant.AntTableColumns<ColumnsProps>([{
-    dataIndex: 'title',
+    dataIndex: 'name',
     title: '名称',
   }, {
     dataIndex: 'type',
@@ -31,9 +29,6 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   }, {
     dataIndex: 'permission',
     title: '权限标识',
-  }, {
-    dataIndex: 'status',
-    title: '状态',
   }, {
     dataIndex: 'id',
     title: '操作',
@@ -104,7 +99,7 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
           ghost
           type={'primary'}
           onClick={() => {
-            systemUserAdd.open()
+            menuModal.open()
           }}
         >
           新增
