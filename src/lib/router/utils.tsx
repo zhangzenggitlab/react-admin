@@ -2,7 +2,7 @@ import Login from '@/pages/login/login.tsx'
 import Home from '@/pages/common/home/home.tsx'
 import Error from '@/pages/common/error/error.tsx'
 import NotFound from '@/pages/common/not-found/not-found.tsx'
-import { AsyncImportComponent } from '@/lib/router/async-import-component/async-import-component'
+import { AsyncImportComponent } from '@/lib/router/async-import-component/async-import-component.tsx'
 import { AsyncImportComponentProps } from '@/lib'
 import { Test } from '@/pages/test/test.tsx'
 
