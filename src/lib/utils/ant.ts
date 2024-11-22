@@ -10,7 +10,7 @@ export interface AntTableColumnsProps<T = any> extends Omit<TableColumnProps, 'r
    * year:精确到年
    * mouth:精确到月
    */
-  valueType?: 'date' | 'day' | 'year' | 'mouth'
+  valueType?: 'date' | 'day' | 'year' | 'mouth' | 'mm' | 'ss'
   render?: (value: any, record: T, index: number) => React.ReactNode | RenderedCell<any>;
 }
 
@@ -54,6 +54,12 @@ export function returnByValueType(type: AntTableColumnsProps['valueType'], str: 
   let val = '-'
 
   switch (type) {
+    case 'mm':
+      val = $.utils.tool.formatDate(str, 'YYYY-MM-dd hh:mm')
+      break
+    case 'ss':
+      val = $.utils.tool.formatDate(str, 'YYYY-MM-dd hh:mm')
+      break
     case 'date':
       val = $.utils.tool.formatDate(str, 'YYYY-MM-dd hh:mm:ss')
       break
