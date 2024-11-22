@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const useHttp = <T extends (...args: any[]) => Promise<any>>(
+export const useHttp = <T extends (...args: any) => Promise<any>>(
   request: T,
   defaultData: Partial<Awaited<ReturnType<T>>>,
   defaultLoading: boolean = false,
@@ -9,7 +9,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   const [loading, setLoading] = React.useState(defaultLoading)
   const [err, setErr] = React.useState()
 
-  async function fn(...args: Parameters<T>[]) {
+  async function fn(...args: Parameters<T>) {
     setLoading(true)
 
     return request(...args)
@@ -27,7 +27,7 @@ export const useHttp = <T extends (...args: any[]) => Promise<any>>(
   }
 
   return {
-    getData: (...args: Parameters<T>[]): Promise<Awaited<ReturnType<T>>> => fn(...args),
+    getData: (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => fn(...args),
     data,
     loading,
     err,

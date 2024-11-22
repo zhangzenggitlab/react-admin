@@ -1,7 +1,10 @@
-import { Form, Input } from 'antd'
 import React from 'react'
 
-import { FilterForm, Panel, Table } from '@/components'
+import { Dropdown, Form, Input, Popconfirm } from 'antd'
+import { EllipsisOutlined } from '@ant-design/icons'
+
+import { Button, FilterForm, Panel, Table } from '@/components'
+import { systemUserAdd } from '@/pages/system/system-user/modal'
 
 export interface FormItem {
   name: string
@@ -16,13 +19,60 @@ interface ColumnsProps {
 
 const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
-  const columns = $.utils.ant.AntTableColumns<ColumnsProps>([])
+  const columns = $.utils.ant.AntTableColumns<ColumnsProps>([{
+    dataIndex: 'title',
+    title: '名称',
+  }, {
+    dataIndex: 'type',
+    title: '类型',
+  }, {
+    dataIndex: 'sort',
+    title: '排序',
+  }, {
+    dataIndex: 'permission',
+    title: '权限标识',
+  }, {
+    dataIndex: 'status',
+    title: '状态',
+  }, {
+    dataIndex: 'id',
+    title: '操作',
+    fixed: 'right',
+    width: 160,
+    render: (_) => {
+      return <div className="flex gap-8">
+        <a>编辑</a>
+        <Popconfirm
+          title="提示"
+          description="确定删除?"
+          onConfirm={() => {
+            console.log(11)
+          }}
+        >
+          <a>删除</a>
+        </Popconfirm>
+        <Dropdown
+          menu={{
+            items: [
+              {
+                label: '新增子项',
+                key: '1',
+              },
+            ],
+          }}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <EllipsisOutlined />
+          </a>
+        </Dropdown>
+      </div>
+    },
+  }])
 
-  const { getData, data, loading } = $.hooks.useHttp(async (): Promise<any> => {
-  }, {}, true)
-  const { page, pageSize, setTotal, onSearch } = $.hooks.usePagination(getData)
+  const { getData, data, loading } = $.hooks.useHttp($.api.menu.menuList, {}, true)
+  const { page, pageSize, setTotal, onSearch, pagination } = $.hooks.usePagination(getData)
 
-  function getFilterFormData() {
+  function getFilterFormData(): MenuApi.MenuListParams {
     const values = form.getFieldsValue()
 
     return {
@@ -34,8 +84,7 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
 
   React.useEffect(() => {
     const params = getFilterFormData()
-    console.log(params)
-    getData().then(res => {
+    getData(params).then(res => {
       setTotal(res?.total || 0)
     })
   }, [])
@@ -44,14 +93,25 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
     <Panel title={title}>
       <Panel.Item className="mt-20">
         <FilterForm form={form} onSearch={onSearch}>
-          <Form.Item name={'name'} label={'姓名'}>
+          <Form.Item name={'name'} label={'名称'}>
             <Input placeholder={'请输入'} />
           </Form.Item>
         </FilterForm>
       </Panel.Item>
 
-      <Panel.Item className="mt-20">
-        <Table columns={columns} dataSource={data?.data || []} loading={loading} />
+      <Panel.Item className="mt-20" rightNodes={
+        <Button
+          ghost
+          type={'primary'}
+          onClick={() => {
+            systemUserAdd.open()
+          }}
+        >
+          新增
+        </Button>
+      }>
+        <Table className={'mt-16'} columns={columns} dataSource={data?.data || []} loading={loading}
+               pagination={pagination} />
       </Panel.Item>
     </Panel>
   </>

@@ -87,14 +87,30 @@ const SystemUserList = (props: RouterConfig) => {
     },
   ])
 
-  const { getData, data, loading } = $.hooks.useHttp($.api.userList, {})
-  const { setTotal, pagination,onSearch } = $.hooks.usePagination(getTableData)
+  const { getData, data, loading } = $.hooks.useHttp($.api.user.userList, {})
+  const {
+    page,
+    pageSize, setTotal, pagination, onSearch,
+  } = $.hooks.usePagination(getTableData)
 
   async function getTableData() {
+
   }
 
+  function getFilterFormData(): UserApi.UserListParams {
+    const values = form.getFieldsValue()
+
+    return {
+      ...values,
+      page,
+      pageSize,
+    }
+  }
+
+
   React.useEffect(() => {
-    getData().then((res) => {
+    const params = getFilterFormData()
+    getData(params).then((res) => {
       setTotal(res.total)
     })
   }, [])

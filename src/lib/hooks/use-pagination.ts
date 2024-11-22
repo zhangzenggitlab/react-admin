@@ -1,7 +1,7 @@
 import React from 'react'
 import type { PaginationProps, TablePaginationConfig as AntTablePaginationConfig } from 'antd'
 
-type RequestType = () => Promise<any>
+type RequestType = (...args:any) => Promise<any>
 
 export interface PageProps extends PaginationProps {
   /** 立即执行传进来的函数 */
@@ -22,8 +22,6 @@ interface TablePaginationConfig extends AntTablePaginationConfig {
  * @param config 配置
  */
 export const usePagination = (requestFn: RequestType, config?: PageProps) => {
-
-
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSize] = React.useState(10)
   const [total, setTotal] = React.useState(0)
