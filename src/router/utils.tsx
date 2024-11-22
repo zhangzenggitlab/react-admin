@@ -31,15 +31,15 @@ const baseRouters: RouterConfig[] = [
       }],
   },
   {
-    path:'/test',
+    path: '/test',
     element: <Test />,
     children: [],
   },
   {
-    path:'*',
+    path: '*',
     element: <NotFound />,
     children: [],
-  }
+  },
 ]
 
 function initRouters() {
