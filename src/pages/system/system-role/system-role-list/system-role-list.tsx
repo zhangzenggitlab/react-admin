@@ -98,7 +98,7 @@ const SystemRoleList = (props: BasePage) => {
     <Panel title={props.title}>
       <Panel.Item className="mt-20">
         <FilterForm form={form} onSearch={onSearch}>
-          <Form.Item name={'name'} label={'姓名'}>
+          <Form.Item name={'name'} label={'名称'}>
             <Input placeholder={'请输入'} />
           </Form.Item>
         </FilterForm>

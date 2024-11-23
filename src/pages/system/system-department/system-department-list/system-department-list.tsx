@@ -2,7 +2,7 @@ import React from 'react'
 import { Dropdown, Form, Input, Popconfirm } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
 
-import { FilterForm, Panel, Table } from '@/components'
+import { Button, FilterForm, Panel, Table } from '@/components'
 import { departmentAddModal } from '../modal'
 
 export interface FormItem {
@@ -103,8 +103,18 @@ const SystemDepartmentList: React.FC<SystemDepartmentListProps> = ({ title }) =>
         </FilterForm>
       </Panel.Item>
 
-      <Panel.Item className="mt-20">
-        <Table columns={columns} dataSource={data?.data || []} loading={loading} pagination={pagination} />
+      <Panel.Item className="mt-20" rightNodes={
+        <Button
+          ghost
+          type={'primary'}
+          onClick={() => {
+            departmentAddModal.open()
+          }}
+        >
+          新增
+        </Button>
+      }>
+        <Table className={"mt-16"} columns={columns} dataSource={data?.data || []} loading={loading} pagination={pagination} />
       </Panel.Item>
     </Panel>
   </>
