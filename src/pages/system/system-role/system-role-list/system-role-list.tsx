@@ -3,7 +3,7 @@ import React from 'react'
 
 import { FormItem } from '@/pages/common/template/list-page.tsx'
 import { Button, FilterForm, Panel, Table } from '@/components'
-import { roleAddModal } from '../modal'
+import { roleAddModal, setRoleMenuModal } from '../modal'
 import { EllipsisOutlined } from '@ant-design/icons'
 
 type ColumnsProps = RoleEntity.role
@@ -57,8 +57,8 @@ const SystemRoleList = (props: BasePage) => {
                 label: '菜单权限',
                 key: '2',
                 onClick: () => {
-                  roleAddModal.open({
-                    form: { parentId: record.id },
+                  setRoleMenuModal.open({
+                    id: record.id,
                   })
                 },
               },

@@ -1,23 +1,24 @@
 import { BaseModal, OptionsType } from '@/components'
 import React from 'react'
-import { Form,TreeSelect } from 'antd'
+import { Form, TreeSelect } from 'antd'
 
-type SetUserRoleModalProps = {
-  id: string | number
+type ModalProps = {
+  id?: string | number
 }
 
 type FormItem = UserEntity.User // todo
 
-export class SetUserRoleModal extends BaseModal<SetUserRoleModalProps> {
+export class SetRoleMenuModal extends BaseModal<ModalProps> {
   options: OptionsType = {
-    title: '设置权限',
+    title: '标题',
+    onOk: this.onOk.bind(this),
   }
 
-  async ok() {
+  async onOk() {
     return this.submit()
   }
 
-  submit() {
+  async submit() {
   }
 
   render(): React.ReactNode {
@@ -42,7 +43,7 @@ export class SetUserRoleModal extends BaseModal<SetUserRoleModalProps> {
     }, [])
 
     return <Form form={form} labelCol={{ span: 3 }}>
-      <Form.Item name="roids" label="角色" rules={[{ required: true }]}>
+      <Form.Item name="menuIds" label="菜单" rules={[{ required: true }]}>
         <TreeSelect showSearch placeholder="请选择" fieldNames={{ value: 'id', label: 'name' }}
                     filterTreeNode={$.utils.ant.filterTreeNode} allowClear
                     treeData={options} multiple />
@@ -51,4 +52,4 @@ export class SetUserRoleModal extends BaseModal<SetUserRoleModalProps> {
   }
 }
 
-export const setUserRoleModal = new SetUserRoleModal()
+export const setRoleMenuModal = new SetRoleMenuModal()
