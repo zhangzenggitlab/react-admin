@@ -33,9 +33,9 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   }
 
   React.useEffect(() => {
-    const params: any = getFilterFormData()
+    const params = getFilterFormData()
 
-    getData(params).then(res => {
+    getData().then(res => {
       setTotal(res?.total || 0)
     })
   }, [])

@@ -14,5 +14,4 @@ declare namespace RoleApi {
   interface RoleAllRes extends Pick<RoleEntity.role, 'id' | 'name'> {
     children?: RoleAllRes[]
   }
-
 }

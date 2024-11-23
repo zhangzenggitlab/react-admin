@@ -40,18 +40,12 @@ export function roleAll(): Promise<RoleApi.RoleAllRes[]> {
     resolve([{
       id: 1,
       name: '超級管理員',
-      permission: 'admin',
-      parentId: 0,
     }, {
       id: 2,
       name: '菜单管理员',
-      permission: 'menu',
-      parentId: 0,
     }, {
       id: 3,
       name: '用户管理员',
-      permission: 'role',
-      parentId: 0,
     }])
   }))
 

@@ -1,0 +1,1 @@
+export * from './department-add.modal.tsx'

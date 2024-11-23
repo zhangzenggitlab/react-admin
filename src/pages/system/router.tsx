@@ -33,6 +33,10 @@ export const routers: RouterConfig[] = [
         title: '角色管理',
         path: '/system/role',
         element: () => import('./system-role/system-role-list/system-role-list.tsx'),
+      }, {
+        title: '部门管理',
+        path: '/system/department',
+        element: () => import('./system-department/system-department-list/system-department-list.tsx'),
       },
     ],
   },
