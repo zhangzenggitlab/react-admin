@@ -12,7 +12,7 @@ declare namespace MenuEntity {
     /** 状态；1启用,2：禁用 */
     status: '1' | '2'
     /** 父菜单id */
-    parentId:number
+    parentId: number | string
     /** 创建时间 */
     createTime: string | number
     /** 更新时间 */

@@ -3,26 +3,31 @@ import React from 'react'
 import { Dropdown, Form, Input, Popconfirm } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
 
-import { Button, FilterForm, Panel, Table } from '@/components'
+import { Button, FilterForm, Panel, Table, Tag } from '@/components'
 import { menuModal } from '../modal'
 
 type FormItem = MenuApi.MenuListParams
+
 
 interface SystemMenuProps {
   title: string
 }
 
-interface ColumnsProps {
-}
-
 const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
-  const columns = $.utils.ant.AntTableColumns<ColumnsProps>([{
+  const columns = $.utils.ant.AntTableColumns<MenuEntity.menu>([{
     dataIndex: 'name',
     title: '名称',
   }, {
     dataIndex: 'type',
     title: '类型',
+    render: (val) => {
+      return <>
+        <Tag type={'error'}>
+          {val === $.enumData.menuEnum.MenuTypeEnum.菜单 ? '菜单' : '按钮'}
+        </Tag>
+      </>
+    },
   }, {
     dataIndex: 'sort',
     title: '排序',
@@ -34,9 +39,13 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
     title: '操作',
     fixed: 'right',
     width: 160,
-    render: (_) => {
+    render: (_, record) => {
       return <div className="flex gap-8">
-        <a>编辑</a>
+        <a onClick={() => {
+          menuModal.open({
+            form: record,
+          })
+        }}>编辑</a>
         <Popconfirm
           title="提示"
           description="确定删除?"
@@ -52,6 +61,11 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
               {
                 label: '新增子项',
                 key: '1',
+                onClick: () => {
+                  menuModal.open({
+                    form: { parentId: record.id },
+                  })
+                },
               },
             ],
           }}
