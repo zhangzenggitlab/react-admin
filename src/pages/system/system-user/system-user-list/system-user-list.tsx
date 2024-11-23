@@ -4,7 +4,7 @@ import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { departmentList, StatusEnum } from '../define.ts'
-import { systemUserAdd } from '../modal'
+import { systemUserAdd, setUserRoleModal } from '../modal'
 
 type FormItem = UserEntity.User
 
@@ -73,6 +73,11 @@ const SystemUserList = (props: RouterConfig) => {
                   {
                     label: '分配角色',
                     key: '1',
+                    onClick: () => {
+                      setUserRoleModal.open({
+                        id: record.id,
+                      })
+                    },
                   },
                 ],
               }}

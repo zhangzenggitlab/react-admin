@@ -45,7 +45,7 @@ export class DepartmentAddModal extends BaseModal<ModalProps> {
       <div className={'grid col-2 gap-x-20'}>
         <Form.Item name={'parentId'} label={'父级'} rules={[{ required: true }]}>
           <TreeSelect showSearch placeholder="请选择"
-                      filterTreeNode={(inputValue, treeNode) => $.utils.ant.filterTreeNode(inputValue, treeNode)}
+                      filterTreeNode={$.utils.ant.filterTreeNode}
                       treeNodeFilterProp="label" allowClear
                       style={{ width: 220 }}
                       treeData={options}

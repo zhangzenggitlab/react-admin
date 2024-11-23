@@ -38,7 +38,7 @@ export class RoleAddModal extends BaseModal<RoleAddModalProps> {
 
     React.useEffect(() => {
       getData().then(res => {
-        setOptions([{ id: '0', name: '一级角色' }, ...res])
+        setOptions([ ...res])
       })
     }, [])
 
