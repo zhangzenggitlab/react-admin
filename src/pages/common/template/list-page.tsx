@@ -18,9 +18,9 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
   const columns = $.utils.ant.AntTableColumns<ColumnsProps>([])
 
-  const { getData, data, loading } = $.hooks.useHttp(async (...args: any): Promise<any> => {
+  const { getData, data, loading } = $.hooks.useHttp(async (): Promise<any> => {
   }, {}, true)
-  const { page, pageSize, setTotal, onSearch } = $.hooks.usePagination(getData)
+  const { page, pageSize, setTotal, onSearch,pagination } = $.hooks.usePagination(getData)
 
   function getFilterFormData() {
     const values = form.getFieldsValue()
@@ -51,7 +51,7 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
       </Panel.Item>
 
       <Panel.Item className="mt-20">
-        <Table columns={columns} dataSource={data?.data || []} loading={loading} />
+        <Table columns={columns} dataSource={data?.data || []} loading={loading} pagination={pagination}/>
       </Panel.Item>
     </Panel>
   </>

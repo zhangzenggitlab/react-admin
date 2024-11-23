@@ -7,7 +7,6 @@ export const routers: RouterConfig[] = [
     icon: <SettingOutlined />,
     redirect: '/system/menu',
     children: [
-
       {
         title: '用户管理',
         path: '/system/user',
@@ -29,7 +28,11 @@ export const routers: RouterConfig[] = [
       }, {
         title: '菜单管理',
         path: '/system/menu',
-        element: () => import('./system-menu/system-menu-list/system-menu.tsx'),
+        element: () => import('./system-menu/system-menu-list/system-menu-list.tsx'),
+      }, {
+        title: '角色管理',
+        path: '/system/role',
+        element: () => import('./system-role/system-role-list/system-role-list.tsx'),
       },
     ],
   },

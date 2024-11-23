@@ -5,6 +5,7 @@ import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table, Tag } from '@/components'
 import { menuModal } from '../modal'
+import { roleAddModal } from '@/pages/system/system-role/modal'
 
 type FormItem = MenuApi.MenuListParams
 
@@ -13,7 +14,7 @@ interface SystemMenuProps {
   title: string
 }
 
-const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
+const SystemMenuList: React.FC<SystemMenuProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
   const columns = $.utils.ant.AntTableColumns<MenuEntity.menu>([{
     dataIndex: 'name',
@@ -62,7 +63,7 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
                 label: '新增子项',
                 key: '1',
                 onClick: () => {
-                  menuModal.open({
+                  roleAddModal.open({
                     form: { parentId: record.id },
                   })
                 },
@@ -113,7 +114,7 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
           ghost
           type={'primary'}
           onClick={() => {
-            menuModal.open()
+            roleAddModal.open()
           }}
         >
           新增
@@ -126,4 +127,4 @@ const SystemMenu: React.FC<SystemMenuProps> = ({ title }) => {
   </>
 }
 
-export default SystemMenu
+export default SystemMenuList
