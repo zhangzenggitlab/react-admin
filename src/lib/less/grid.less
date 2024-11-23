@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+
+  each(range(24), {
+    .col-@{index} {
+      grid-template-columns: repeat(@value, 1fr);
+    }
+  });
+
+  each(range(40), {
+    .gap-col@{index} {
+      grid-column-gap: 20 @value;
+    }
+  });
+}

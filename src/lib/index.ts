@@ -1,6 +1,6 @@
 export *  from './router'
+export * from './popup/popup.tsx'
 export * as utils from './utils'
 export * as hooks from './hooks'
 export * as api from './api'
-export * from './popup/popup.tsx'
 export * as enumData from './enum'

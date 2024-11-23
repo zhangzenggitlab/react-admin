@@ -11,6 +11,8 @@ declare namespace MenuEntity {
     permission: string
     /** 状态；1启用,2：禁用 */
     status: '1' | '2'
+    /** 父菜单id */
+    parentId:number
     /** 创建时间 */
     createTime: string | number
     /** 更新时间 */

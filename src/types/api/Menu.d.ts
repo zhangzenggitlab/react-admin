@@ -6,8 +6,12 @@ declare namespace MenuApi {
   interface MenuListParams {
     page: number
     pageSize: number
-    name?:string
+    name?: string
   }
 
   type MenuListRes = PageListType<MenuEntity.menu>
+
+  interface MenuAllRes extends MenuEntity.menu {
+    children?: MenuEntity.menu[]
+  }
 }
