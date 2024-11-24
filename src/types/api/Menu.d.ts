@@ -11,7 +11,7 @@ declare namespace MenuApi {
 
   type MenuListRes = PageListType<MenuEntity.menu>
 
-  interface MenuAllRes extends MenuEntity.menu {
-    children?: MenuEntity.menu[]
+  interface MenuAllRes extends Pick<MenuEntity.menu, 'id' | 'parentId' | 'name'> {
+    children?: MenuAllRes[]
   }
 }

@@ -10,7 +10,7 @@ type FormItem = UserEntity.User // todo
 
 export class SetRoleMenuModal extends BaseModal<ModalProps> {
   options: OptionsType = {
-    title: '标题',
+    title: '菜单权限',
     onOk: this.onOk.bind(this),
   }
 
@@ -42,7 +42,7 @@ export class SetRoleMenuModal extends BaseModal<ModalProps> {
       getAllRole()
     }, [])
 
-    return <Form form={form} labelCol={{ span: 3 }}>
+    return <Form form={form} >
       <Form.Item name="menuIds" label="菜单" rules={[{ required: true }]}>
         <TreeSelect showSearch placeholder="请选择" fieldNames={{ value: 'id', label: 'name' }}
                     filterTreeNode={$.utils.ant.filterTreeNode} allowClear

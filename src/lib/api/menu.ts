@@ -39,24 +39,12 @@ export function menuAll(): Promise<Request.Response<MenuApi.MenuAllRes[]>> {
       data: [{
         id: 1,
         name: '用戶管理',
-        permission: 'user',
-        type: '1',
-        status: '1',
-        sort: '1',
         parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
       }, {
         id: 2,
         name: '菜单管理',
-        permission: 'menu',
-        type: '1',
-        status: '1',
-        sort: '1',
         parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
-        children:[]
+        children: [],
       }],
     })
   }))
