@@ -11,4 +11,5 @@ declare module '*.bmp'
 declare module '*.tiff'
 
 declare const _TITLE_: string
+declare const _API_: string
 

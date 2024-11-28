@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       _TITLE_: JSON.stringify(env.VITE_TITLE),
+      _API_:JSON.stringify(env.VITE_API),
     },
     plugins: [react(),
       inject({

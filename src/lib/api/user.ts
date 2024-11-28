@@ -1,30 +1,11 @@
-export async function userList(params: UserApi.UserListParams): Promise<Request.PageType<UserEntity.User>> {
-  console.log(params)
+export async function userList(params: UserApi.UserListParams) {
+  return $.utils.axios.http.post<UserApi.UserListParams,Request.PageType<UserEntity.User>>('/user/list', params).then(res => {
+    return res
+  })
+}
 
-  return new Promise((resolve => {
-    resolve({
-      total: 2,
-      pageSize: 1,
-      page: 1,
-      data: [{
-        id: 1,
-        name: '超级管理员',
-        account: 'admin',
-        phone: '1808*****59',
-        status: '1',
-        mail: '',
-        createTime: '2019-08-02',
-        departmentName: '',
-      }, {
-        id: 2,
-        name: '用户管理员',
-        account: 'user',
-        phone: '1808*****59',
-        status: '2',
-        mail: '',
-        createTime: '2019-08-02',
-        departmentName: '',
-      }],
-    })
-  }))
+export async function login(data: UserApi.UserLoginVo) {
+  return $.utils.axios.http.post<UserApi.UserLoginVo, UserApi.UserLoginRes>('/user/login', data).then(res => {
+    return res.data
+  })
 }

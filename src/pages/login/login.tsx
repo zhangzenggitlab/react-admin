@@ -6,7 +6,7 @@ import { LockOutlined, MobileOutlined } from '@ant-design/icons'
 import { Button } from '@/components'
 
 interface FormItem {
-  username: string
+  password: string
   account: string
   checked: boolean
 }
@@ -34,11 +34,11 @@ const Login = () => {
         <Tabs defaultActiveKey="1" items={items} centered />
 
         <Form form={form} layout={'vertical'} initialValues={{ checked: true }}>
-          <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]} style={{ marginBottom: 24 }}>
+          <Form.Item name="account" rules={[{ required: true, message: '请输入用户名' }]} style={{ marginBottom: 24 }}>
             <Input placeholder="用户名: admin " prefix={<MobileOutlined />} size={'large'} allowClear
                    autoComplete="false" />
           </Form.Item>
-          <Form.Item name="account" rules={[{ required: true, message: '请输入密码' }]} style={{ marginBottom: 24 }}>
+          <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]} style={{ marginBottom: 24 }}>
             <Input.Password placeholder="密码: admin" prefix={<LockOutlined />} size={'large'} allowClear />
           </Form.Item>
           <Form.Item name="checked" className={'flex between'} style={{ marginBottom: 24, width: '100%' }}>
@@ -48,7 +48,14 @@ const Login = () => {
           <Form.Item className={'width'}>
             <Button type={'primary'} className={'width'} size={'large'} onClick={() => {
               form.validateFields().then(() => {
-                navigate('/system/user')
+                const { account,password } = form.getFieldsValue()
+
+                $.api.user.login({
+                  account,password
+                }).then(res=>{
+                  localStorage.setItem('token',res)
+                  navigate('/system/user')
+                })
               })
             }}>登录</Button>
           </Form.Item>
