@@ -1,4 +1,5 @@
 import axios, { AxiosInterceptorOptions, AxiosRequestHeaders } from 'axios'
+import {message} from 'antd'
 
 const instance = axios.create({
   baseURL: _API_,
@@ -29,10 +30,13 @@ instance.interceptors.request.use(function(config:HeaderType) {
  * 添加响应拦截器
  */
 instance.interceptors.response.use(function(response) {
-
-  if (response.status === 200) {
+  console.log(response.data)
+  if (response.status === 200 && response.data.code === 200) {
     return response.data.data
   }else {
+    message.error(response.data.msg)
+    $.utils.router.useNavigate()("/login")
+
     return Promise.reject()
   }
 }, function(error) {

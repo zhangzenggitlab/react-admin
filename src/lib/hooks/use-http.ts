@@ -22,7 +22,7 @@ export const useHttp = <T extends (...args: any) => Promise<any>>(
       })
       .catch((err) => {
         setErr(err)
-        return err
+        return Promise.reject()
       })
   }
 

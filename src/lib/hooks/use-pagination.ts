@@ -22,6 +22,7 @@ interface TablePaginationConfig extends AntTablePaginationConfig {
  * @param config 配置
  */
 export const usePagination = (requestFn: RequestType, config?: PageProps) => {
+
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSize] = React.useState(10)
   const [total, setTotal] = React.useState(0)
