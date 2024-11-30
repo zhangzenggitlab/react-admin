@@ -10,6 +10,8 @@ export interface FormProps extends AntFormProps {
   children?: React.ReactNode
   /** 查询按钮 */
   onSearch?: () => void
+  /** 重置按钮 */
+  onReset?:()=>void
   /** 行高 */
   rowHeight?: number
 }
@@ -19,7 +21,7 @@ const DEFINE = {
 }
 
 export const FilterForm = (props: FormProps) => {
-  const { rowHeight = DEFINE.rowHeight, children,onSearch = ()=>{},...prop } = props
+  const { rowHeight = DEFINE.rowHeight, children,onSearch = ()=>{},onReset = ()=>{},...prop } = props
   const [collapsed, setCollapsed] = React.useState<boolean>(true)
   const [hidden, setHidden] = React.useState(false)
   const filterFormRef = React.useRef<HTMLDivElement>(null)
@@ -59,6 +61,7 @@ export const FilterForm = (props: FormProps) => {
         <Button
           onClick={() => {
             props.form?.resetFields()
+            onReset?.()
           }}
         >
           重置

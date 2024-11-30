@@ -1,6 +1,6 @@
 declare namespace UserEntity {
   interface User {
-    id: string | number
+    id:  number
     /** 姓名 */
     name: string
     /** 账号 */

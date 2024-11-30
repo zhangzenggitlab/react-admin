@@ -20,13 +20,12 @@ export function enumToOptions(enumData: Record<string, any>): OptionsValueType[]
   return options
 }
 
-
 /**
  * 日期格式化
  * @param dateStr
  * @param format
  */
-export const formatDate = (dateStr: number | Date, format: string = 'YYYY-MM-dd hh:mm:ss') => {
+export function formatDate(dateStr: number | Date, format: string = 'YYYY-MM-dd hh:mm:ss') {
   // 10位数时间戳需要转为13位
   if (typeof dateStr === 'number' && dateStr.toString().length === 10) {
     dateStr = dateStr * 1000
@@ -59,4 +58,19 @@ export const formatDate = (dateStr: number | Date, format: string = 'YYYY-MM-dd 
     return all
   })
   return format
+}
+
+/**
+ * 刪除对象假值
+ */
+export function deleteObjNull<T extends Record<string, any>>(object: T) {
+  const newObj: Partial<T> = {}
+
+  for (const e in object) {
+    if (object[e]) {
+      newObj[e] = object[e]
+    }
+  }
+
+  return newObj as T
 }

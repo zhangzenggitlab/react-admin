@@ -1,9 +1,15 @@
 import React from 'react'
 
+type ConfigType = {
+  /** 自动删除假值 */
+  deleteNull?: boolean
+}
+
 export const useHttp = <T extends (...args: any) => Promise<any>>(
   request: T,
   defaultData: Partial<Awaited<ReturnType<T>>>,
   defaultLoading: boolean = false,
+  config?: ConfigType,
 ) => {
   const [data, setData] = React.useState<typeof defaultData>(defaultData)
   const [loading, setLoading] = React.useState(defaultLoading)
@@ -12,7 +18,9 @@ export const useHttp = <T extends (...args: any) => Promise<any>>(
   async function fn(...args: Parameters<T>) {
     setLoading(true)
 
-    return request(...args)
+    const params = config?.deleteNull ? $.utils.tool.deleteObjNull(args) : args
+
+    return request(...params)
       .then((res) => {
         setData(res)
         return res

@@ -4,13 +4,11 @@ import { ConfigProvider } from '@/components'
 import { GetRoutes } from '@/router/router.tsx'
 
 const BaseRouter = () => {
+
   return (
     <BrowserRouter>
       <ConfigProvider>
-
           <GetRoutes />
-
-
       </ConfigProvider>
     </BrowserRouter>
   )

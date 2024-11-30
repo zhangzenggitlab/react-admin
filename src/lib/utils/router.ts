@@ -12,7 +12,6 @@ export interface UsePreviewNavigateProps extends NavigateOptions {
  */
 export const useNavigate = () => {
   const navigate = ReactUseNavigate()
-
   return (path: string, options?: NavigateOptions) => {
     navigate(path, options)
   }
@@ -30,3 +29,8 @@ export const usePreviewNavigate = () => {
   }
 }
 
+export let navigate = (path: string, options?: NavigateOptions) => {
+  const navigate = useNavigate()
+
+  navigate(path, options)
+}

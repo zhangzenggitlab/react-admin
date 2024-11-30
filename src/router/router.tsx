@@ -6,5 +6,5 @@ import { initRouters, baseRouters } from '../lib/router/utils.tsx'
   return useRoutes(baseRouters as RouteObject[])
 }
 
-initRouters()
+ initRouters()
 

@@ -22,4 +22,13 @@ declare namespace Request {
     total: number
     data: T[]
   }
+
+  /**
+   * 成功通用返回类型
+   */
+  export interface ResponseSuccess {
+    msg: string,
+    code: 200
+    data: null
+  }
 }

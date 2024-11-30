@@ -48,12 +48,13 @@ const Login = () => {
           <Form.Item className={'width'}>
             <Button type={'primary'} className={'width'} size={'large'} onClick={() => {
               form.validateFields().then(() => {
-                const { account,password } = form.getFieldsValue()
+                const { account, password } = form.getFieldsValue()
 
                 $.api.user.login({
-                  account,password
-                }).then(res=>{
-                  localStorage.setItem('token',res)
+                  account, password,
+                }).then(res => {
+
+                  localStorage.setItem('token', res)
                   navigate('/system/user')
                 })
               })

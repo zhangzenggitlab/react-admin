@@ -1,4 +1,3 @@
-import React from 'react'
 import { Dropdown, Form, Input, Popconfirm, Select, Tag, TreeSelect } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
 
@@ -6,11 +5,13 @@ import { Button, FilterForm, Panel, Table } from '@/components'
 import { departmentList, StatusEnum } from '../define.ts'
 import { systemUserAdd, setUserRoleModal } from '../modal'
 
-type FormItem = UserEntity.User
+type FormItem = Omit<UserApi.UserListParams, 'pageSize' | 'page'>
+
+type ColumnsType = UserEntity.User
 
 const SystemUserList = (props: RouterConfig) => {
   const [form] = Form.useForm<FormItem>()
-  const columns = $.utils.ant.AntTableColumns<FormItem>([
+  const columns = $.utils.ant.AntTableColumns<ColumnsType>([
     {
       dataIndex: 'name',
       title: '姓名',
@@ -52,7 +53,7 @@ const SystemUserList = (props: RouterConfig) => {
               onClick={() => {
                 systemUserAdd.open({
                   form: record,
-                })
+                }).then(()=>onRefresh())
               }}
             >
               编辑
@@ -61,7 +62,7 @@ const SystemUserList = (props: RouterConfig) => {
               title="提示"
               description="确定删除?"
               onConfirm={() => {
-                console.log(11)
+                $.api.user.deleteUser({id:record.id}).then(()=> onRefresh())
               }}
             >
               <a>删除</a>
@@ -93,50 +94,42 @@ const SystemUserList = (props: RouterConfig) => {
   ])
 
   const { getData, data, loading } = $.hooks.useHttp($.api.user.userList, {})
+
   const {
     page,
     pageSize,
     setTotal,
     pagination,
-    onSearch,
-  } = $.hooks.usePagination(getData)
+    onRefresh,
+  } = $.hooks.usePagination(getTableData)
 
-  function getFilterFormData(): UserApi.UserListParams {
+  async function getTableData() {
     const values = form.getFieldsValue()
-
-    return {
-      ...values,
-      page,
-      pageSize,
-    }
-  }
-
-  React.useEffect(() => {
-    const params = getFilterFormData()
-
-    getData(params).then((res) => {
-      console.log(111)
+    getData(
+      {
+        page,
+        pageSize,
+        ...values,
+      }).then((res) => {
       setTotal(res.total)
-    }).catch(err=>{
-      console.log(err)
     })
-  }, [])
+  }
 
   return (
     <Panel title={props.title}>
       <Panel.Item className="mt-20">
-        <FilterForm form={form} onSearch={onSearch}>
+        <FilterForm form={form} onSearch={getTableData} onReset={getTableData}>
           <Form.Item name="name" label="姓名">
-            <Input placeholder="请输入" />
+            <Input placeholder="请输入" allowClear />
           </Form.Item>
           <Form.Item name="account" label="账号">
-            <Input placeholder="请输入" />
+            <Input placeholder="请输入" allowClear />
           </Form.Item>
           <Form.Item name="phone" label="手机号码">
-            <Input placeholder="请输入" />
+            <Input placeholder="请输入" allowClear />
           </Form.Item>
           <Form.Item name="mail" label="邮箱">
-            <Input placeholder="请输入" />
+            <Input placeholder="请输入" allowClear />
           </Form.Item>
           <Form.Item name="status" label="状态">
             <Select
@@ -161,14 +154,17 @@ const SystemUserList = (props: RouterConfig) => {
             ghost
             type={'primary'}
             onClick={() => {
-              systemUserAdd.open()
+              systemUserAdd.open().then(() => {
+                onRefresh()
+              })
             }}
           >
             新增
           </Button>
         }
       >
-        <Table style={{ width: '100%' }} className={'mt-16'} columns={columns} dataSource={data.data || []}
+        <Table style={{ width: '100%' }} rowKey={'id'} className={'mt-16'} columns={columns}
+               dataSource={data.data || []}
                pagination={pagination} loading={loading} />
       </Panel.Item>
     </Panel>

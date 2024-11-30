@@ -10,7 +10,7 @@ const routerModules: Record<string, RouterBase.PageRouter> = import.meta.glob('@
   eager: true,
 })
 
-const baseRouters: RouterConfig[] = [
+ const baseRouters: RouterConfig[] = [
   {
     path: '/login',
     element: <Login />,

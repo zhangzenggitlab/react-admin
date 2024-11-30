@@ -18,13 +18,19 @@ export abstract class BaseModal<T extends Record<string, any>> {
 
   props? = {} as T
 
-  open(options?: OptionsType & T) {
+  submit() {
+  }
+
+  async open(options?: OptionsType & T) {
     this.props = options
 
-    createPopup({
-      children: <OpenModal<T> render={this.render.bind(this)} title={this.options.title} options={this.options}
-                              renderProps={options}
-      />,
+    return new Promise((resolve) => {
+      createPopup({
+        children: <OpenModal<T> render={this.render.bind(this)} title={this.options.title} options={this.options}
+                                renderProps={options} resolve={resolve}
+        />,
+      })
     })
+
   }
 }
