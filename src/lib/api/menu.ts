@@ -1,51 +1,27 @@
-export function menuList(params: MenuApi.MenuListParams): Promise<Request.PageType<MenuEntity.menu>> {
-  console.log(params)
-  return new Promise((resolve => {
-    resolve({
-      total: 2,
-      pageSize: 1,
-      page: 1,
-      data: [{
-        id: 1,
-        name: '用戶管理',
-        permission: 'user',
-        type: '1',
-        status: '1',
-        sort: '1',
-        parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
-      }, {
-        id: 2,
-        name: '菜单管理',
-        permission: 'menu',
-        type: '1',
-        status: '1',
-        sort: '1',
-        parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
-      }],
-    })
-  }))
-
+export async function menuList(data: MenuApi.MenuListParams) {
+  return $.utils.axios.http.post<MenuApi.MenuListParams, Request.Page<MenuApi.MenuListResVo>>('/menu/list', data).then(res => {
+    return res
+  })
 }
 
-export function menuAll(): Promise<Request.Response<MenuApi.MenuAllRes[]>> {
-  return new Promise((resolve => {
-    resolve({
-      code: 200,
-      msg: '',
-      data: [{
-        id: 1,
-        name: '用戶管理',
-        parentId: 0,
-      }, {
-        id: 2,
-        name: '菜单管理',
-        parentId: 0,
-        children: [],
-      }],
-    })
-  }))
+export async function menuAll() {
+  return $.utils.axios.http.post<never, MenuApi.MenuAllResVo[]>('/menu/all').then(res => {
+    return res || []
+  })
+}
+
+export async function menuAdd(data:MenuApi.MenuAddVo) {
+  return $.utils.axios.http.post<MenuApi.MenuAddVo, Request.Success>('/menu/add',data).then(res => {
+    return res || []
+  })
+}
+
+export async function update(data:MenuApi.MenuUpdateVo) {
+  return $.utils.axios.http.post<MenuApi.MenuUpdateVo, Request.Success>('/menu/update',data).then(res => {
+    return res || []
+  })
+}
+
+export async function deleteMenu(data:MenuApi.MenuDeleteVo) {
+  return $.utils.axios.http.post<MenuApi.MenuDeleteVo, Request.Success>('/menu/delete',data)
 }

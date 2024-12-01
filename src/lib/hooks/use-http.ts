@@ -36,7 +36,7 @@ export const useHttp = <T extends (...args: any) => Promise<any>>(
 
   return {
     getData: (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => fn(...args),
-    data,
+    data: data as Awaited<ReturnType<T>>,
     loading,
     err,
   }

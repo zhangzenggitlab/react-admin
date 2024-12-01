@@ -17,4 +17,15 @@ declare namespace DepartmentApi {
   interface DepartmentAllRes extends Pick<DepartmentEntity.department, 'id' | 'name' | 'parentId'> {
     children?: DepartmentAllRes[]
   }
+
+  /**
+   * DepartmentListVo
+   */
+  export interface DepartmentListVo {
+    name?: string;
+    page?: number;
+    pageSize?: number;
+    [property: string]: any;
+  }
+
 }

@@ -16,7 +16,7 @@ declare namespace Request {
    * 分页
    * 列表接口一般会继承当前类
    */
-  interface PageType<T> {
+  interface Page<T> {
     page: number,
     pageSize: number
     total: number
@@ -26,7 +26,7 @@ declare namespace Request {
   /**
    * 成功通用返回类型
    */
-  export interface ResponseSuccess {
+  export interface Success {
     msg: string,
     code: 200
     data: null

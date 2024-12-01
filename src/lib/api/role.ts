@@ -1,4 +1,4 @@
-export function roleList(params: RoleApi.RoleListParams): Promise<Request.PageType<RoleEntity.role>> {
+export function roleList(params: RoleApi.RoleListParams): Promise<Request.Page<RoleEntity.role>> {
   console.log(params)
   return new Promise((resolve => {
     resolve({

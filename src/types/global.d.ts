@@ -62,5 +62,5 @@ declare global {
    * 分页接口直接接受当前type
    * T 返回数据类型
    */
-  type PageListType<T> = Request.Response<Request.PageType<T>>
+  type PageListType<T> = Request.Response<Request.Page<T>>
 }

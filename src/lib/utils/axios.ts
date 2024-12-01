@@ -39,7 +39,7 @@ instance.interceptors.response.use(function(response) {
     const protocol = window.location.protocol
     const host = window.location.host
 
-   location.href = `${protocol}//${host}/login`
+    location.href = `${protocol}//${host}/login`
   }
 
   message.error(response.data.msg)
@@ -55,7 +55,7 @@ export const http = {
    * @param url 接口地址
    * @param data body参数
    */
-  post: async <T, R>(url: string, data: T): Promise<R> => {
+  post: async <T, R>(url: string, data?: T): Promise<R> => {
     return instance({
       method: 'post',
       url,

@@ -29,7 +29,6 @@ export const usePagination = (requestFn: RequestType, config?: PageProps) => {
   const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, size) => {
     setPage(current)
     setPageSize(size)
-    onReset?.()
   }
 
   const showTotal: PaginationProps['showTotal'] = (total) => `共 ${total} 条`
@@ -51,11 +50,13 @@ export const usePagination = (requestFn: RequestType, config?: PageProps) => {
     }
   }, [])
 
-  /** 搜索使用第一页 */
+  React.useEffect(()=>{
+    requestFn()
+  },[page,pageSize])
+
+  /** 重置按钮第一页 */
   function onReset() {
     setPage(1)
-    console.log(11)
-    requestFn?.()
   }
 
   /** 刷新 */

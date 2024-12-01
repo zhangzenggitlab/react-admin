@@ -5,7 +5,6 @@ import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table, Tag } from '@/components'
 import { menuModal } from '../modal'
-import { roleAddModal } from '@/pages/system/system-role/modal'
 
 type FormItem = MenuApi.MenuListParams
 
@@ -16,7 +15,7 @@ interface SystemMenuProps {
 
 const SystemMenuList: React.FC<SystemMenuProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
-  const columns = $.utils.ant.AntTableColumns<MenuEntity.menu>([{
+  const columns = $.utils.ant.AntTableColumns<MenuApi.MenuListResVo>([{
     dataIndex: 'name',
     title: '名称',
   }, {
@@ -45,13 +44,14 @@ const SystemMenuList: React.FC<SystemMenuProps> = ({ title }) => {
         <a onClick={() => {
           menuModal.open({
             form: record,
-          })
+            id: record.id,
+          }).then(() => onRefresh())
         }}>编辑</a>
         <Popconfirm
           title="提示"
           description="确定删除?"
           onConfirm={() => {
-            console.log(11)
+            return $.api.menu.deleteMenu({ id: record.id }).then(() => onRefresh())
           }}
         >
           <a>删除</a>
@@ -63,9 +63,9 @@ const SystemMenuList: React.FC<SystemMenuProps> = ({ title }) => {
                 label: '新增子项',
                 key: '1',
                 onClick: () => {
-                  roleAddModal.open({
+                  menuModal.open({
                     form: { parentId: record.id },
-                  })
+                  }).then(() => onRefresh())
                 },
               },
             ],
@@ -80,29 +80,24 @@ const SystemMenuList: React.FC<SystemMenuProps> = ({ title }) => {
   }])
 
   const { getData, data, loading } = $.hooks.useHttp($.api.menu.menuList, {}, true)
-  const { page, pageSize, setTotal, onSearch, pagination } = $.hooks.usePagination(getData)
+  const { page, pageSize, setTotal, onRefresh, pagination } = $.hooks.usePagination(onSearch)
 
-  function getFilterFormData(): MenuApi.MenuListParams {
+  async function onSearch() {
     const values = form.getFieldsValue()
 
-    return {
+    getData({
       ...values,
       page,
       pageSize,
-    }
-  }
-
-  React.useEffect(() => {
-    const params = getFilterFormData()
-    getData(params).then(res => {
+    }).then(res => {
       setTotal(res?.total || 0)
     })
-  }, [])
+  }
 
   return <>
     <Panel title={title}>
       <Panel.Item className="mt-20">
-        <FilterForm form={form} onSearch={onSearch}>
+        <FilterForm form={form} onSearch={onSearch} onReset={onSearch}>
           <Form.Item name={'name'} label={'名称'}>
             <Input placeholder={'请输入'} />
           </Form.Item>
@@ -114,7 +109,7 @@ const SystemMenuList: React.FC<SystemMenuProps> = ({ title }) => {
           ghost
           type={'primary'}
           onClick={() => {
-            roleAddModal.open()
+            menuModal.open().then(() => onRefresh())
           }}
         >
           新增
