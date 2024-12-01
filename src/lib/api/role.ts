@@ -1,52 +1,21 @@
-export function roleList(params: RoleApi.RoleListParams): Promise<Request.Page<RoleEntity.role>> {
-  console.log(params)
-  return new Promise((resolve => {
-    resolve({
-      total: 2,
-      pageSize: 1,
-      page: 1,
-      data: [{
-        id: 1,
-        name: '超級管理員',
-        permission: 'admin',
-        sort: '1',
-        remark: '拥有系统全部权限',
-        parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
-      }, {
-        id: 2,
-        name: '菜单管理员',
-        permission: 'menu',
-        sort: '1', remark: '',
-        parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
-      }, {
-        id: 3,
-        name: '用户管理员',
-        permission: 'role',
-        sort: '1', remark: '',
-        parentId: 0,
-        createTime: '123456767',
-        updateTime: '123456767',
-      }],
-    })
-  }))
+export async function roleList(data: RoleApi.RoleListVo) {
+  return $.utils.axios.http.post<RoleApi.RoleListVo, Request.Page<RoleApi.RoleListResVo>>('/role/list', data)
 }
 
-export function roleAll(): Promise<RoleApi.RoleAllRes[]> {
-  return new Promise((resolve => {
-    resolve([{
-      id: 1,
-      name: '超級管理員',
-    }, {
-      id: 2,
-      name: '菜单管理员',
-    }, {
-      id: 3,
-      name: '用户管理员',
-    }])
-  }))
+export async function add(data: RoleApi.RoleAddVo) {
+  return $.utils.axios.http.post<RoleApi.RoleAddVo, Request.Success>('/role/add', data)
+}
 
+export async function update(data: RoleApi.RoleUpdateVo) {
+  return $.utils.axios.http.post<RoleApi.RoleUpdateVo, Request.Success>('/role/update', data)
+}
+
+export async function deleteRole(data: RoleApi.RoleDeleteVo) {
+  return $.utils.axios.http.post<RoleApi.RoleDeleteVo, Request.Success>('/role/delete', data)
+}
+
+export async function all() {
+  return $.utils.axios.http.post<never, RoleApi.RoleAllResVo[]>('/role/all').then(res => {
+    return res || []
+  })
 }

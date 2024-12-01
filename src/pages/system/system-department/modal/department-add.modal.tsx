@@ -1,14 +1,13 @@
-import { BaseModal, OptionsType } from '@/components'
 import React from 'react'
 import { Form, Input, InputNumber, TreeSelect } from 'antd'
 
+import { BaseModal, OptionsType } from '@/components'
+
 type ModalProps = {
-  id?: string
-  form?: Partial<DepartmentEntity.department>
+  id?: number
+  form?: Partial<FormItem>
 }
-type FormItem = {
-  name: string
-}
+type FormItem = DepartmentApi.DepartmentAddVo
 
 export class DepartmentAddModal extends BaseModal<ModalProps> {
   options: OptionsType = {
@@ -21,24 +20,23 @@ export class DepartmentAddModal extends BaseModal<ModalProps> {
     return this.submit()
   }
 
-  async submit() {
-  }
-
   render() {
     const [form] = Form.useForm<FormItem>()
-    const [options, setOptions] = React.useState<DepartmentApi.DepartmentAllRes[]>([])
-    const { getData, loading } = $.hooks.useHttp($.api.department.departmentAll, [], true)
+    const { getData,data, loading } = $.hooks.useHttp($.api.department.all, [], true)
+
     this.submit = async () => {
       await form.validateFields()
       const value = form.getFieldsValue()
-      console.log(value)
-      return Promise.reject()
+
+      if (this.props?.id) {
+        return $.api.department.update(value)
+      }
+
+      return $.api.department.add(value)
     }
 
     React.useEffect(() => {
-      getData().then(res => {
-        setOptions([{ id: '0', name: '一级部门', parentId: 0 }, ...res])
-      })
+      getData()
     }, [])
 
     return <Form form={form} className={'grid'} labelCol={{ style: { width: 60 } }} initialValues={this.props?.form}>
@@ -48,7 +46,7 @@ export class DepartmentAddModal extends BaseModal<ModalProps> {
                       filterTreeNode={$.utils.ant.filterTreeNode}
                       treeNodeFilterProp="label" allowClear
                       style={{ width: 220 }}
-                      treeData={options}
+                      treeData={[{id:0,name:"一级部门"},...data]}
                       loading={loading}
                       fieldNames={{ value: 'id', label: 'name' }} />
         </Form.Item>

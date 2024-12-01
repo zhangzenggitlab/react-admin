@@ -19,9 +19,9 @@ interface TablePaginationConfig extends AntTablePaginationConfig {
 /**
  * 分页
  * @param requestFn 异步请求,加载数据
- * @param config 配置
+ // * @param config 配置
  */
-export const usePagination = (requestFn: RequestType, config?: PageProps) => {
+export const usePagination = (requestFn: RequestType) => {
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSize] = React.useState(10)
   const [total, setTotal] = React.useState(0)
@@ -44,11 +44,11 @@ export const usePagination = (requestFn: RequestType, config?: PageProps) => {
     pageSize,
   }
 
-  React.useEffect(() => {
-    if (!config?.immediate) {
-      requestFn()
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (!config?.immediate) {
+  //     requestFn()
+  //   }
+  // }, [])
 
   React.useEffect(()=>{
     requestFn()

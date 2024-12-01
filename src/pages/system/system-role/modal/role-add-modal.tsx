@@ -3,12 +3,11 @@ import { Form, Input, InputNumber, TreeSelect } from 'antd'
 
 import { BaseModal, OptionsType } from '@/components'
 
-type RoleAddModalProps = {
-  form?: any
-}
+type FormItem = RoleApi.RoleAddVo
 
-type FormItem = {
-  name: string
+type RoleAddModalProps = {
+  id?: number
+  form?: FormItem
 }
 
 export class RoleAddModal extends BaseModal<RoleAddModalProps> {
@@ -22,23 +21,24 @@ export class RoleAddModal extends BaseModal<RoleAddModalProps> {
     return this.submit()
   }
 
-  async submit() {
-  }
-
   render() {
     const [form] = Form.useForm<FormItem>()
-    const [options, setOptions] = React.useState<RoleApi.RoleAllRes[]>([])
-    const { getData, loading } = $.hooks.useHttp($.api.role.roleAll, [], true)
+    const { getData, data, loading } = $.hooks.useHttp($.api.role.all, [], true)
     this.submit = async () => {
       await form.validateFields()
       const value = form.getFieldsValue()
-      console.log(value)
-      return Promise.reject()
+
+      if (this.props?.id) {
+        return $.api.role.update({ ...value, id: this.props.id })
+      }
+
+      return $.api.role.add(value)
     }
 
     React.useEffect(() => {
       getData().then(res => {
-        setOptions([ ...res])
+
+        console.log(res)
       })
     }, [])
 
@@ -46,10 +46,10 @@ export class RoleAddModal extends BaseModal<RoleAddModalProps> {
       <div className={'grid col-2 gap-x-20'}>
         <Form.Item name={'parentId'} label={'父级'} rules={[{ required: true }]}>
           <TreeSelect showSearch placeholder="请选择"
-                      filterTreeNode={(inputValue, treeNode) => $.utils.ant.filterTreeNode(inputValue, treeNode)}
+                      filterTreeNode={$.utils.ant.filterTreeNode}
                       treeNodeFilterProp="label" allowClear
                       style={{ width: 220 }}
-                      treeData={options}
+                      treeData={[{ id: 0, name: '一级角色' }, ...data]}
                       loading={loading}
                       fieldNames={{ value: 'id', label: 'name' }} />
         </Form.Item>
@@ -62,7 +62,7 @@ export class RoleAddModal extends BaseModal<RoleAddModalProps> {
         <Form.Item name={'permission'} label={'权限码'} rules={[{ required: true }]}>
           <Input placeholder={'请输入'} style={{ width: 220 }} allowClear />
         </Form.Item>
-        <Form.Item name={'remark'} label={'备注'} rules={[{ required: true }]}>
+        <Form.Item name={'remark'} label={'备注'}>
           <Input.TextArea placeholder={'请输入'} />
         </Form.Item>
       </div>

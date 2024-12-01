@@ -5,15 +5,13 @@ import { EllipsisOutlined } from '@ant-design/icons'
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { departmentAddModal } from '../modal'
 
-export interface FormItem {
-  name: string
-}
+export type FormItem = DepartmentApi.DepartmentListVo
 
 interface SystemDepartmentListProps {
   title: string
 }
 
-type ColumnsProps = DepartmentEntity.department
+type ColumnsProps = DepartmentApi.DepartmentListResVo
 
 const SystemDepartmentList: React.FC<SystemDepartmentListProps> = ({ title }) => {
   const [form] = Form.useForm<FormItem>()
@@ -39,7 +37,8 @@ const SystemDepartmentList: React.FC<SystemDepartmentListProps> = ({ title }) =>
         <a onClick={() => {
           departmentAddModal.open({
             form: record,
-          })
+            id:record.id
+          }).then(() => onRefresh())
         }}>编辑</a>
         <Popconfirm
           title="提示"
@@ -59,7 +58,7 @@ const SystemDepartmentList: React.FC<SystemDepartmentListProps> = ({ title }) =>
                 onClick: () => {
                   departmentAddModal.open({
                     form: { parentId: record.id },
-                  })
+                  }).then(() => onRefresh())
                 },
               },
             ],
@@ -74,29 +73,25 @@ const SystemDepartmentList: React.FC<SystemDepartmentListProps> = ({ title }) =>
   }])
 
   const { getData, data, loading } = $.hooks.useHttp($.api.department.departmentList, {}, true)
-  const { page, pageSize, setTotal, onSearch, pagination } = $.hooks.usePagination(getData)
+  const { page, pageSize, setTotal, onRefresh, pagination } = $.hooks.usePagination(onSearch)
 
-  function getFilterFormData() {
+  async function onSearch() {
     const values = form.getFieldsValue()
 
-    return {
+    getData({
       ...values,
       page,
       pageSize,
-    }
-  }
-
-  React.useEffect(() => {
-    const params: any = getFilterFormData()
-    getData(params).then(res => {
+    }).then(res => {
       setTotal(res?.total || 0)
     })
-  }, [])
+  }
+
 
   return <>
     <Panel title={title}>
       <Panel.Item className="mt-20">
-        <FilterForm form={form} onSearch={onSearch}>
+        <FilterForm form={form} onSearch={onSearch} onReset={onRefresh}>
           <Form.Item name={'name'} label={'名称'}>
             <Input placeholder={'请输入'} />
           </Form.Item>
@@ -108,13 +103,14 @@ const SystemDepartmentList: React.FC<SystemDepartmentListProps> = ({ title }) =>
           ghost
           type={'primary'}
           onClick={() => {
-            departmentAddModal.open()
+            departmentAddModal.open().then(() => onRefresh())
           }}
         >
           新增
         </Button>
       }>
-        <Table className={"mt-16"} columns={columns} dataSource={data?.data || []} loading={loading} pagination={pagination} />
+        <Table className={'mt-16'} columns={columns} dataSource={data?.data || []} loading={loading}
+               pagination={pagination} />
       </Panel.Item>
     </Panel>
   </>
