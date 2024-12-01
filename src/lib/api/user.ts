@@ -5,8 +5,8 @@ export async function userList(params: UserApi.UserListParams) {
 }
 
 export async function login(data: UserApi.UserLoginVo) {
-  return $.utils.axios.http.post<UserApi.UserLoginVo, UserApi.UserLoginRes>('/user/login', data).then(res => {
-    return res
+  return $.utils.axios.http.post<UserApi.UserLoginVo, UserApi.UserLoginResVo>('/user/login', data).then(res => {
+    return res.token|| ''
   })
 }
 

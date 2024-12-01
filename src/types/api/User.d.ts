@@ -22,8 +22,12 @@ declare namespace UserApi {
     password?: string;
   }
 
-  export interface UserLoginRes {
-    data: string
+  /**
+   * UserLoginResVo
+   */
+  export interface UserLoginResVo {
+    token?: string;
+    [property: string]: any;
   }
 
   /**
@@ -60,14 +64,14 @@ declare namespace UserApi {
   export interface UserListResVo {
     account?: string;
     createTime?: string;
-    id?: number;
+    id: number;
     mail?: string;
     name?: string;
     phone?: string;
-    status?: '1' | '2';
-
+    status?: '1'|'2';
     [property: string]: any;
   }
+
 
   /**
    * UserUpdateVo

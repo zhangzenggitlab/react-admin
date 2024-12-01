@@ -1,7 +1,8 @@
 import { Form, Input, Select, TreeSelect } from 'antd'
 
 import { BaseModal, OptionsType } from '@/components'
-import { departmentList, StatusEnum } from '@/pages/system/system-user/define.ts'
+import { StatusEnum } from '@/pages/system/system-user/define.ts'
+import React from 'react'
 
 type FormItem = UserApi.ReqUserAdd & {
   id?: number
@@ -24,6 +25,7 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
 
   render() {
     const [form] = Form.useForm<FormItem>()
+    const { getData, data, loading } = $.hooks.useHttp($.api.department.all, [], true)
 
     this.submit = async () => {
       await form.validateFields()
@@ -35,6 +37,10 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
 
       return $.api.user.add(values)
     }
+
+    React.useEffect(() => {
+      getData()
+    }, [])
 
     return (
       <Form form={form} labelCol={{ span: 3 }} initialValues={this.props?.form}>
@@ -55,9 +61,10 @@ export class SystemUserAdd extends BaseModal<BeforeProps> {
         <Form.Item name="status" label="状态" rules={[{ required: true }]}>
           <Select placeholder="请选择" allowClear options={$.utils.tool.enumToOptions(StatusEnum)} />
         </Form.Item>
-        <Form.Item name="departmenId" label="部门" rules={[{ required: true }]}>
+        <Form.Item name="departmentId" label="部门" rules={[{ required: true }]}>
           <TreeSelect showSearch placeholder="请选择" filterTreeNode={$.utils.ant.filterTreeNode} allowClear
-                      treeData={departmentList} />
+                      treeData={data} loading={loading} fieldNames={{ value: 'id', label: 'name' }}
+                      treeNodeFilterProp="label" />
         </Form.Item>
       </Form>
     )

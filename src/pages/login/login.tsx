@@ -52,8 +52,7 @@ const Login = () => {
 
                 $.api.user.login({
                   account, password,
-                }).then(res => {
-
+                }).then((res) => {
                   localStorage.setItem('token', res)
                   navigate('/system/user')
                 })

@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import { Skeleton, Spin } from '@/components'
-import {BaseLayout} from '@/layout'
+import { BaseLayout } from '@/layout'
 
 export interface AsyncImportComponentProps extends Omit<RouterConfig, 'element' | 'children'> {
   element?: () => Promise<any> | null
@@ -33,7 +33,8 @@ export const AsyncImportComponent = (props: AsyncImportComponentProps) => {
           res = await Element?.beforeEnter({ ...params })
         }
 
-        setLazyElement(<BaseLayout router={props}><Element {...props} {...res} location={location} title={props.title} router={props} /></BaseLayout>)
+        setLazyElement(<BaseLayout router={props}><Element {...props} {...res} location={location} title={props.title}
+                                                           router={props} /></BaseLayout>)
       })
     }
   }, [props, params, location])

@@ -2,14 +2,19 @@ import { Dropdown, Form, Input, Popconfirm, Select, Tag, TreeSelect } from 'antd
 import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
-import { departmentList, StatusEnum } from '../define.ts'
+import { StatusEnum } from '../define.ts'
 import { systemUserAdd, setUserRoleModal } from '../modal'
 
 type FormItem = Omit<UserApi.UserListParams, 'pageSize' | 'page'>
 
-type ColumnsType = UserEntity.User
+type ColumnsType = UserApi.UserListResVo
 
-const SystemUserList = (props: RouterConfig) => {
+interface BeforeProps {
+  departmentList: DepartmentApi.DepartmentAllResVo[]
+}
+
+const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
+
   const [form] = Form.useForm<FormItem>()
   const columns = $.utils.ant.AntTableColumns<ColumnsType>([
     {
@@ -53,7 +58,7 @@ const SystemUserList = (props: RouterConfig) => {
               onClick={() => {
                 systemUserAdd.open({
                   form: record,
-                }).then(()=>onRefresh())
+                }).then(() => onRefresh())
               }}
             >
               编辑
@@ -62,7 +67,7 @@ const SystemUserList = (props: RouterConfig) => {
               title="提示"
               description="确定删除?"
               onConfirm={() => {
-                $.api.user.deleteUser({id:record.id}).then(()=> onRefresh())
+                $.api.user.deleteUser({ id: record.id }).then(() => onRefresh())
               }}
             >
               <a>删除</a>
@@ -76,8 +81,8 @@ const SystemUserList = (props: RouterConfig) => {
                     key: '1',
                     onClick: () => {
                       setUserRoleModal.open({
-                        id: record.id,
-                      })
+                        userId: record.id,
+                      }).then(() => onRefresh())
                     },
                   },
                 ],
@@ -140,9 +145,8 @@ const SystemUserList = (props: RouterConfig) => {
             />
           </Form.Item>
           <Form.Item name="departmenId" label="部门">
-            <TreeSelect showSearch placeholder="请选择" filterTreeNode={(inputValue, treeNode) =>
-              treeNode.data.props.label.indexOf(inputValue) !== -1} treeNodeFilterProp="label" allowClear
-                        style={{ width: 180 }} treeData={departmentList} />
+            <TreeSelect showSearch placeholder="请选择" fieldNames={{ value: 'id', label: 'name' }} filterTreeNode={$.utils.ant.filterTreeNode} treeNodeFilterProp="label" allowClear
+                        style={{ width: 180 }} treeData={props.departmentList} />
           </Form.Item>
         </FilterForm>
       </Panel.Item>
@@ -169,6 +173,14 @@ const SystemUserList = (props: RouterConfig) => {
       </Panel.Item>
     </Panel>
   )
+}
+
+SystemUserList.beforeEnter = async () => {
+  const departmentList = await $.api.department.all()
+
+  return {
+    departmentList,
+  }
 }
 
 export default SystemUserList

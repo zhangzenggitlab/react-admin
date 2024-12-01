@@ -4,7 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { css } from '@emotion/css'
 import { clsx } from 'clsx'
 
-export const BaseLayout = (props: BasePage) => {
+export function BaseLayout<T>(props: BasePage & T) {
   const [open, setOpen] = React.useState(false)
   const location = useLocation()
   const navigate = useNavigate()

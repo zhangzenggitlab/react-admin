@@ -44,7 +44,8 @@ export class DepartmentAddModal extends BaseModal<ModalProps> {
         <Form.Item name={'parentId'} label={'父级'} rules={[{ required: true }]}>
           <TreeSelect showSearch placeholder="请选择"
                       filterTreeNode={$.utils.ant.filterTreeNode}
-                      treeNodeFilterProp="label" allowClear
+                      treeNodeFilterProp="label"
+                      allowClear
                       style={{ width: 220 }}
                       treeData={[{id:0,name:"一级部门"},...data]}
                       loading={loading}

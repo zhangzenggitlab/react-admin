@@ -9,8 +9,6 @@ declare namespace RoleApi {
     name?: string
   }
 
-  type RoleListRes = PageListType<RoleEntity.role>
-
   interface RoleAllRes extends Pick<RoleEntity.role, 'id' | 'name'> {
     children?: RoleAllRes[]
   }
