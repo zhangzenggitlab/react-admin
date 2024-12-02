@@ -3,7 +3,7 @@ import { EllipsisOutlined } from '@ant-design/icons'
 
 import { Button, FilterForm, Panel, Table } from '@/components'
 import { StatusEnum } from '../define.ts'
-import { systemUserAdd, setUserRoleModal } from '../modal'
+import { setUserRoleModal, systemUserAdd } from '../modal'
 
 type FormItem = Omit<UserApi.UserListParams, 'pageSize' | 'page'>
 
@@ -14,7 +14,6 @@ interface BeforeProps {
 }
 
 const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
-
   const [form] = Form.useForm<FormItem>()
   const columns = $.utils.ant.AntTableColumns<ColumnsType>([
     {
@@ -110,6 +109,7 @@ const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
 
   async function getTableData() {
     const values = form.getFieldsValue()
+
     getData(
       {
         page,
@@ -145,7 +145,8 @@ const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
             />
           </Form.Item>
           <Form.Item name="departmenId" label="部门">
-            <TreeSelect showSearch placeholder="请选择" fieldNames={{ value: 'id', label: 'name' }} filterTreeNode={$.utils.ant.filterTreeNode} treeNodeFilterProp="label" allowClear
+            <TreeSelect showSearch placeholder="请选择" fieldNames={{ value: 'id', label: 'name' }}
+                        filterTreeNode={$.utils.ant.filterTreeNode} treeNodeFilterProp="label" allowClear
                         style={{ width: 180 }} treeData={props.departmentList} />
           </Form.Item>
         </FilterForm>
@@ -158,9 +159,7 @@ const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
             ghost
             type={'primary'}
             onClick={() => {
-              systemUserAdd.open().then(() => {
-                onRefresh()
-              })
+              systemUserAdd.open().then(() => onRefresh())
             }}
           >
             新增
