@@ -105,9 +105,9 @@ const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
     setTotal,
     pagination,
     onRefresh,
-  } = $.hooks.usePagination(getTableData)
+  } = $.hooks.usePagination(onSearch)
 
-  async function getTableData() {
+  async function onSearch() {
     const values = form.getFieldsValue()
 
     getData(
@@ -123,7 +123,7 @@ const SystemUserList: BaseFc<BasePage, BeforeProps> = (props) => {
   return (
     <Panel title={props.title}>
       <Panel.Item className="mt-20">
-        <FilterForm form={form} onSearch={getTableData} onReset={getTableData}>
+        <FilterForm form={form} onSearch={onSearch} onReset={onSearch}>
           <Form.Item name="name" label="姓名">
             <Input placeholder="请输入" allowClear />
           </Form.Item>
