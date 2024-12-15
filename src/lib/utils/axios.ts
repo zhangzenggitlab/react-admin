@@ -38,8 +38,8 @@ instance.interceptors.response.use(function(response) {
   if (response.data.code == 401) {
     const protocol = window.location.protocol
     const host = window.location.host
-    console.log(response.data)
- //   location.href = `${protocol}//${host}/login`
+
+    location.href = `${protocol}//${host}/login`
   }
 
   message.error(response.data.msg)
