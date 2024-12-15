@@ -12,7 +12,7 @@ interface HeaderType extends Omit<AxiosInterceptorOptions, 'headers'> {
     /**
      * 后端接受token
      */
-    satoken?: string
+    token?: string
   }
 }
 
@@ -20,7 +20,7 @@ interface HeaderType extends Omit<AxiosInterceptorOptions, 'headers'> {
  * 添加请求拦截器
  */
 instance.interceptors.request.use(function(config: HeaderType) {
-  config.headers.satoken = localStorage.getItem('token') || ''
+  config.headers.token = localStorage.getItem('token') || ''
 
   return config
 }, function(error) {
@@ -38,8 +38,8 @@ instance.interceptors.response.use(function(response) {
   if (response.data.code == 401) {
     const protocol = window.location.protocol
     const host = window.location.host
-
-    location.href = `${protocol}//${host}/login`
+    console.log(response.data)
+ //   location.href = `${protocol}//${host}/login`
   }
 
   message.error(response.data.msg)
