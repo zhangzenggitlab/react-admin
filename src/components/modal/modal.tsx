@@ -11,7 +11,8 @@ export const Modal = (props: ModalProps) => {
     children, onOk = async () => {
     }, onCancel = () => {
       setOpen(false)
-    },resolve=()=>{}, ...prop
+    }, resolve = () => {
+    }, ...prop
   } = props
 
   const [confirmLoading, setConfirmLoading] = React.useState<boolean>(false)

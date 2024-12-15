@@ -12,8 +12,7 @@ type OpenModalType<T> = {
 
 export function OpenModal<T>(props: OpenModalType<T>) {
   const {
-    resolve = () => {
-    },
+    resolve = () => {},
   } = props
 
   return <Modal {...props.options} resolve={resolve}>

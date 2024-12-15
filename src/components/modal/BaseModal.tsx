@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { ModalProps } from '@/components'
-import { createPopup } from '@/lib'
 import { OpenModal } from '@/components/modal/open-modal.tsx'
 
 /**
@@ -18,14 +17,14 @@ export abstract class BaseModal<T extends Record<string, any>> {
 
   props? = {} as T
 
-  submit() {
+  async submit() {
   }
 
   async open(options?: OptionsType & T) {
     this.props = options
 
     return new Promise((resolve) => {
-      createPopup({
+      $.hooks.usePopup.create({
         children: <OpenModal<T> render={this.render.bind(this)} title={this.options.title} options={this.options}
                                 renderProps={options} resolve={resolve}
         />,

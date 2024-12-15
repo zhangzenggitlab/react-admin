@@ -11,14 +11,9 @@ type FormItem = UserEntity.User // todo
 export class SetRoleMenuModal extends BaseModal<ModalProps> {
   options: OptionsType = {
     title: '菜单权限',
-    onOk: this.onOk.bind(this),
-  }
-
-  async onOk() {
-    return this.submit()
-  }
-
-  async submit() {
+    onOk: async()=>{
+      return this.submit()
+    },
   }
 
   render(): React.ReactNode {

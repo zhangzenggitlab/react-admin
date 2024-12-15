@@ -1,39 +1,24 @@
-import React from 'react'
 import { createRoot } from 'react-dom/client'
+
+import React from 'react'
 
 import { ConfigProvider } from '@/components'
 
-interface UsePopupProps extends BaseComponent {
-  /**
-   * 调用open方法打开内容
-   */
-  open?: (...args: UsePopupProps[]) => Promise<any>
-}
+type OpenDialogProps = BaseComponent
 
-export const usePopup = () => {
-  let popup = document.getElementById('popup')
-
-  if (!popup) {
-    popup = document.createElement('div')
-    popup.setAttribute('id', 'popup')
-
-    popup.style.position = 'fixed'
-    document.body.append(popup)
-  }
-
-  function open(props: UsePopupProps) {
-    createRoot(popup!).render(
-      <React.StrictMode>
-        <ConfigProvider>
-          {props.children}
-        </ConfigProvider>
-      </React.StrictMode>,
-    )
-  }
-
+/**
+ * 动态增加组件到浏览器，如Modal等
+ */
+export const usePopup = (function() {
   return {
-    open,
+    create: function(props: OpenDialogProps) {
+      createRoot(document.createElement('popup-' + $.utils.tool.uuid(3))).render(
+        <React.StrictMode>
+          <ConfigProvider>
+            {props.children}
+          </ConfigProvider>
+        </React.StrictMode>,
+      )
+    },
   }
-}
-
-
+})()
