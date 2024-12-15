@@ -23,11 +23,11 @@ export class SetRoleMenuModal extends BaseModal<ModalProps> {
 
   render(): React.ReactNode {
     const [form] = Form.useForm<FormItem>()
-    const [options, setOptions] = React.useState<RoleApi.RoleAllRes[]>([])
+    const [options, setOptions] = React.useState<RoleApi.RoleAllResVo[]>([])
 
     function getAllRole() {
-      $.api.role.roleAll().then(res => {
-        setOptions([...res])
+      $.api.role.all().then(res => {
+        setOptions(res)
       })
     }
 
@@ -42,7 +42,7 @@ export class SetRoleMenuModal extends BaseModal<ModalProps> {
       getAllRole()
     }, [])
 
-    return <Form form={form} >
+    return <Form form={form}>
       <Form.Item name="menuIds" label="菜单" rules={[{ required: true }]}>
         <TreeSelect showSearch placeholder="请选择" fieldNames={{ value: 'id', label: 'name' }}
                     filterTreeNode={$.utils.ant.filterTreeNode} allowClear

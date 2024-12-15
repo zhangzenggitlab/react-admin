@@ -14,11 +14,9 @@ export class RoleAddModal extends BaseModal<RoleAddModalProps> {
   options: OptionsType = {
     title: '新增',
     width: 650,
-    onOk: this.ok.bind(this),
-  }
-
-  async ok() {
-    return this.submit()
+    onOk: async () => {
+      return this.submit()
+    },
   }
 
   render() {
