@@ -7,7 +7,7 @@ export interface DrawerProps extends AntDrawerProps {
 }
 
 export const Drawer = (props: DrawerProps) => {
-  const { children = null, title = '',maskClosable = true } = props
+  const { children = null, title = '', maskClosable = true } = props
 
   return (<AntDrawer maskClosable={maskClosable} {...props}>
     <div className={clsx('flex between')}>

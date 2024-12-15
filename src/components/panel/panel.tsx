@@ -7,7 +7,7 @@ import { PanelItem } from './panel-item'
 
 export interface PanelProps extends BaseComponent {
   loading?: boolean
-  title?:string
+  title?: string
 }
 
 interface PanelType {

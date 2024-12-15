@@ -5,7 +5,7 @@ import clsx from 'clsx'
 export interface PanelItemProps extends BaseComponent {
   loading?: boolean
   rightNodes?: JSX.Element | string | null
-  title?:string
+  title?: string
 }
 
 export const PanelItem = (props: PanelItemProps) => {
